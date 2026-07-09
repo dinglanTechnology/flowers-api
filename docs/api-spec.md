@@ -478,20 +478,22 @@ interface AiTask {
 
 ## 5. 素材数据处理约定
 
-项目的"素材"分三类，处理方式不同：
+项目的"素材"处理方式：
 
 | 类别 | 性质 | 归属 | 后端存储 |
 |---|---|---|---|
-| 内置花/叶/线/器、主题、头像、形态 | 参数化矢量代码 | **渲染留前端** | 元数据进 `builtin_material` 目录（catalog 接口下发） |
+| 内置花/叶/线/器 + 6 款姿态 | **透明底 PNG** | OSS + DB | `Material.imageUrl` / `styles[].imageUrl` + OSS URL |
+| 主题、头像预设 | 配置 | 代码常量 | `bootstrap.data.ts`（`/config/bootstrap` 下发） |
 | 自定义花材 | 真实图片 | OSS + DB | `CustomMaterial` + OSS URL |
-| 示范广场作品 | 数据 | DB seed | `PlazaPost` 记录 |
+| 示范广场作品 | 数据 | DB | `PlazaPost` 记录 |
 | 作品/广场缩略图 | 光栅图 | OSS | `thumbnailUrl` |
 
 **关键原则**
-1. `assetId` / `theme` / `vaseId` / `avatarId` 一经发布**永不复用或删除**，历史作品靠其引用。
+1. `assetId` / `styleOption` / `theme` / `vaseId` / `avatarId` 一经发布**永不复用或删除**，历史作品靠其引用。
 2. `arrangement` 后端**不透明**：只做结构/大小校验，不校验具体 id（避免与自定义花材冲突、避免前端加花就要后端同步）。
-3. `kind` 是**前后端渲染契约**：后端目录新增 `kind` 必须配前端发版；客户端遇未知 `kind` 降级跳过。
-4. 缩略图**光栅化持久化**，让展示与 renderer 解耦（未来 H5 分享页无需搬渲染代码）。
+3. **内置素材已由矢量改为图片**：前端直接贴 `imageUrl`，不再需要按 `kind` 跑 draw 函数。矢量源仍在 `builtin-materials.data.ts` + 原型，仅用于生成 PNG（`scripts/materials-svg-to-png.mjs` → OSS）。
+4. 素材目录进 `Material` 表：支持后台上下架（`active`）/换图/调序（`sortOrder`）而不发版；`version` 由 DB 内容算出，变则客户端自动拉新。
+5. 缩略图/姿态图**光栅化持久化于 OSS，DB 只存 URL**，展示与 renderer 解耦。
 
 ---
 
