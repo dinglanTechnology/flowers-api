@@ -1,0 +1,83 @@
+import { createHash } from 'crypto';
+
+export interface BuiltinMaterial {
+  id: string;
+  name: string;
+  category: 'flower' | 'greenery' | 'line' | 'vase';
+  kind: string;
+  colors: string[];
+  shape?: string;
+  previewUrl?: string;
+  minAppVersion?: string;
+}
+
+export const MATERIAL_CATEGORIES = [
+  { id: 'flower', label: '花朵' },
+  { id: 'greenery', label: '枝叶' },
+  { id: 'line', label: '线条' },
+  { id: 'vase', label: '花器' },
+];
+
+/** 内置素材元数据（与小程序端 draw 函数按 kind 对齐；渲染在前端） */
+export const BUILTIN_MATERIALS: BuiltinMaterial[] = [
+  { id: 'mat-camellia', name: '山茶', category: 'flower', kind: 'camellia', colors: ['#d96f7d', '#f2c4be', '#8a3f4a'] },
+  { id: 'mat-peony', name: '芍药', category: 'flower', kind: 'peony', colors: ['#e8a1b2', '#f5d0ca', '#b85f76'] },
+  { id: 'mat-orchid', name: '兰枝', category: 'flower', kind: 'orchid', colors: ['#f2e8c9', '#c58fb1', '#6e8c64'] },
+  { id: 'mat-lily', name: '百合', category: 'flower', kind: 'lily', colors: ['#fff1cf', '#e5a65a', '#7b9a63'] },
+  { id: 'mat-anthurium', name: '掌花', category: 'flower', kind: 'anthurium', colors: ['#bf3f46', '#f0c955', '#5d8d55'] },
+  { id: 'mat-spray', name: '小花束', category: 'flower', kind: 'spray', colors: ['#f4c45f', '#cf6f89', '#7aa66b'] },
+  { id: 'mat-rose', name: '玫瑰', category: 'flower', kind: 'rose', colors: ['#c83f5a', '#f4a6aa', '#7a253a'] },
+  { id: 'mat-tulip', name: '郁金香', category: 'flower', kind: 'tulip', colors: ['#e85f72', '#ffd0b5', '#5c8a57'] },
+  { id: 'mat-carnation', name: '康乃馨', category: 'flower', kind: 'carnation', colors: ['#df7fa0', '#ffd4dc', '#9d4e64'] },
+  { id: 'mat-hydrangea', name: '绣球', category: 'flower', kind: 'hydrangea', colors: ['#9db7e8', '#c7d6f7', '#6d80b1'] },
+  { id: 'mat-sunflower', name: '向日葵', category: 'flower', kind: 'sunflower', colors: ['#f2b23c', '#ffe06f', '#6d4527'] },
+  { id: 'mat-lisianthus', name: '洋桔梗', category: 'flower', kind: 'lisianthus', colors: ['#b78ad8', '#ead8f6', '#6e4a8a'] },
+  { id: 'mat-calla', name: '马蹄莲', category: 'flower', kind: 'calla', colors: ['#f7f2d7', '#d7b25e', '#67855b'] },
+  { id: 'mat-babysbreath', name: '满天星', category: 'flower', kind: 'babysbreath', colors: ['#f8f3dc', '#ffffff', '#7f9a71'] },
+  { id: 'mat-lotus', name: '荷花', category: 'flower', kind: 'lotus', colors: ['#e9a0b5', '#f8d7c8', '#78945e'] },
+  { id: 'mat-waterlily', name: '睡莲', category: 'flower', kind: 'waterlily', colors: ['#f1bfd0', '#fff0c7', '#638f6d'] },
+  { id: 'mat-iris', name: '鸢尾', category: 'flower', kind: 'iris', colors: ['#7c65b8', '#d7c5f2', '#5f8a62'] },
+  { id: 'mat-dahlia', name: '大丽花', category: 'flower', kind: 'dahlia', colors: ['#d65b71', '#f3b064', '#7f4a4a'] },
+  { id: 'mat-wintersweet', name: '蜡梅', category: 'flower', kind: 'wintersweet', colors: ['#f0c84d', '#ffe7a0', '#745437'] },
+  { id: 'mat-freesia', name: '小苍兰', category: 'flower', kind: 'freesia', colors: ['#f4cf70', '#fff2c2', '#668f61'] },
+  { id: 'mat-phalaenopsis', name: '蝴蝶兰', category: 'flower', kind: 'phalaenopsis', colors: ['#f0d9f4', '#c781b7', '#6d8a5d'] },
+  { id: 'mat-anemone', name: '银莲花', category: 'flower', kind: 'anemone', colors: ['#f1f0e6', '#8aa4d6', '#2d2933'] },
+  { id: 'mat-monstera', name: '龟背叶', category: 'greenery', kind: 'monstera', colors: ['#3e7751', '#79a56c', '#244d39'] },
+  { id: 'mat-eucalyptus', name: '尤加利', category: 'greenery', kind: 'eucalyptus', colors: ['#8aa889', '#557b63', '#b7c6a5'] },
+  { id: 'mat-bamboo', name: '竹叶', category: 'greenery', kind: 'bamboo', colors: ['#4d7b50', '#90b36e', '#355e43'] },
+  { id: 'mat-fern', name: '蕨叶', category: 'greenery', kind: 'fern', colors: ['#4f8b5b', '#9ec27b', '#2f6045'] },
+  { id: 'mat-dusty-miller', name: '银叶菊', category: 'greenery', kind: 'dustymiller', colors: ['#aebaae', '#7f9388', '#d8dfd1'] },
+  { id: 'mat-nandina', name: '南天竹', category: 'greenery', kind: 'nandina', colors: ['#9b3946', '#d57a65', '#566f43'] },
+  { id: 'mat-olive', name: '橄榄枝', category: 'greenery', kind: 'olive', colors: ['#7e965f', '#596f4a', '#b7bf92'] },
+  { id: 'mat-lotus-leaf', name: '荷叶', category: 'greenery', kind: 'lotusleaf', colors: ['#4d7b55', '#8bae6a', '#315740'] },
+  { id: 'mat-sweetflag', name: '菖蒲叶', category: 'greenery', kind: 'sweetflag', colors: ['#5c8755', '#a4bd6d', '#345d45'] },
+  { id: 'mat-willow', name: '垂枝', category: 'line', kind: 'willow', colors: ['#6f8c59', '#a8bd7d', '#536b45'] },
+  { id: 'mat-reed', name: '芦苇', category: 'line', kind: 'reed', colors: ['#b68f57', '#e3c48b', '#7d6847'] },
+  { id: 'mat-branch', name: '枯枝', category: 'line', kind: 'drybranch', colors: ['#7c5842', '#a0714f', '#4a352c'] },
+  { id: 'mat-pussy-willow', name: '银柳', category: 'line', kind: 'pussywillow', colors: ['#d8d4c8', '#f0eadc', '#6d6459'] },
+  { id: 'mat-wheat', name: '麦穗', category: 'line', kind: 'wheat', colors: ['#c9964f', '#efd08b', '#7b603a'] },
+  { id: 'mat-foxtail', name: '狗尾草', category: 'line', kind: 'foxtail', colors: ['#a88755', '#d3b67a', '#5e7047'] },
+  { id: 'mat-clematis-vine', name: '铁线莲藤', category: 'line', kind: 'clematisvine', colors: ['#7b8d63', '#c6b6e8', '#4d6344'] },
+  { id: 'mat-vase-ceramic', name: '陶瓷瓶', category: 'vase', kind: 'vase', shape: 'classic', colors: ['#c8b394', '#80654b', '#f0e2c7'] },
+  { id: 'mat-vase-ink', name: '墨色瓶', category: 'vase', kind: 'vase', shape: 'inkstone', colors: ['#29322f', '#6b776f', '#111615'] },
+  { id: 'mat-vase-glass', name: '玻璃瓶', category: 'vase', kind: 'vase', shape: 'cylinder', colors: ['#b9d8d2', '#6fa6a4', '#eef9f4'] },
+  { id: 'mat-vase-neck', name: '长颈瓶', category: 'vase', kind: 'vase', shape: 'neck', colors: ['#d8c0a4', '#8d6646', '#f5e7d2'] },
+  { id: 'mat-vase-bowl', name: '水盘', category: 'vase', kind: 'vase', shape: 'bowl', colors: ['#56646a', '#9aa6a7', '#d8dedb'] },
+  { id: 'mat-vase-basket', name: '竹篮', category: 'vase', kind: 'vase', shape: 'basket', colors: ['#b8864b', '#e0bd78', '#7a5632'] },
+  { id: 'mat-vase-clay', name: '矮陶罐', category: 'vase', kind: 'vase', shape: 'clay', colors: ['#b46f4e', '#e1a078', '#6e4335'] },
+  { id: 'mat-vase-metal', name: '金属桶', category: 'vase', kind: 'vase', shape: 'bucket', colors: ['#8e9491', '#c8ceca', '#555b59'] },
+  { id: 'mat-vase-origami', name: '折纸瓶', category: 'vase', kind: 'vase', shape: 'origami', colors: ['#d8d1c7', '#8f9b95', '#f5efe7'] },
+  { id: 'mat-vase-ring', name: '环形瓶', category: 'vase', kind: 'vase', shape: 'ring', colors: ['#c9d4cf', '#697e7f', '#eef3ee'] },
+  { id: 'mat-vase-handled', name: '双耳陶瓶', category: 'vase', kind: 'vase', shape: 'handled', colors: ['#c9835d', '#8e4f3b', '#f0c09b'] },
+  { id: 'mat-vase-pedestal', name: '几何高脚瓶', category: 'vase', kind: 'vase', shape: 'pedestal', colors: ['#707882', '#c7ced4', '#343a42'] },
+  { id: 'mat-vase-crescent', name: '月牙水盘', category: 'vase', kind: 'vase', shape: 'crescent', colors: ['#3f5260', '#9ab4bd', '#dfe8e8'] },
+  { id: 'mat-vase-wabi', name: '侘寂粗陶', category: 'vase', kind: 'vase', shape: 'wabi', colors: ['#9d7357', '#c49a72', '#5c4638'] },
+  { id: 'mat-vase-square', name: '透明方瓶', category: 'vase', kind: 'vase', shape: 'square', colors: ['#9fc8c4', '#5f9698', '#eefaf6'] },
+  { id: 'mat-vase-slim', name: '金属窄口瓶', category: 'vase', kind: 'vase', shape: 'slim', colors: ['#c6b27a', '#77623f', '#f3df9c'] },
+];
+
+/** 目录版本 = 内容哈希，数据变则变 */
+export const MATERIALS_VERSION = createHash('sha256')
+  .update(JSON.stringify({ c: MATERIAL_CATEGORIES, m: BUILTIN_MATERIALS }))
+  .digest('hex')
+  .slice(0, 12);

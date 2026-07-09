@@ -1,0 +1,97 @@
+// 「插了个花」业务后端数据模型
+// 详见 docs/architecture.md §7
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// 用户：微信 openid 建号
+model User {
+  id        String   @id @default(cuid())
+  openid    String   @unique
+  unionid   String?
+  nickname  String   @default("")
+  avatarId  String   @default("lotus")
+  avatarUrl String?
+  works     Work[]
+  posts     PlazaPost[]
+  materials CustomMaterial[]
+  aiTasks   AiTask[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// 作品：插花快照 + 日历聚合
+model Work {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  title        String   @default("今日花事")
+  theme        String   @default("night")
+  vaseId       String
+  arrangement  Json // { items[], theme, vaseId, ... } 插花数据快照
+  thumbnailUrl String?
+  dateKey      String // "2026-07-08"，按天聚合用
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId, dateKey])
+  @@index([userId, createdAt])
+}
+
+/// 广场作品（UGC，含内容审核状态）
+model PlazaPost {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  authorName   String // 冗余快照，改名不影响历史
+  title        String
+  theme        String
+  arrangement  Json // 支持"点开继续编辑"
+  thumbnailUrl String?
+  likeCount    Int      @default(0)
+  auditStatus  String   @default("pending") // pending | approved | rejected
+  createdAt    DateTime @default(now())
+
+  @@index([auditStatus, createdAt])
+}
+
+/// 自定义花材（AI 抠图产物）
+model CustomMaterial {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  name           String
+  category       String // flower | greenery | line
+  baseMaterialId String
+  baseKind       String?
+  imageUrl       String // 透明底成品
+  sourceImageUrl String? // 上传原图
+  createdAt      DateTime @default(now())
+
+  @@index([userId, createdAt])
+}
+
+/// AI 异步任务（image2 / cutout）
+model AiTask {
+  id             String   @id @default(cuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  type           String // image2 | cutout
+  status         String   @default("pending") // pending | running | succeeded | failed
+  progress       Int      @default(0)
+  prompt         String?
+  inputImageUrl  String?
+  resultUrl      String?
+  error          String?
+  meta           Json? // size / baseMaterialId / category 等
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId, createdAt])
+}
