@@ -9,7 +9,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { WechatSecurityService } from '../../wechat/wechat-security.service';
 import { PlazaFeedDto, SharePlazaDto } from './dto/plaza.dto';
 
-function toPlazaDto(p: PlazaPost) {
+function toPlazaDto(p: PlazaPost, liked = false) {
   return {
     id: p.id,
     userId: p.userId,
@@ -19,6 +19,7 @@ function toPlazaDto(p: PlazaPost) {
     arrangement: p.arrangement,
     thumbnailUrl: p.thumbnailUrl,
     likeCount: p.likeCount,
+    liked,
     auditStatus: p.auditStatus,
     createdAt: p.createdAt.toISOString(),
   };
@@ -31,7 +32,7 @@ export class PlazaService {
     private readonly security: WechatSecurityService,
   ) {}
 
-  async feed(query: PlazaFeedDto) {
+  async feed(userId: string, query: PlazaFeedDto) {
     const limit = query.limit ?? 20;
     const rows = await this.prisma.plazaPost.findMany({
       where: { auditStatus: 'approved' },
@@ -41,8 +42,19 @@ export class PlazaService {
     });
     const hasMore = rows.length > limit;
     const page = hasMore ? rows.slice(0, limit) : rows;
+
+    // 一次查出当前用户在本页里点过赞的帖子，标注 liked
+    const likedSet = new Set(
+      (
+        await this.prisma.plazaLike.findMany({
+          where: { userId, postId: { in: page.map((p) => p.id) } },
+          select: { postId: true },
+        })
+      ).map((l) => l.postId),
+    );
+
     return {
-      items: page.map(toPlazaDto),
+      items: page.map((p) => toPlazaDto(p, likedSet.has(p.id))),
       nextCursor: hasMore ? page[page.length - 1].id : null,
     };
   }
@@ -101,19 +113,58 @@ export class PlazaService {
     return toPlazaDto(post);
   }
 
-  async getById(id: string) {
+  async getById(userId: string, id: string) {
     const post = await this.prisma.plazaPost.findUnique({ where: { id } });
     if (!post || post.auditStatus !== 'approved')
       throw new NotFoundException('作品不存在');
-    return toPlazaDto(post);
+    const liked = !!(await this.prisma.plazaLike.findUnique({
+      where: { userId_postId: { userId, postId: id } },
+    }));
+    return toPlazaDto(post, liked);
   }
 
-  async like(id: string) {
-    const post = await this.prisma.plazaPost
-      .update({ where: { id }, data: { likeCount: { increment: 1 } } })
-      .catch(() => {
-        throw new NotFoundException('作品不存在');
-      });
-    return { likeCount: post.likeCount };
+  /** 点赞/取消赞（幂等 toggle）：liked 表示本次操作后的状态 */
+  async like(userId: string, id: string) {
+    const post = await this.prisma.plazaPost.findUnique({ where: { id } });
+    if (!post || post.auditStatus !== 'approved')
+      throw new NotFoundException('作品不存在');
+
+    const existing = await this.prisma.plazaLike.findUnique({
+      where: { userId_postId: { userId, postId: id } },
+    });
+
+    if (existing) {
+      // 取消赞：删记录 + 计数 -1（原子）
+      const [, updated] = await this.prisma.$transaction([
+        this.prisma.plazaLike.delete({ where: { id: existing.id } }),
+        this.prisma.plazaPost.update({
+          where: { id },
+          data: { likeCount: { decrement: 1 } },
+        }),
+      ]);
+      return { likeCount: updated.likeCount, liked: false };
+    }
+
+    // 点赞：建记录 + 计数 +1（并发下靠唯一键兜底）
+    try {
+      const [, updated] = await this.prisma.$transaction([
+        this.prisma.plazaLike.create({ data: { userId, postId: id } }),
+        this.prisma.plazaPost.update({
+          where: { id },
+          data: { likeCount: { increment: 1 } },
+        }),
+      ]);
+      return { likeCount: updated.likeCount, liked: true };
+    } catch (err) {
+      // 并发重复点赞（唯一键冲突）：视为已赞，返回当前计数
+      if (
+        err instanceof Prisma.PrismaClientKnownRequestError &&
+        err.code === 'P2002'
+      ) {
+        const fresh = await this.prisma.plazaPost.findUnique({ where: { id } });
+        return { likeCount: fresh?.likeCount ?? post.likeCount, liked: true };
+      }
+      throw err;
+    }
   }
 }

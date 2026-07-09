@@ -8,10 +8,7 @@ import { AI_PROVIDER } from './providers/ai-provider.interface';
 import { MockProvider } from './providers/mock.provider';
 import { RelayProvider } from './providers/relay.provider';
 import { AtlasProvider } from './providers/atlas.provider';
-import {
-  FailoverProvider,
-  NamedProvider,
-} from './providers/failover.provider';
+import { FailoverProvider, NamedProvider } from './providers/failover.provider';
 
 /** 单个上游配置（含协议） */
 interface UpstreamConfig {
@@ -25,9 +22,7 @@ interface UpstreamConfig {
 
 /** 按协议实例化对应 provider */
 function buildProvider(u: UpstreamConfig): NamedProvider {
-  return u.protocol === 'atlas'
-    ? new AtlasProvider(u)
-    : new RelayProvider(u);
+  return u.protocol === 'atlas' ? new AtlasProvider(u) : new RelayProvider(u);
 }
 
 function parseRedis(url?: string): {

@@ -18,14 +18,14 @@ export class PlazaController {
 
   @Get()
   @ApiData(PlazaFeedResultDto)
-  feed(@Query() query: PlazaFeedDto) {
-    return this.plazaService.feed(query);
+  feed(@CurrentUser('userId') userId: string, @Query() query: PlazaFeedDto) {
+    return this.plazaService.feed(userId, query);
   }
 
   @Get(':id')
   @ApiData(PlazaPostDto)
-  getById(@Param('id') id: string) {
-    return this.plazaService.getById(id);
+  getById(@CurrentUser('userId') userId: string, @Param('id') id: string) {
+    return this.plazaService.getById(userId, id);
   }
 
   @Post()
@@ -36,7 +36,7 @@ export class PlazaController {
 
   @Post(':id/like')
   @ApiData(LikeResultDto)
-  like(@Param('id') id: string) {
-    return this.plazaService.like(id);
+  like(@CurrentUser('userId') userId: string, @Param('id') id: string) {
+    return this.plazaService.like(userId, id);
   }
 }

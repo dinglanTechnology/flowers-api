@@ -20,6 +20,7 @@ import { PlazaModule } from './modules/plaza/plaza.module';
 import { MaterialsModule } from './modules/materials/materials.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { AiModule } from './modules/ai/ai.module';
+import { AppConfigModule } from './modules/app-config/app-config.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { AiModule } from './modules/ai/ai.module';
     MaterialsModule,
     UploadModule,
     AiModule,
+    AppConfigModule,
   ],
   controllers: [AppController],
   providers: [

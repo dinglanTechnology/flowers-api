@@ -43,6 +43,8 @@ export class PlazaPostDto {
   arrangement!: Record<string, any>;
   thumbnailUrl!: string | null;
   likeCount!: number;
+  /** 当前登录用户是否已赞 */
+  liked!: boolean;
   auditStatus!: string;
   createdAt!: string;
 }
@@ -54,6 +56,8 @@ export class PlazaFeedResultDto {
 
 export class LikeResultDto {
   likeCount!: number;
+  /** 本次操作后当前用户的点赞态（true=已赞） */
+  liked!: boolean;
 }
 
 export class CustomMaterialDto {
@@ -134,4 +138,38 @@ export class UploadUrlDto {
 
 export class OkDto {
   ok!: boolean;
+}
+
+export class ThemeDto {
+  id!: string;
+  label!: string;
+  note!: string;
+  bg!: string;
+  panel!: string;
+  panel2!: string;
+  text!: string;
+  muted!: string;
+  line!: string;
+  accent!: string;
+  accent2!: string;
+  danger!: string;
+  canvas!: string;
+  paper!: string;
+  shadow!: string;
+  vase!: string[];
+  previewFlower!: string[];
+}
+
+export class AvatarOptionDto {
+  id!: string;
+  label!: string;
+  colors!: string[];
+}
+
+export class BootstrapConfigDto {
+  version!: string;
+  /** version 命中时为 true 且省略 themes/avatars */
+  changed?: boolean;
+  themes?: ThemeDto[];
+  avatars?: AvatarOptionDto[];
 }

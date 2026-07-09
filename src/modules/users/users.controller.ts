@@ -20,7 +20,11 @@ export class UsersController {
 
   @Patch('me')
   @ApiData(UserDto)
-  updateMe(@CurrentUser('userId') userId: string, @Body() dto: UpdateUserDto) {
-    return this.usersService.updateMe(userId, dto);
+  updateMe(
+    @CurrentUser('userId') userId: string,
+    @CurrentUser('openid') openid: string,
+    @Body() dto: UpdateUserDto,
+  ) {
+    return this.usersService.updateMe(userId, openid, dto);
   }
 }

@@ -54,7 +54,9 @@ export class AtlasProvider implements AiProvider {
 
   image2(input: Image2Input): Promise<Buffer> {
     if (!input.image) {
-      throw new Error('image2 缺少参考图（Atlas edit 模型需要输入图 URL 或 base64）');
+      throw new Error(
+        'image2 缺少参考图（Atlas edit 模型需要输入图 URL 或 base64）',
+      );
     }
     return this.predict('image2', {
       model: this.image2Model,

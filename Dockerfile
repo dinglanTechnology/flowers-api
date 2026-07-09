@@ -29,4 +29,5 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
 COPY package.json ./
 EXPOSE 3000
-CMD ["node", "dist/main"]
+# nest build 产物在 dist/src/（tsc 编译根含 src 外文件，故多一层 src）
+CMD ["node", "dist/src/main"]

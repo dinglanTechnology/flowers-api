@@ -107,6 +107,7 @@ interface User {
   nickname: string;
   avatarId: AvatarId;
   avatarUrl: string | null;
+  phone: string | null;    // 新版 getuserphonenumber 绑定，未绑为 null
   createdAt: string;
 }
 // openid / unionid / sessionKey 为服务端内部字段，绝不下发
@@ -141,6 +142,7 @@ interface PlazaPost {
   arrangement: Arrangement;
   thumbnailUrl: string | null;
   likeCount: number;
+  liked: boolean;           // 当前登录用户是否已赞
   auditStatus: AuditStatus; // feed 仅返回 approved
   createdAt: string;
 }
@@ -162,26 +164,51 @@ interface CustomMaterial {
 }
 ```
 
-### 2.8 BuiltinMaterial（内置素材，元数据）
+### 2.8 BuiltinMaterial（内置素材，图片渲染）
 
 ```ts
-// 内置素材是"参数化矢量代码"，渲染由小程序端 draw 函数按 kind 完成；
-// 后端只持有元数据目录，不参与渲染。
+// 内置素材已改为图片渲染：前端直接贴 imageUrl，多样式素材每款姿态各有独立图。
+// 矢量字段（kind/colors/shape/morph/lengthScale）不下发，仅生成 PNG 时用。
+interface MaterialStyle {
+  styleOption: string;     // 样式预设 id，如 "rose-full-mid"（与作品项 styleOption 对齐）
+  name: string;            // "玫瑰盛放"
+  imageUrl: string;        // 该姿态的 OSS 透明底 PNG（长度已烘入）
+}
+
 interface BuiltinMaterial {
-  id: string;              // "mat-rose"，一经发布永不复用/删除
+  id: string;              // "mat-rose"，一经发布永不复用/删除；= OSS 文件名
   name: string;            // "玫瑰"
   category: 'flower' | 'greenery' | 'line' | 'vase';
-  kind: string;            // ★渲染契约：前端 draw 函数按 kind 匹配
-  colors: string[];        // ["#c83f5a","#f4a6aa","#7a253a"]
-  shape?: string;          // 花器专用（classic/inkstone/...）
-  previewUrl?: string;     // 可选 SVG 预览图（选择器/多端用，不参与画布渲染）
-  minAppVersion?: string;  // 可选：需要的最低前端版本
+  imageUrl: string | null; // 缩略图/单样式素材的 OSS 透明底 PNG
+  styles: MaterialStyle[] | null; // 花/枝/线为 6 款；花器等单样式为 null
 }
 
 interface MaterialsCatalog {
-  version: string;
-  categories: { id: string; label: string }[]; // flower/greenery/line/vase
+  version: string;         // 由 DB 内容算出（换图/上下架即变）
+  categories: { id: string; label: string }[]; // flower/greenery/line/vase（代码常量）
   materials: BuiltinMaterial[];
+}
+```
+
+### 2.8b Theme / AvatarOption（客户端配置，`GET /config/bootstrap`）
+
+```ts
+interface Theme {
+  id: string;              // night/light/morning/rouge/gallery/onyx
+  label: string;
+  note: string;
+  bg: string; panel: string; panel2: string;
+  text: string; muted: string; line: string;
+  accent: string; accent2: string; danger: string;
+  canvas: string; paper: string; shadow: string;
+  vase: string[];          // 花器渐变三色
+  previewFlower: string[]; // 预览花三色
+}
+
+interface AvatarOption {
+  id: AvatarId;            // 与 User.avatarId 对齐
+  label: string;           // "荷"/"兰"/...
+  colors: string[];        // 头像双色
 }
 ```
 
@@ -238,11 +265,26 @@ interface AiTask {
 ### 3.1 认证 Auth · P1
 
 #### `POST /api/auth/wechat/login` 🔓
-微信小程序登录：`code2session` 换 openid → upsert 用户 → 签发 JWT。
+微信小程序登录：`code2session` 换 openid → upsert 用户 → 签发令牌对。传 `phoneCode` 则同步换取并绑定手机号（新版 `getuserphonenumber`，无需解密）。
 
-- 请求：`{ code: string; nickname?: string; avatarUrl?: string }`
-- 响应：`{ accessToken: string; user: User }`
-- 错误：`400` code 无效；`500` 微信接口异常
+- 请求：`{ code: string; phoneCode?: string; nickname?: string; avatarUrl?: string }`
+- 响应：`{ accessToken: string; refreshToken: string; user: User }`
+- 错误：`400` code / phoneCode 无效；微信接口异常
+
+#### `POST /api/auth/refresh` 🔓
+用 refresh token 换新令牌对（旧 refresh 立即失效，轮换）。
+
+- 请求：`{ refreshToken: string }`
+- 响应：`{ accessToken: string; refreshToken: string }`
+- 错误：`401` refresh 无效或已过期
+
+#### `POST /api/auth/logout` 🔓
+吊销 refresh token。
+
+- 请求：`{ refreshToken: string }`
+- 响应：`{ success: true }`
+
+> 令牌：`accessToken` 为无状态 JWT（默认 `JWT_ACCESS_EXPIRES_IN`）；`refreshToken` 为不透明随机串，sha256 后存 Redis（默认 `JWT_REFRESH_EXPIRES_IN`）。客户端未接刷新逻辑前，两者可同设为长期。
 
 ---
 
@@ -253,21 +295,26 @@ interface AiTask {
 
 #### `PATCH /api/users/me` ✅
 - 请求：`{ nickname?: string; avatarId?: AvatarId }`（`nickname` ≤ 12 字）
-- 响应：`User`
+- `nickname` 过微信 `msgSecCheck` 文本审核，不通过 `400`
+- 响应：`User`（含 `phone`）
 
 ---
 
 ### 3.3 内置素材目录 Materials Catalog · P2
 
 #### `GET /api/materials/catalog?version=<cached?>` 🔓（可缓存）
-下发全量内置素材元数据。渲染仍在前端（按 `kind` 匹配 draw 函数）。
+下发内置素材目录。**分类为代码常量；素材从 `Material` 表读**，支持后台上下架（`active`）/换图/调序（`sortOrder`）而不发版。素材已改为**图片渲染**：前端直接贴 `imageUrl`，多样式素材的每款姿态各有独立 `imageUrl`。
 
 - 请求：`?version=<客户端已缓存版本，可选>`
 - 响应（有更新）：`MaterialsCatalog`
-- 响应（已最新）：`{ version: string; changed: false }`（或 HTTP `304`）
-- 客户端策略：本地缓存 + 版本比对；未知 `kind` 防御性跳过；渲染选择器时与 `GET /materials/custom` 合并。
+  - `materials[]`：`{ id, name, category, imageUrl, styles }`
+  - `styles`：花/枝/线为 6 款 `{ styleOption, name, imageUrl }`（长度已烘进图）；花器等单样式素材为 `null`
+- 响应（已最新）：`{ version: string; changed: false }`
+- 版本号由 DB 内容算出（换图/上下架改变 `updatedAt` → version 变 → 客户端自动拉新）
+- 客户端策略：本地缓存 + 版本比对；`styles?.length ? 渲染6款 : 单样式`；渲染选择器时与 `GET /materials/custom` 合并
+- 图片资源：全部 OSS，key 约定 `default-materials/<category>/<id>.png`（缩略图）、`default-materials/<category>/<id>/<styleOption>.png`（姿态）
 
-> 主题 `themes`、头像 `avatarOptions`、形态 `styleOptions` 暂留前端；确有多端需求时再合并为 `GET /api/config/bootstrap` 一次性下发。
+> 矢量相关字段（`kind`/`colors`/`shape`/`morph`/`lengthScale`）不再下发——纯图片渲染用不到；它们只在生成 PNG 时用（见 `scripts/materials-svg-to-png.mjs`）。主题/头像预设改由 `GET /config/bootstrap` 下发（见 3.9）。
 
 ---
 
@@ -364,7 +411,7 @@ interface AiTask {
 - 响应：`CustomMaterial[]`（当前用户，`createdAt` 倒序）
 
 #### `POST /api/materials/custom` ✅
-保存 cutout 产物为花材库条目。
+保存 cutout 产物为花材库条目。`name` 过微信 `msgSecCheck` 文本审核，不通过 `400`。
 - 请求：`{ name, category, baseMaterialId, baseKind?, imageUrl, sourceImageUrl? }`
 - 响应：`CustomMaterial`
 
@@ -376,24 +423,37 @@ interface AiTask {
 ### 3.8 分享广场 Plaza · P4（含微信内容审核）
 
 #### `GET /api/plaza?cursor=&limit=` ✅
-广场 feed，仅返回 `approved`。
+广场 feed，仅返回 `approved`。每条带 `liked`（当前用户是否已赞，一次批量查询标注）。
 - 响应：`{ items: PlazaPost[]; nextCursor: string | null }`
 
 #### `POST /api/plaza` ✅
-分享作品。先过微信 `imgSecCheck`(缩略图)+`msgSecCheck`(标题)。
+分享作品。标题过微信 `msgSecCheck`（文本）；图片审核当前为放行 stub（见下）。
 - 请求：`{ workId }` 或 `{ title, theme, arrangement, thumbnail }`
-- 响应：`PlazaPost`（通过 `approved`，异步审核 `pending`）
-- 错误：`400` 内容审核不通过
+- 响应：`PlazaPost`（`auditStatus: approved`）
+- 错误：`400` 标题审核不通过
 
 #### `GET /api/plaza/:id` ✅
-- 响应：`PlazaPost`（供"点开继续编辑"）
+- 响应：`PlazaPost`（含 `liked`，供"点开继续编辑"）
 
-#### `POST /api/plaza/:id/like` ✅ ·（可选增强）
-- 响应：`{ likeCount: number }`
+#### `POST /api/plaza/:id/like` ✅
+点赞/取消赞（幂等 toggle，按 `PlazaLike` 唯一键去重）。
+- 响应：`{ likeCount: number; liked: boolean }`（`liked` = 本次操作后的状态）
+- 错误：`404` 作品不存在或未过审
 
-#### `POST /api/wechat/audit-callback` 🔓 ·（可选，异步审核回调）
-微信 `msgSecCheck` 异步结果回调，更新 `auditStatus`。
-- 响应：按微信要求返回 `success`
+> **内容审核现状**：文本审核（`msgSecCheck`）已接入 Plaza 标题、昵称、自定义素材名。**图片审核（`imgSecCheck` / `media_check_async`）暂不做**——`WechatSecurityService.checkImage` 为放行 stub；`POST /wechat/audit-callback` 异步回调未实现。所有图片直传 OSS，DB 只存 URL。
+
+---
+
+### 3.9 客户端配置 Config · P2
+
+#### `GET /api/config/bootstrap?version=<cached?>` 🔓（可缓存）
+下发前端启动配置：主题 + 头像预设（原写死在前端，现集中下发，版本化）。
+
+- 请求：`?version=<客户端已缓存版本，可选>`
+- 响应（有更新）：`{ version: string; themes: Theme[]; avatars: AvatarOption[] }`
+- 响应（已最新）：`{ version: string; changed: false }`
+- `Theme`：`{ id, label, note, bg, panel, text, accent, …, vase[], previewFlower[] }`（6 套）
+- `AvatarOption`：`{ id, label, colors[] }`（8 个，`id` 与 `User.avatarId` 对齐）
 
 ---
 
@@ -402,17 +462,17 @@ interface AiTask {
 | # | 模块 | 接口 | 阶段 |
 |---|---|---|---|
 | 1 | 系统 | `GET /health` | P0 ✅ |
-| 2 | 认证 | `POST /auth/wechat/login` | P1 |
-| 3–4 | 用户 | `GET/PATCH /users/me` | P2 |
-| 5 | 内置素材 | `GET /materials/catalog` | P2 |
-| 6–11 | 作品+日历 | calendar / list / detail / create / update / delete | P3 |
-| 12–13 | 上传 | `POST /upload/signature`、`POST /upload` | P5 |
-| 14–17 | AI | image2 提交/查询、cutout 提交/查询 | P5 |
-| 18–20 | 自定义花材 | custom list / create / delete | P6 |
-| 21–23 | 广场 | feed / share / detail | P4 |
-| +2 | 广场（可选） | like、audit-callback | P4 |
+| 2–4 | 认证 | `POST /auth/wechat/login`、`POST /auth/refresh`、`POST /auth/logout` | P1 |
+| 5–6 | 用户 | `GET/PATCH /users/me` | P2 |
+| 7 | 内置素材 | `GET /materials/catalog` | P2 |
+| 8 | 客户端配置 | `GET /config/bootstrap`（主题+头像） | P2 |
+| 9–14 | 作品+日历 | calendar / list / detail / create / update / delete | P3 |
+| 15–16 | 上传 | `POST /upload/signature`、`POST /upload` | P5 |
+| 17–20 | AI | image2 提交/查询、cutout 提交/查询 | P5 |
+| 21–23 | 自定义花材 | custom list / create / delete | P6 |
+| 24–27 | 广场 | feed / share / detail / like（toggle） | P4 |
 
-**核心接口 23 个 + 可选 2 个。**
+**已实现接口 27 个。** 图片内容审核（`imgSecCheck` / `POST /wechat/audit-callback`）暂不做。
 
 ---
 

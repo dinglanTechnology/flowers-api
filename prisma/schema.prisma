@@ -23,6 +23,7 @@ model User {
   posts     PlazaPost[]
   materials CustomMaterial[]
   aiTasks   AiTask[]
+  likes     PlazaLike[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -55,11 +56,25 @@ model PlazaPost {
   theme        String
   arrangement  Json // 支持"点开继续编辑"
   thumbnailUrl String?
-  likeCount    Int      @default(0)
-  auditStatus  String   @default("pending") // pending | approved | rejected
-  createdAt    DateTime @default(now())
+  likeCount    Int         @default(0) // 冗余计数，随 PlazaLike 增删维护
+  likes        PlazaLike[]
+  auditStatus  String      @default("pending") // pending | approved | rejected
+  createdAt    DateTime    @default(now())
 
   @@index([auditStatus, createdAt])
+}
+
+/// 点赞记录（userId + postId 唯一，防重复赞、支持取消）
+model PlazaLike {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  postId    String
+  post      PlazaPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+
+  @@unique([userId, postId])
+  @@index([postId])
 }
 
 /// 默认花材（官方内置素材，全局共享，无 owner）。imageUrl 指向 OSS 透明底 PNG。

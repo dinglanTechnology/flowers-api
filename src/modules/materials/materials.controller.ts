@@ -44,9 +44,10 @@ export class MaterialsController {
   @ApiData(CustomMaterialDto)
   createCustom(
     @CurrentUser('userId') userId: string,
+    @CurrentUser('openid') openid: string,
     @Body() dto: CreateCustomMaterialDto,
   ) {
-    return this.materialsService.createCustom(userId, dto);
+    return this.materialsService.createCustom(userId, openid, dto);
   }
 
   @ApiBearerAuth()

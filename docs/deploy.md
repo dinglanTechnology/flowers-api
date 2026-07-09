@@ -10,19 +10,20 @@
 |---|---|
 | **应用 app** | CI 构建镜像推仓库 → Jenkins 在服务器 `docker run` |
 | **PostgreSQL** | 阿里云 RDS（外部，表结构已手动初始化） |
-| **Redis** | 服务器自建，用本仓库 `docker-compose.yml` 起（同机、与 app 共用 docker 网络） |
+| **Redis** | 运维在服务器自建（原生安装或自管容器），与 app 同机 |
 | **对象存储** | 阿里云 OSS（外部） |
 
-> app、Redis 在**同一台服务器**，通过 docker 网络 `flowers-net` 互连；app 用服务名 `redis` 访问 Redis，Redis 端口不对外暴露。
+> Redis 由运维自行 provision；app 容器如何连到它取决于 Redis 的部署方式（见第 4 节①的连接说明），对应地填 `REDIS_URL`。
 
 ---
 
 ## 2. 服务器 / 环境要求
 
 - Linux 服务器，2C4G 起步（出图任务吃内存）。
-- **Docker ≥ 24 + Docker Compose v2**。
+- **Docker ≥ 24**（跑 app 镜像）。
+- Redis（运维自建）：与 app 同机，app 容器可达。
 - 出站放行（见第 6 节）；入站仅需 HTTPS（见第 7 节）。
-- 磁盘预留 10G+（镜像 + Redis 数据卷）。
+- 磁盘预留 10G+（镜像 + 日志）。
 
 ---
 
@@ -32,39 +33,41 @@
 |---|---|
 | **应用镜像** | CI 产出，推到镜像仓库；Jenkins 拉取。地址 + tag 规则由 CI 提供 |
 | **`.env` 文件** | 含全部机密（见第 5 节），**不进 git**，安全私传 |
-| **`docker-compose.yml`** | 仓库内，仅用于起自建 Redis |
 | **本文档** | 部署步骤、网络、验证 |
 
 ---
 
 ## 4. 部署步骤
 
-### ① 起自建 Redis（首次 / 服务器重装时）
+### ① Redis（运维自建）
 
-在服务器上仓库目录执行（会创建 `flowers-net` 网络 + 带密码持久化的 Redis）：
+运维在服务器上装好 Redis，建议：**开启持久化（AOF）**、**`maxmemory-policy noeviction`**（Redis 存 refresh token + AI 任务队列，键不能被当缓存淘汰）、随机器自启。
 
-```bash
-REDIS_PASSWORD=<强密码> docker compose up -d
-docker compose ps          # 确认 flower-redis healthy
-```
+app 容器如何连 Redis，按 Redis 的部署方式选一种，并据此填 `REDIS_URL`：
 
-Redis 已配：AOF 持久化（`redisdata` 卷，重启不丢 token/队列）、必须密码、`noeviction`（不淘汰键）、`restart: unless-stopped`。
+| Redis 部署方式 | app 的 `docker run` | `REDIS_URL` |
+|---|---|---|
+| 原生装在宿主机 | 加 `--add-host=host.docker.internal:host-gateway` | `redis://host.docker.internal:6379` |
+| 原生装在宿主机（或用 host 网络） | 加 `--network host`（此时去掉 `-p`） | `redis://127.0.0.1:6379` |
+| 运维用 docker 跑 Redis | app `--network <该容器所在网络>` | `redis://<redis容器名>:6379` |
+
+> 若 Redis 设了密码，`REDIS_URL` 写成 `redis://:<密码>@<host>:6379`。
 
 ### ② Jenkins 部署 app（每次发版）
-
-app 加入同一网络 `flowers-net`，通过服务名 `redis` 连 Redis：
 
 ```bash
 docker pull <registry>/flowers-api:<tag>
 docker rm -f flowers-api 2>/dev/null || true
 docker run -d --name flowers-api \
-  --network flowers-net \
+  --add-host=host.docker.internal:host-gateway \
   --env-file /path/to/.env \
   -p 3000:3000 \
   --restart unless-stopped \
   <registry>/flowers-api:<tag>
 docker logs -f flowers-api
 ```
+
+> 上面按「Redis 原生装宿主机」写；若运维用别的方式,按第 ① 节表格调整网络参数与 `REDIS_URL`。
 
 ### ③ 数据库表结构
 
@@ -82,7 +85,7 @@ docker logs -f flowers-api
 | `NODE_ENV` | 是 | | `production` |
 | `PORT` | 否 | | 默认 3000 |
 | `DATABASE_URL` | 是 | ✅ | 阿里云 RDS PostgreSQL 连接串 |
-| `REDIS_URL` | 是 | ✅ | `redis://:<强密码>@redis:6379`（服务名 redis + 与 compose 的 `REDIS_PASSWORD` 一致） |
+| `REDIS_URL` | 是 | | 指向运维自建的 Redis，地址按第 4 节①的连接方式填（如 `redis://host.docker.internal:6379`；有密码则 `redis://:<密码>@host:6379`） |
 | `JWT_SECRET` | 是 | ✅ | 令牌签名密钥，`openssl rand -base64 48` |
 | `JWT_ACCESS_EXPIRES_IN` | 否 | | 默认 30d |
 | `JWT_REFRESH_EXPIRES_IN` | 否 | | 默认 90d |
@@ -100,8 +103,6 @@ docker logs -f flowers-api
 | `OSS_ACCESS_KEY_ID` | 是 | ✅ | 阿里云 AccessKey ID |
 | `OSS_ACCESS_KEY_SECRET` | 是 | ✅ | 阿里云 AccessKey Secret |
 | `OSS_CDN_BASE` | 否 | | 可选，图片 CDN 域名 |
-
-另外起 Redis 时需 **`REDIS_PASSWORD`**（compose 用；与 `REDIS_URL` 里的密码保持一致）。
 
 > 程序启动会校验关键变量，缺失会 fail-fast 并打印缺哪个。
 
@@ -156,11 +157,9 @@ curl https://<域名>/api/health          # 健康检查
 docker pull <registry>/flowers-api:<tag> && docker rm -f flowers-api && docker run -d ...（同第 4 节②）
 
 docker logs -f flowers-api            # 应用日志
-docker compose restart redis          # 重启 Redis（数据在 redisdata 卷，不丢）
-docker exec -it flower-redis redis-cli -a <密码> ping   # 测 Redis
 
 # schema 变更后（手动）
 DATABASE_URL=<RDS> pnpm prisma db push
 ```
 
-数据备份：RDS 由阿里云侧负责；Redis 数据在 `redisdata` 卷（AOF）。
+数据备份：RDS 由阿里云侧负责；Redis 持久化 + 备份由运维侧负责。

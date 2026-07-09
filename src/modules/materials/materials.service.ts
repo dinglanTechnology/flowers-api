@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -6,6 +7,7 @@ import {
 import { createHash } from 'crypto';
 import { CustomMaterial, Material } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
+import { WechatSecurityService } from '../../wechat/wechat-security.service';
 import { CreateCustomMaterialDto } from './dto/create-custom-material.dto';
 import { MATERIAL_CATEGORIES } from './builtin-materials.data';
 
@@ -37,7 +39,10 @@ function toCustomDto(m: CustomMaterial) {
 
 @Injectable()
 export class MaterialsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly security: WechatSecurityService,
+  ) {}
 
   /**
    * 默认素材目录（版本化）。分类为结构性枚举，留在代码；素材从 Material 表读，
@@ -82,7 +87,15 @@ export class MaterialsService {
     return rows.map(toCustomDto);
   }
 
-  async createCustom(userId: string, dto: CreateCustomMaterialDto) {
+  async createCustom(
+    userId: string,
+    openid: string,
+    dto: CreateCustomMaterialDto,
+  ) {
+    // 素材名是 UGC，先过微信文本审核
+    if (!(await this.security.checkText(dto.name, openid))) {
+      throw new BadRequestException('素材名未通过内容审核');
+    }
     const created = await this.prisma.customMaterial.create({
       data: {
         userId,
