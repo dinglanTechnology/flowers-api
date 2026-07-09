@@ -50,9 +50,10 @@ export class MaterialsController {
     return this.materialsService.createCustom(userId, openid, dto);
   }
 
+  /** 删除自定义花材（仅本人） */
   @ApiBearerAuth()
   @Delete('custom/:id')
-  @ApiData(OkDto)
+  @ApiData(OkDto, { errors: [403, 404] })
   removeCustom(@CurrentUser('userId') userId: string, @Param('id') id: string) {
     return this.materialsService.removeCustom(userId, id);
   }

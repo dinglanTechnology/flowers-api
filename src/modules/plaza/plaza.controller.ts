@@ -22,8 +22,9 @@ export class PlazaController {
     return this.plazaService.feed(userId, query);
   }
 
+  /** 广场作品详情（供"点开继续编辑"） */
   @Get(':id')
-  @ApiData(PlazaPostDto)
+  @ApiData(PlazaPostDto, { errors: [404] })
   getById(@CurrentUser('userId') userId: string, @Param('id') id: string) {
     return this.plazaService.getById(userId, id);
   }
@@ -34,8 +35,9 @@ export class PlazaController {
     return this.plazaService.share(userId, dto);
   }
 
+  /** 点赞/取消赞（幂等 toggle） */
   @Post(':id/like')
-  @ApiData(LikeResultDto)
+  @ApiData(LikeResultDto, { errors: [404] })
   like(@CurrentUser('userId') userId: string, @Param('id') id: string) {
     return this.plazaService.like(userId, id);
   }

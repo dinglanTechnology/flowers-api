@@ -31,6 +31,7 @@ export class WorksController {
     return this.worksService.calendar(userId, month);
   }
 
+  /** 某天的作品列表（`?dateKey=YYYY-MM-DD`），按 createdAt 倒序 */
   @Get()
   @ApiData(WorkDto, { isArray: true })
   list(
@@ -40,20 +41,23 @@ export class WorksController {
     return this.worksService.list(userId, dateKey);
   }
 
+  /** 作品详情 */
   @Get(':id')
-  @ApiData(WorkDto)
+  @ApiData(WorkDto, { errors: [403, 404] })
   findOne(@CurrentUser('userId') userId: string, @Param('id') id: string) {
     return this.worksService.findOne(userId, id);
   }
 
+  /** 保存作品 */
   @Post()
   @ApiData(WorkDto)
   create(@CurrentUser('userId') userId: string, @Body() dto: CreateWorkDto) {
     return this.worksService.create(userId, dto);
   }
 
+  /** 更新作品（字段任意子集） */
   @Patch(':id')
-  @ApiData(WorkDto)
+  @ApiData(WorkDto, { errors: [403, 404] })
   update(
     @CurrentUser('userId') userId: string,
     @Param('id') id: string,
@@ -62,8 +66,9 @@ export class WorksController {
     return this.worksService.update(userId, id, dto);
   }
 
+  /** 删除作品 */
   @Delete(':id')
-  @ApiData(OkDto)
+  @ApiData(OkDto, { errors: [403, 404] })
   remove(@CurrentUser('userId') userId: string, @Param('id') id: string) {
     return this.worksService.remove(userId, id);
   }

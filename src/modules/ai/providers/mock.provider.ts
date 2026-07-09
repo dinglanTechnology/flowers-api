@@ -10,11 +10,11 @@ const PLACEHOLDER_PNG = Buffer.from(
 /** 本地开发 Mock 实现（AI_PROVIDER=mock） */
 @Injectable()
 export class MockProvider implements AiProvider {
-  async image2(_input: Image2Input): Promise<Buffer> {
-    return PLACEHOLDER_PNG;
+  image2(_input: Image2Input): Promise<Buffer> {
+    return Promise.resolve(PLACEHOLDER_PNG);
   }
 
-  async cutout(_input: CutoutInput): Promise<Buffer> {
-    return PLACEHOLDER_PNG;
+  cutout(_input: CutoutInput): Promise<Buffer> {
+    return Promise.resolve(PLACEHOLDER_PNG);
   }
 }

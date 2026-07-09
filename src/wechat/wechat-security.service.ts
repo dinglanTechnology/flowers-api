@@ -68,10 +68,7 @@ export class WechatSecurityService {
   }
 
   /** 图片审核。TODO(P4): 接入 media_check_async 异步审核 + 回调；当前放行。 */
-  async checkImage(
-    _imageUrl: string | null,
-    _openid: string,
-  ): Promise<boolean> {
-    return true;
+  checkImage(_imageUrl: string | null, _openid: string): Promise<boolean> {
+    return Promise.resolve(true);
   }
 }
