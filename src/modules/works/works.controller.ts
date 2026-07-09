@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ApiData } from '../../common/dto/api-response.dto';
@@ -15,13 +24,19 @@ export class WorksController {
 
   /** 日历：某月每天作品数量（须在 :id 路由之前声明） */
   @Get('calendar')
-  calendar(@CurrentUser('userId') userId: string, @Query('month') month?: string) {
+  calendar(
+    @CurrentUser('userId') userId: string,
+    @Query('month') month?: string,
+  ) {
     return this.worksService.calendar(userId, month);
   }
 
   @Get()
   @ApiData(WorkDto, { isArray: true })
-  list(@CurrentUser('userId') userId: string, @Query('dateKey') dateKey?: string) {
+  list(
+    @CurrentUser('userId') userId: string,
+    @Query('dateKey') dateKey?: string,
+  ) {
     return this.worksService.list(userId, dateKey);
   }
 

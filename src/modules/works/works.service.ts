@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma, Work } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateWorkDto } from './dto/create-work.dto';
@@ -40,7 +44,10 @@ export class WorksService {
   }
 
   /** 日历：某月每天的作品数量 */
-  async calendar(userId: string, month?: string): Promise<Record<string, number>> {
+  async calendar(
+    userId: string,
+    month?: string,
+  ): Promise<Record<string, number>> {
     const rows = await this.prisma.work.groupBy({
       by: ['dateKey'],
       where: { userId, ...(month ? { dateKey: { startsWith: month } } : {}) },

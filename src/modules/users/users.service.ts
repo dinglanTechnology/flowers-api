@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { toPublicUser, PublicUser } from '../../common/serializers/user.serializer';
+import {
+  toPublicUser,
+  PublicUser,
+} from '../../common/serializers/user.serializer';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
@@ -14,7 +17,10 @@ export class UsersService {
   }
 
   async updateMe(userId: string, dto: UpdateUserDto): Promise<PublicUser> {
-    const user = await this.prisma.user.update({ where: { id: userId }, data: dto });
+    const user = await this.prisma.user.update({
+      where: { id: userId },
+      data: dto,
+    });
     return toPublicUser(user);
   }
 }

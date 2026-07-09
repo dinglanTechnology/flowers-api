@@ -1,0 +1,72 @@
+name: builder
+
+on:
+  workflow_dispatch:
+
+# on:
+#   push:
+#     branches:
+#       - uat
+#       - develop
+#       # - feature/*  # 支持 feature 分支
+#   pull_request:
+#     branches:
+#       - uat
+#       - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.ALIYUN_REGISTRY }}
+          username: ${{ secrets.ALIYUN_REGISTRY_USERNAME }}
+          password: ${{ secrets.ALIYUN_REGISTRY_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.ALIYUN_REGISTRY }}/dinglan-backend/${{ github.event.repository.name }}
+          tags: |
+            type=ref,event=branch
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Get Jenkins CRUMB
+        id: get-crumb
+        run: |
+          CRUMB=$(curl -s -u ${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_API_TOKEN }} \
+            "${{ secrets.JENKINS_URL }}/crumbIssuer/api/json" | jq -r .crumb)
+          echo "::set-output name=crumb::$CRUMB"
+
+      - name: Notify Jenkins for uat branch
+        env:
+          CRUMB: ${{ steps.get-crumb.outputs.crumb }}
+        run: |
+          IMAGE_TAG=${{ steps.meta.outputs.tags }}
+          curl -X POST \
+            -H "Jenkins-Crumb: $CRUMB" \
+            -u ${{ secrets.JENKINS_USERNAME }}:${{ secrets.JENKINS_API_TOKEN }} \
+            "${{ secrets.JENKINS_URL }}/job/flower-api-dev/buildWithParameters" \
+            --data token=${{ secrets.JENKINS_BUILD_TOKEN }} \
+            --data IMAGE_TAG=${IMAGE_TAG}

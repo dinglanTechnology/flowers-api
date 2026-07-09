@@ -2,7 +2,8 @@
 export const STORAGE_PROVIDER = Symbol('STORAGE_PROVIDER');
 
 /** 直传场景：决定对象 key 前缀、大小与类型限制 */
-export type UploadScene = 'cutout-source' | 'export-reference' | 'work-thumbnail' | 'general';
+export type UploadScene =
+  'cutout-source' | 'export-reference' | 'work-thumbnail' | 'general';
 
 export interface UploadSignatureInput {
   scene: UploadScene;

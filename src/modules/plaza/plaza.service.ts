@@ -57,16 +57,21 @@ export class PlazaService {
     let thumbnailUrl: string | null;
 
     if (dto.workId) {
-      const work = await this.prisma.work.findUnique({ where: { id: dto.workId } });
+      const work = await this.prisma.work.findUnique({
+        where: { id: dto.workId },
+      });
       if (!work) throw new NotFoundException('作品不存在');
-      if (work.userId !== userId) throw new ForbiddenException('无权分享该作品');
+      if (work.userId !== userId)
+        throw new ForbiddenException('无权分享该作品');
       title = work.title;
       theme = work.theme;
       arrangement = work.arrangement as Prisma.InputJsonValue;
       thumbnailUrl = work.thumbnailUrl;
     } else {
       if (!dto.title || !dto.theme || !dto.arrangement) {
-        throw new BadRequestException('缺少 workId 或作品信息（title/theme/arrangement）');
+        throw new BadRequestException(
+          '缺少 workId 或作品信息（title/theme/arrangement）',
+        );
       }
       title = dto.title;
       theme = dto.theme;
@@ -98,7 +103,8 @@ export class PlazaService {
 
   async getById(id: string) {
     const post = await this.prisma.plazaPost.findUnique({ where: { id } });
-    if (!post || post.auditStatus !== 'approved') throw new NotFoundException('作品不存在');
+    if (!post || post.auditStatus !== 'approved')
+      throw new NotFoundException('作品不存在');
     return toPlazaDto(post);
   }
 

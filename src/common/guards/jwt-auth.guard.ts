@@ -34,7 +34,10 @@ export class JwtAuthGuard implements CanActivate {
     if (!token) throw new UnauthorizedException('缺少访问令牌');
 
     try {
-      const payload = await this.jwt.verifyAsync<{ sub: string; openid?: string }>(token, {
+      const payload = await this.jwt.verifyAsync<{
+        sub: string;
+        openid?: string;
+      }>(token, {
         secret: this.config.get<string>('jwt.secret'),
       });
       (request as Request & { user: unknown }).user = {

@@ -1,4 +1,11 @@
-import { IsIn, IsObject, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
+import {
+  IsIn,
+  IsObject,
+  IsOptional,
+  IsString,
+  Matches,
+  MaxLength,
+} from 'class-validator';
 
 const THEMES = ['night', 'light', 'morning', 'rouge', 'gallery', 'onyx'];
 

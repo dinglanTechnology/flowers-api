@@ -23,16 +23,22 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
     const payload =
-      exception instanceof HttpException ? exception.getResponse() : '服务器内部错误';
+      exception instanceof HttpException
+        ? exception.getResponse()
+        : '服务器内部错误';
 
     if (status >= 500) {
-      this.logger.error(`${request.method} ${request.url}`, (exception as Error)?.stack);
+      this.logger.error(
+        `${request.method} ${request.url}`,
+        (exception as Error)?.stack,
+      );
     }
 
     const msg =
       typeof payload === 'string'
         ? payload
-        : ((payload as Record<string, unknown>)?.message as string) ?? '请求失败';
+        : (((payload as Record<string, unknown>)?.message as string) ??
+          '请求失败');
 
     response.status(status).json({ code: status, data: null, msg });
   }

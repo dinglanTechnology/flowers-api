@@ -27,7 +27,10 @@ export class AiController {
 
   @Get('image2/:taskId')
   @ApiData(AiImage2StatusDto)
-  getImage2(@CurrentUser('userId') userId: string, @Param('taskId') taskId: string) {
+  getImage2(
+    @CurrentUser('userId') userId: string,
+    @Param('taskId') taskId: string,
+  ) {
     return this.aiService.getImage2Task(userId, taskId);
   }
 
@@ -41,7 +44,10 @@ export class AiController {
 
   @Get('cutout-flower/:taskId')
   @ApiData(AiCutoutStatusDto)
-  getCutout(@CurrentUser('userId') userId: string, @Param('taskId') taskId: string) {
+  getCutout(
+    @CurrentUser('userId') userId: string,
+    @Param('taskId') taskId: string,
+  ) {
     return this.aiService.getCutoutTask(userId, taskId);
   }
 }

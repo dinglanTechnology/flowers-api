@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -34,7 +42,10 @@ export class MaterialsController {
   @ApiBearerAuth()
   @Post('custom')
   @ApiData(CustomMaterialDto)
-  createCustom(@CurrentUser('userId') userId: string, @Body() dto: CreateCustomMaterialDto) {
+  createCustom(
+    @CurrentUser('userId') userId: string,
+    @Body() dto: CreateCustomMaterialDto,
+  ) {
     return this.materialsService.createCustom(userId, dto);
   }
 

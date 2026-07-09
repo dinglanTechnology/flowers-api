@@ -8,7 +8,11 @@ async function bootstrap(): Promise<void> {
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, transform: true, forbidNonWhitelisted: false }),
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      forbidNonWhitelisted: false,
+    }),
   );
   app.enableCors();
 
@@ -23,6 +27,9 @@ async function bootstrap(): Promise<void> {
 
   const port = process.env.PORT ?? 3000;
   await app.listen(port);
-  Logger.log(`🌸 flowers-api 启动: http://localhost:${port}/api  文档: /api/docs`, 'Bootstrap');
+  Logger.log(
+    `🌸 flowers-api 启动: http://localhost:${port}/api  文档: /api/docs`,
+    'Bootstrap',
+  );
 }
 void bootstrap();

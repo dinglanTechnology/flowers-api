@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // 响应模型（供 Swagger 文档展示；运行时返回结构兼容的普通对象）
 
 export class UserDto {
@@ -6,12 +5,19 @@ export class UserDto {
   nickname!: string;
   avatarId!: string;
   avatarUrl!: string | null;
+  phone!: string | null;
   createdAt!: string;
 }
 
 export class LoginResultDto {
   accessToken!: string;
+  refreshToken!: string;
   user!: UserDto;
+}
+
+export class TokenPairDto {
+  accessToken!: string;
+  refreshToken!: string;
 }
 
 export class WorkDto {
@@ -62,15 +68,21 @@ export class CustomMaterialDto {
   createdAt!: string;
 }
 
+export class MaterialStyleDto {
+  styleOption!: string;
+  name!: string;
+  /** 该姿态的 OSS 透明底 PNG（已烘入长度） */
+  imageUrl!: string;
+}
+
 export class BuiltinMaterialDto {
   id!: string;
   name!: string;
   category!: string;
-  kind!: string;
-  colors!: string[];
-  shape?: string;
-  previewUrl?: string;
-  minAppVersion?: string;
+  /** 缩略图/单样式素材的 OSS 透明底 PNG */
+  imageUrl!: string | null;
+  /** 多样式素材（花/枝/线）的 6 款姿态；花器等单样式素材为 null */
+  styles!: MaterialStyleDto[] | null;
 }
 
 export class MaterialCategoryDto {

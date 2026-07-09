@@ -1,8 +1,14 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { Inject, Logger } from '@nestjs/common';
 import { Job } from 'bullmq';
-import { AI_PROVIDER, type AiProvider } from './providers/ai-provider.interface';
-import { STORAGE_PROVIDER, type StorageProvider } from '../../storage/storage.interface';
+import {
+  AI_PROVIDER,
+  type AiProvider,
+} from './providers/ai-provider.interface';
+import {
+  STORAGE_PROVIDER,
+  type StorageProvider,
+} from '../../storage/storage.interface';
 import { PrismaService } from '../../prisma/prisma.service';
 
 export const AI_QUEUE = 'ai';
@@ -39,10 +45,19 @@ export class AiProcessor extends WorkerHost {
     try {
       const buffer =
         job.name === 'cutout'
-          ? await this.ai.cutout({ image: job.data.image ?? '', prompt: job.data.prompt })
-          : await this.ai.image2({ prompt: job.data.prompt ?? '', image: job.data.image });
+          ? await this.ai.cutout({
+              image: job.data.image ?? '',
+              prompt: job.data.prompt,
+            })
+          : await this.ai.image2({
+              prompt: job.data.prompt ?? '',
+              image: job.data.image,
+            });
 
-      await this.prisma.aiTask.update({ where: { id: taskId }, data: { progress: 80 } });
+      await this.prisma.aiTask.update({
+        where: { id: taskId },
+        data: { progress: 80 },
+      });
 
       const key = `ai/${job.name}/${taskId}.png`;
       const url = await this.storage.put(key, buffer, 'image/png');

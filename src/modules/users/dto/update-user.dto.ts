@@ -1,6 +1,15 @@
 import { IsIn, IsOptional, IsString, MaxLength } from 'class-validator';
 
-const AVATAR_IDS = ['lotus', 'orchid', 'sun', 'leaf', 'rose', 'moon', 'tea', 'ink'];
+const AVATAR_IDS = [
+  'lotus',
+  'orchid',
+  'sun',
+  'leaf',
+  'rose',
+  'moon',
+  'tea',
+  'ink',
+];
 
 export class UpdateUserDto {
   @IsOptional()

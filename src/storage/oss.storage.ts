@@ -56,7 +56,8 @@ export class OssStorage implements StorageProvider {
   createUploadSignature(input: UploadSignatureInput): Promise<UploadSignature> {
     const prefix = SCENE_PREFIX[input.scene] ?? SCENE_PREFIX.general;
     const maxSize = SCENE_MAX[input.scene] ?? SCENE_MAX.general;
-    const ext = (input.ext || 'png').replace(/[^a-z0-9]/gi, '').toLowerCase() || 'png';
+    const ext =
+      (input.ext || 'png').replace(/[^a-z0-9]/gi, '').toLowerCase() || 'png';
     const key = `${prefix}/${input.userId}/${randomUUID()}.${ext}`;
     const expire = Math.floor(Date.now() / 1000) + 300;
 
@@ -68,9 +69,15 @@ export class OssStorage implements StorageProvider {
       ],
     };
     const policy = Buffer.from(JSON.stringify(policyObj)).toString('base64');
-    const signature = createHmac('sha1', this.cfg.accessKeySecret).update(policy).digest('base64');
-    const host = this.cfg.endpoint || `https://${this.cfg.bucket}.${this.cfg.region}.aliyuncs.com`;
-    const fileUrl = this.cfg.cdnBase ? `${this.cfg.cdnBase}/${key}` : `${host}/${key}`;
+    const signature = createHmac('sha1', this.cfg.accessKeySecret)
+      .update(policy)
+      .digest('base64');
+    const host =
+      this.cfg.endpoint ||
+      `https://${this.cfg.bucket}.${this.cfg.region}.aliyuncs.com`;
+    const fileUrl = this.cfg.cdnBase
+      ? `${this.cfg.cdnBase}/${key}`
+      : `${host}/${key}`;
 
     return Promise.resolve({
       mode: 'post-policy',

@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { WechatService } from './wechat.service';
+import { TokenService } from './token.service';
 
 @Module({
   imports: [
@@ -12,15 +13,12 @@ import { WechatService } from './wechat.service';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>('jwt.secret'),
-        signOptions: {
-          // 值形如 '30d'，运行时由 ms() 解析；此处转型以满足 @nestjs/jwt 类型
-          expiresIn: (config.get<string>('jwt.expiresIn') ?? '30d') as unknown as number,
-        },
+        // access 有效期在签发时按 token 指定（见 TokenService），此处不设全局默认
       }),
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, WechatService],
+  providers: [AuthService, WechatService, TokenService],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

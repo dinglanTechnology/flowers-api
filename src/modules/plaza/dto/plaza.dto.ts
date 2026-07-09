@@ -1,4 +1,10 @@
-import { IsIn, IsObject, IsOptional, IsString, MaxLength } from 'class-validator';
+import {
+  IsIn,
+  IsObject,
+  IsOptional,
+  IsString,
+  MaxLength,
+} from 'class-validator';
 import { PaginationDto } from '../../../common/dto/pagination.dto';
 
 const THEMES = ['night', 'light', 'morning', 'rouge', 'gallery', 'onyx'];

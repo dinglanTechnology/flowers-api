@@ -39,3 +39,6 @@ yarn-error.log*
 # temp
 /tmp
 /temp
+
+# 生成产物：素材 SVG→PNG 导出（由 pnpm materials:png 生成，上传 OSS 后无需入库）
+/materials-png

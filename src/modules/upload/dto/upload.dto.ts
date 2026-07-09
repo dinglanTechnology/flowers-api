@@ -1,6 +1,11 @@
 import { IsIn, IsOptional, IsString } from 'class-validator';
 
-const SCENES = ['cutout-source', 'export-reference', 'work-thumbnail', 'general'];
+const SCENES = [
+  'cutout-source',
+  'export-reference',
+  'work-thumbnail',
+  'general',
+];
 
 export class SignatureDto {
   @IsIn(SCENES)

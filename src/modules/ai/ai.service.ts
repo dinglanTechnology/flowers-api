@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 import { AiTask } from '@prisma/client';
@@ -26,7 +30,11 @@ export class AiService {
         meta: { size: dto.size ?? '1024x1536' },
       },
     });
-    await this.queue.add('image2', { taskId: task.id, prompt: dto.prompt, image });
+    await this.queue.add('image2', {
+      taskId: task.id,
+      prompt: dto.prompt,
+      image,
+    });
     return { taskId: task.id, status: task.status, progress: task.progress };
   }
 
@@ -48,7 +56,11 @@ export class AiService {
         },
       },
     });
-    await this.queue.add('cutout', { taskId: task.id, prompt: dto.prompt, image });
+    await this.queue.add('cutout', {
+      taskId: task.id,
+      prompt: dto.prompt,
+      image,
+    });
     return { taskId: task.id, status: task.status, progress: task.progress };
   }
 

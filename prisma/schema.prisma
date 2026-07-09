@@ -15,6 +15,7 @@ model User {
   id        String   @id @default(cuid())
   openid    String   @unique
   unionid   String?
+  phone     String?
   nickname  String   @default("")
   avatarId  String   @default("lotus")
   avatarUrl String?
@@ -59,6 +60,24 @@ model PlazaPost {
   createdAt    DateTime @default(now())
 
   @@index([auditStatus, createdAt])
+}
+
+/// 默认花材（官方内置素材，全局共享，无 owner）。imageUrl 指向 OSS 透明底 PNG。
+model Material {
+  id        String   @id // 与素材 id / OSS 文件名一致，如 mat-rose
+  name      String
+  category  String // flower | greenery | line | vase
+  kind      String
+  colors    String[] // 主色，前端矢量渲染/回退用
+  shape     String? // 花器形状
+  imageUrl  String? // OSS 透明底 PNG 地址；内置素材走矢量时可为空
+  styles    Json? // 多样式预设数组 [{styleOption,name,morph,lengthScale,colors}]；单样式素材(花器/自定义)为 null
+  sortOrder Int      @default(0) // 目录展示顺序
+  active    Boolean  @default(true) // 下架开关，无需删除数据
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, sortOrder])
 }
 
 /// 自定义花材（AI 抠图产物）

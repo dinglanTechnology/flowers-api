@@ -11,6 +11,8 @@ export class MinioStorage implements StorageProvider {
 
   put(_key: string, buffer: Buffer, contentType: string): Promise<string> {
     this.logger.debug(`[dev-inline] 存储对象 ${_key}（${buffer.length} 字节）`);
-    return Promise.resolve(`data:${contentType};base64,${buffer.toString('base64')}`);
+    return Promise.resolve(
+      `data:${contentType};base64,${buffer.toString('base64')}`,
+    );
   }
 }

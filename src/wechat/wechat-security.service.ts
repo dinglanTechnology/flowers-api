@@ -20,12 +20,16 @@ export class WechatSecurityService {
   }
 
   private async getAccessToken(): Promise<string> {
-    if (this.cachedToken && Date.now() < this.tokenExpireAt) return this.cachedToken;
+    if (this.cachedToken && Date.now() < this.tokenExpireAt)
+      return this.cachedToken;
     const url =
       `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential` +
       `&appid=${this.appId}&secret=${this.secret}`;
     const res = await fetch(url);
-    const data = (await res.json()) as { access_token?: string; expires_in?: number };
+    const data = (await res.json()) as {
+      access_token?: string;
+      expires_in?: number;
+    };
     if (!data.access_token) throw new Error('获取微信 access_token 失败');
     this.cachedToken = data.access_token;
     this.tokenExpireAt = Date.now() + ((data.expires_in ?? 7200) - 300) * 1000;
@@ -64,7 +68,10 @@ export class WechatSecurityService {
   }
 
   /** 图片审核。TODO(P4): 接入 media_check_async 异步审核 + 回调；当前放行。 */
-  async checkImage(_imageUrl: string | null, _openid: string): Promise<boolean> {
+  async checkImage(
+    _imageUrl: string | null,
+    _openid: string,
+  ): Promise<boolean> {
     return true;
   }
 }
