@@ -86,7 +86,8 @@ export class AtlasProvider implements AiProvider {
     op: string,
     body: Record<string, unknown>,
   ): Promise<Buffer> {
-    const res = await fetch(`${this.base}/model/generateImage`, {
+    const url = `${this.base}/model/generateImage`;
+    const res = await fetch(url, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${this.apiKey}`,
@@ -97,6 +98,10 @@ export class AtlasProvider implements AiProvider {
         enable_sync_mode: true,
         enable_base64_output: true,
       }),
+    }).catch((error: unknown) => {
+      throw new Error(
+        `Atlas ${op} 请求失败 ${url}: ${(error as Error).message}`,
+      );
     });
 
     const json = (await res.json().catch(() => ({}))) as AtlasResponse;

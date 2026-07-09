@@ -3,9 +3,10 @@
 // 抠图用专用去背模型（出真透明 PNG）；生图/编辑类模型返回压平图，不适合抠图
 const ATLAS_IMAGE2_MODEL = 'openai/gpt-image-2/edit';
 const ATLAS_CUTOUT_MODEL = 'youchuan/v8.1/remove-background';
-// TokenLab：OpenAI 兼容，模型名为裸名（该平台无 nano-banana-2-lite，退到 nano-banana-2）
+// TokenLab：OpenAI 兼容，模型名为裸名
 const TOKENLAB_IMAGE2_MODEL = 'gpt-image-2';
-const TOKENLAB_CUTOUT_MODEL = 'nano-banana-2';
+// cutout 走 OpenAI images.edit；nano-banana-2 当前不支持 image-edit 操作。
+const TOKENLAB_CUTOUT_MODEL = 'gpt-image-2';
 
 /** 集中读取环境变量，供 ConfigService 按路径取用（如 config.get('jwt.secret')） */
 export default () => ({
