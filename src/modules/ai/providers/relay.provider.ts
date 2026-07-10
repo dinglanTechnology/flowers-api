@@ -71,16 +71,17 @@ export class RelayProvider implements AiProvider {
     if (!this.cutoutModel) {
       throw new Error('未配置抠图模型，抠图能力待接入');
     }
-    // 抠图 = 对原图做图像编辑，移除背景输出透明底 PNG
+    // 抠图 = 对原图做图像编辑（image-edit），移除背景输出透明底 PNG。
+    // 注意：只发 model+image+prompt 这类通用字段。TokenLab 的 gpt-image-2 对
+    // 不在其 public contract 内的参数会直接 400（实测 background='transparent'、
+    // size='auto' 均不被接受），透明底只能靠 prompt 兜底。
+    // 真·透明底以 atlas 的专用去背模型为准，本路径是备用、尽力而为。
     const res = (await this.client.images.edit({
       model: this.cutoutModel,
       image: await this.toUploadable(input.image),
       prompt:
         input.prompt ??
         '精确移除背景，只保留主体花材/植物，边缘干净无残留，输出透明背景 PNG',
-      // gpt-image 系支持透明底；其他模型会忽略此参数，靠 prompt 兜底
-      background: 'transparent',
-      size: 'auto',
     } as never)) as ImageResult;
     return this.extractImage(res, 'cutout');
   }
