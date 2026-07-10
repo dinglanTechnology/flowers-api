@@ -99,10 +99,20 @@ export class AtlasProvider implements AiProvider {
     if (!input.image) {
       throw new Error('cutout 缺少输入图');
     }
-    // 去背模型：单 image 字段、无 prompt，输出带 alpha 的透明 PNG
+    const image = await this.toInline('cutout', input.image);
+    // 专用去背模型（youchuan/.../remove-background 等）：单 image 字段、不读 prompt、原生出真 alpha。
+    if (/remove-?background|rembg|remove-?bg/i.test(this.cutoutModel)) {
+      return this.predict('cutout', { model: this.cutoutModel, image });
+    }
+    // 通用编辑模型（gpt-image-2/edit 等）：prompt 驱动，可按素材类型调优。
+    // images[] + prompt + background:transparent（实测 atlas 接受，用于出透明底）；
+    // 不传 size：atlas 不接受 size:auto（会 400），省略即按原图处理。
     return this.predict('cutout', {
       model: this.cutoutModel,
-      image: await this.toInline('cutout', input.image),
+      prompt: input.prompt,
+      images: [image],
+      background: 'transparent',
+      output_format: 'png',
     });
   }
 

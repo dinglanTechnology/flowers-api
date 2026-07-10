@@ -1,8 +1,9 @@
 // 两个模型在各平台的默认 ID（协议不同、命名也不同，可用 AI_<NAME>_*_MODEL 覆盖）
 // Atlas：自研接口，模型名带 action 后缀
-// 抠图用专用去背模型（出真透明 PNG）；生图/编辑类模型返回压平图，不适合抠图
+// 抠图统一改用 gpt-image-2/edit（prompt 驱动，可按素材类型调优；atlas 接受 background:transparent 出透明底）。
+// 注：youchuan/v8.1/remove-background 是专用去背模型、出真 alpha 但不读 prompt，如需可 AI_ATLAS_CUTOUT_MODEL 切回。
 const ATLAS_IMAGE2_MODEL = 'openai/gpt-image-2/edit';
-const ATLAS_CUTOUT_MODEL = 'youchuan/v8.1/remove-background';
+const ATLAS_CUTOUT_MODEL = 'openai/gpt-image-2/edit';
 // TokenLab：OpenAI 兼容，模型名为裸名
 const TOKENLAB_IMAGE2_MODEL = 'gpt-image-2';
 // cutout 走 OpenAI images.edit；nano-banana-2 当前不支持 image-edit 操作。

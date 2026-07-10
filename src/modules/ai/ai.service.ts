@@ -13,19 +13,45 @@ import { AI_QUEUE } from './ai.processor';
 import { Image2Dto, CutoutDto } from './dto/ai.dto';
 import { checkImageRef, UnsupportedImageError } from './image-format.util';
 
-const CATEGORY_LABEL: Record<string, string> = {
-  flower: '花朵',
-  greenery: '枝叶',
-  line: '线条材料',
+/**
+ * 各类素材的抠图侧重点：三类难点不同，prompt 分开调优。
+ * - flower：柔边花瓣 + 花蕊细节，半透明薄瓣易抠穿/留灰边
+ * - greenery：叶片/枝条间的负空间要一起镂空，细茎叶尖易断
+ * - line：极细线条/草茎结构，最怕抠断、遗漏、抗锯齿留描边
+ */
+const CUTOUT_CATEGORY: Record<string, { label: string; focus: string }> = {
+  flower: {
+    label: '花朵',
+    focus:
+      '保留花瓣柔和的自然边缘和花蕊细节；半透明或较薄的花瓣不要抠穿、边缘不要留灰边；维持花朵原有的层次与色彩。',
+  },
+  greenery: {
+    label: '枝叶',
+    focus:
+      '叶片之间、枝条之间的空隙（负空间）也要一并抠成透明，不能留背景色块；细茎、叶柄、叶尖要完整不断裂；锯齿状叶缘精确贴合。',
+  },
+  line: {
+    label: '线条材料',
+    focus:
+      '主体是极细的线条 / 枝条 / 草茎，务必完整保留每一根细结构、绝不抠断或遗漏；细边不要因抗锯齿留下灰白描边或光晕。',
+  },
 };
+
+/** 通用抠图要求（与分类无关的部分） */
+const CUTOUT_BASE =
+  '精确抠出主体并移除背景，输出透明背景 PNG。' +
+  '要求：主体完整不裁切，边缘干净、无白边与杂色残留；' +
+  '不要添加阴影、倒影、描边或任何额外元素，不改变主体本身的颜色和形状。';
 
 /**
  * 抠图 prompt 内置于后端：前端只给 类型/名字/照片链接，由后端拼 prompt。
- * category/name 仅用于点明主体、避免误抠；抠图统一输出透明底 PNG。
+ * 通用要求 + 按 category 追加该类型的针对性侧重点；name 用于点明主体、避免误抠。
  */
 function buildCutoutPrompt(category: string, name: string): string {
-  const subject = CATEGORY_LABEL[category] ?? '主体';
-  return `精确移除背景，只保留画面中的${subject}主体（${name}），边缘干净无残留、不裁切主体，输出透明背景 PNG。`;
+  const c = CUTOUT_CATEGORY[category];
+  const subject = c?.label ?? '主体';
+  const focus = c?.focus ?? '';
+  return `${CUTOUT_BASE} 本图主体为${subject}（${name}）。${focus}`;
 }
 
 @Injectable()
