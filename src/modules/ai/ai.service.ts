@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -10,6 +11,7 @@ import { AiTask } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AI_QUEUE } from './ai.processor';
 import { Image2Dto, CutoutDto } from './dto/ai.dto';
+import { checkImageRef, UnsupportedImageError } from './image-format.util';
 
 const CATEGORY_LABEL: Record<string, string> = {
   flower: '花朵',
@@ -44,8 +46,21 @@ export class AiService {
     };
   }
 
+  /** 提交前拦掉上游不友好的图片格式，直接回 400 提示（避免白跑一趟队列） */
+  private assertFriendlyImage(image?: string | null) {
+    try {
+      checkImageRef(image);
+    } catch (e) {
+      if (e instanceof UnsupportedImageError) {
+        throw new BadRequestException(e.message);
+      }
+      throw e;
+    }
+  }
+
   async submitImage2(userId: string, dto: Image2Dto) {
     const image = dto.referenceImageUrl ?? dto.referenceImage;
+    this.assertFriendlyImage(image);
     const task = await this.prisma.aiTask.create({
       data: {
         userId,
@@ -66,6 +81,7 @@ export class AiService {
   }
 
   async submitCutout(userId: string, dto: CutoutDto) {
+    this.assertFriendlyImage(dto.sourceImageUrl);
     // prompt 后端内置生成，前端不再传
     const prompt = buildCutoutPrompt(dto.category, dto.name);
     const task = await this.prisma.aiTask.create({

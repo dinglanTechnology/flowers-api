@@ -1,5 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AiProvider, CutoutInput, Image2Input } from './ai-provider.interface';
+import { checkImageBytes } from '../image-format.util';
 
 /** Atlas Cloud 自研图像 API 的上游配置 */
 export interface AtlasUpstreamConfig {
@@ -124,8 +125,10 @@ export class AtlasProvider implements AiProvider {
         `Atlas ${op} 预取到的不是图片（content-type=${mime}，检查源图 URL 是否可公开访问）`,
       );
     }
-    const b64 = Buffer.from(await r.arrayBuffer()).toString('base64');
-    return `data:${mime};base64,${b64}`;
+    const buf = Buffer.from(await r.arrayBuffer());
+    // 按真实字节校验格式：识破 HEIC 伪装成 .jpg 之类，否则 youchuan/gpt-image 会笼统报错
+    checkImageBytes(buf);
+    return `data:${mime};base64,${buf.toString('base64')}`;
   }
 
   /** 提交一次 generateImage 并（同步/轮询）取回图片字节 */

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import OpenAI, { toFile } from 'openai';
 import type { Uploadable } from 'openai/uploads';
 import { AiProvider, CutoutInput, Image2Input } from './ai-provider.interface';
+import { checkImageBytes } from '../image-format.util';
 
 /** 单个中转站上游的配置（一个中转站对应一份） */
 export interface RelayUpstreamConfig {
@@ -116,6 +117,8 @@ export class RelayProvider implements AiProvider {
       mime = r.headers.get('content-type') || mime;
       buffer = Buffer.from(await r.arrayBuffer());
     }
+    // 按真实字节校验格式：非 PNG/JPEG/WEBP（如 HEIC）直接给可读错误，别等上游笼统报错
+    checkImageBytes(buffer);
     const ext = /jpe?g/.test(mime)
       ? 'jpg'
       : mime.includes('webp')
