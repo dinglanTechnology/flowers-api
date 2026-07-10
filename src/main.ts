@@ -37,7 +37,6 @@ async function bootstrap(): Promise<void> {
     )
     .setVersion('0.0.1')
     .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
-    .addServer('/api', '默认（全局前缀 /api）')
     .addTag('认证', 'wechat 登录、令牌刷新/登出')
     .addTag('用户', '当前用户资料')
     .addTag('配置', '主题、头像等客户端启动配置')

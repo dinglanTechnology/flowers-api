@@ -26,6 +26,12 @@ export default () => ({
   },
   ai: {
     provider: process.env.AI_PROVIDER ?? 'mock',
+    // 单次上游请求超时（ms）：超时即失败，避免任务永远卡在 running，并让故障转移能切备用。
+    timeoutMs: parseInt(process.env.AI_REQUEST_TIMEOUT_MS ?? '120000', 10),
+    // 单个任务整体处理超时（ms）：兜底 provider 之外的挂起（OSS 上传 / DB），应大于 timeoutMs×上游数。
+    jobTimeoutMs: parseInt(process.env.AI_JOB_TIMEOUT_MS ?? '300000', 10),
+    // 任务尝试次数（1=不重试）。注意：重试会重新调用上游，可能重复计费，按需调小。
+    attempts: parseInt(process.env.AI_JOB_ATTEMPTS ?? '2', 10),
     // 主/备中转站：数组顺序即故障转移优先级（atlas 主用 → tokenlab 备用）。
     // 每个上游带 protocol：atlas=自研接口，openai=OpenAI 兼容（TokenLab）。
     // 模型 ID 分平台配置：默认按各自协议命名，可用 AI_<NAME>_*_MODEL 覆盖。
@@ -41,6 +47,10 @@ export default () => ({
         apiKey: process.env.AI_ATLAS_API_KEY ?? process.env.AI_API_KEY ?? '',
         image2Model: process.env.AI_ATLAS_IMAGE2_MODEL ?? ATLAS_IMAGE2_MODEL,
         cutoutModel: process.env.AI_ATLAS_CUTOUT_MODEL ?? ATLAS_CUTOUT_MODEL,
+        timeoutMs: parseInt(process.env.AI_REQUEST_TIMEOUT_MS ?? '120000', 10),
+        // 默认异步提交+轮询，避免慢生图的长连接被中间层 60s 超时掐断（UND_ERR_SOCKET）。
+        // 仅在确认上游同步稳定时才 AI_ATLAS_SYNC_MODE=true 切回同步。
+        syncMode: process.env.AI_ATLAS_SYNC_MODE === 'true',
       },
       {
         name: 'tokenlab',
@@ -52,6 +62,7 @@ export default () => ({
           process.env.AI_TOKENLAB_IMAGE2_MODEL ?? TOKENLAB_IMAGE2_MODEL,
         cutoutModel:
           process.env.AI_TOKENLAB_CUTOUT_MODEL ?? TOKENLAB_CUTOUT_MODEL,
+        timeoutMs: parseInt(process.env.AI_REQUEST_TIMEOUT_MS ?? '120000', 10),
       },
     ].filter((u) => u.apiKey),
   },

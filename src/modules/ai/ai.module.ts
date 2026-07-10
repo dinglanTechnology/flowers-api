@@ -18,6 +18,9 @@ interface UpstreamConfig {
   apiKey: string;
   image2Model: string;
   cutoutModel: string;
+  timeoutMs: number;
+  /** 仅 atlas：是否用同步出图模式；默认异步提交+轮询。openai 协议忽略 */
+  syncMode?: boolean;
 }
 
 /** 按协议实例化对应 provider */

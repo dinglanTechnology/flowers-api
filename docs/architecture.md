@@ -223,7 +223,7 @@ model AiTask {
 | | `POST /works` | `{ title, theme, vaseId, arrangement, thumbnail?, dateKey }` | `Work` |
 | | `PATCH /works/:id` | 同上（部分） | `Work` |
 | | `DELETE /works/:id` | — | `{ ok: true }` |
-| Plaza | `GET /plaza?cursor=&limit=` | — | `{ items: PlazaPost[], nextCursor }` |
+| Plaza | `GET /plaza?page=&size=` | — | `{ items: PlazaPost[], total, page, size }` |
 | | `POST /plaza` | `{ workId }` 或 `{ title, theme, arrangement, thumbnail }` | `PlazaPost`（送审后 pending） |
 | | `GET /plaza/:id` | — | `PlazaPost` |
 | Materials | `GET /materials/custom` | — | `CustomMaterial[]` |
@@ -233,7 +233,7 @@ model AiTask {
 | | `POST /upload`（multipart 或 `{ dataUrl }`） | 图片 | `{ url }`（服务端代传兜底） |
 | **AI** | `POST /image2` | `{ prompt, referenceImage(dataURL), size }` | `{ taskId, status:"pending", progress }` |
 | | `GET /image2/:taskId` | — | `{ status, progress, imageUrl }` |
-| | `POST /cutout-flower` | `{ sourceImage(dataURL), name, category, baseMaterialId, baseKind, view, transparentBackground, prompt }` | `{ taskId, status:"pending", progress }` |
+| | `POST /cutout-flower` | `{ category, name, sourceImageUrl }`（prompt 等后端内置） | `{ taskId, status:"pending", progress }` |
 | | `GET /cutout-flower/:taskId` | — | `{ status, progress, image:imageUrl }` |
 
 > **字段与小程序端严格对齐**：前端 `image2TaskId()` 读 `taskId/id/task_id`；`image2ResultSrc()/cutoutResultSrc()` 读 `imageUrl/url/image/imageData/base64/images[0].url…`。后端 GET 成功态统一返回 `imageUrl`（cutout 额外给 `image` 别名），前端无需改动。

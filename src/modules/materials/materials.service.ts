@@ -4,7 +4,6 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { createHash } from 'crypto';
 import { CustomMaterial, Material } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { WechatSecurityService } from '../../wechat/wechat-security.service';
@@ -45,35 +44,16 @@ export class MaterialsService {
   ) {}
 
   /**
-   * 默认素材目录（版本化）。分类为结构性枚举，留在代码；素材从 Material 表读，
+   * 默认素材目录。分类为结构性枚举，留在代码；素材从 Material 表读，
    * 支持后台上下架（active）/ 换图 / 调序（sortOrder）而不发版。
-   * 版本号由 DB 内容算出：换图或上下架改变 updatedAt → version 变 → 客户端自动拉新。
    */
-  async getCatalog(clientVersion?: string) {
+  async getCatalog() {
     const rows = await this.prisma.material.findMany({
       where: { active: true },
       orderBy: { sortOrder: 'asc' },
     });
 
-    const version = createHash('sha256')
-      .update(
-        JSON.stringify(
-          rows.map((m) => [
-            m.id,
-            m.imageUrl,
-            m.sortOrder,
-            m.updatedAt.toISOString(),
-          ]),
-        ),
-      )
-      .digest('hex')
-      .slice(0, 12);
-
-    if (clientVersion && clientVersion === version) {
-      return { version, changed: false };
-    }
     return {
-      version,
       categories: MATERIAL_CATEGORIES,
       materials: rows.map(toBuiltinDto),
     };

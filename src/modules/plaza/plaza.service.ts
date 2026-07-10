@@ -33,29 +33,35 @@ export class PlazaService {
   ) {}
 
   async feed(userId: string, query: PlazaFeedDto) {
-    const limit = query.limit ?? 20;
-    const rows = await this.prisma.plazaPost.findMany({
-      where: { auditStatus: 'approved' },
-      orderBy: { createdAt: 'desc' },
-      take: limit + 1,
-      ...(query.cursor ? { cursor: { id: query.cursor }, skip: 1 } : {}),
-    });
-    const hasMore = rows.length > limit;
-    const page = hasMore ? rows.slice(0, limit) : rows;
+    const page = query.page ?? 1;
+    const size = query.size ?? 20;
+    const where: Prisma.PlazaPostWhereInput = { auditStatus: 'approved' };
+
+    const [total, rows] = await this.prisma.$transaction([
+      this.prisma.plazaPost.count({ where }),
+      this.prisma.plazaPost.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * size,
+        take: size,
+      }),
+    ]);
 
     // 一次查出当前用户在本页里点过赞的帖子，标注 liked
     const likedSet = new Set(
       (
         await this.prisma.plazaLike.findMany({
-          where: { userId, postId: { in: page.map((p) => p.id) } },
+          where: { userId, postId: { in: rows.map((p) => p.id) } },
           select: { postId: true },
         })
       ).map((l) => l.postId),
     );
 
     return {
-      items: page.map((p) => toPlazaDto(p, likedSet.has(p.id))),
-      nextCursor: hasMore ? page[page.length - 1].id : null,
+      items: rows.map((p) => toPlazaDto(p, likedSet.has(p.id))),
+      total,
+      page,
+      size,
     };
   }
 

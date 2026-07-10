@@ -1,16 +1,20 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsInt, IsOptional, Max, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
-/** 游标分页通用入参 */
+/** 分页通用入参（page/size 偏移分页） */
 export class PaginationDto {
   @ApiPropertyOptional({
-    description: '上一页返回的 nextCursor；首页不传',
-    example: 'ckpost123',
+    description: '页码，从 1 开始',
+    minimum: 1,
+    default: 1,
+    example: 1,
   })
   @IsOptional()
-  @IsString()
-  cursor?: string;
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  page = 1;
 
   @ApiPropertyOptional({
     description: '每页条数（1–50）',
@@ -24,5 +28,5 @@ export class PaginationDto {
   @IsInt()
   @Min(1)
   @Max(50)
-  limit = 20;
+  size = 20;
 }

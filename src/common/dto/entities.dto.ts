@@ -102,7 +102,12 @@ export class PlazaPostDto {
 
 export class PlazaFeedResultDto {
   items!: PlazaPostDto[];
-  nextCursor!: string | null;
+  @ApiProperty({ description: '总条数', example: 128 })
+  total!: number;
+  @ApiProperty({ description: '当前页码', example: 1 })
+  page!: number;
+  @ApiProperty({ description: '每页条数', example: 20 })
+  size!: number;
 }
 
 export class LikeResultDto {
@@ -167,7 +172,6 @@ export class MaterialCategoryDto {
 }
 
 export class MaterialsCatalogDto {
-  version!: string;
   categories!: MaterialCategoryDto[];
   materials!: BuiltinMaterialDto[];
 }
@@ -239,9 +243,6 @@ export class AvatarOptionDto {
 }
 
 export class BootstrapConfigDto {
-  version!: string;
-  /** version 命中时为 true 且省略 themes/avatars */
-  changed?: boolean;
-  themes?: ThemeDto[];
-  avatars?: AvatarOptionDto[];
+  themes!: ThemeDto[];
+  avatars!: AvatarOptionDto[];
 }

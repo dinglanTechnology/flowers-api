@@ -11,6 +11,8 @@ export interface RelayUpstreamConfig {
   apiKey: string;
   image2Model: string;
   cutoutModel: string;
+  /** 单次上游请求超时（ms） */
+  timeoutMs: number;
 }
 
 /** 中转站返回的图片项：b64 或 url 二选一 */
@@ -27,6 +29,7 @@ export class RelayProvider implements AiProvider {
   private readonly client: OpenAI;
   private readonly image2Model: string;
   private readonly cutoutModel: string;
+  private readonly timeoutMs: number;
   /** 上游标识，供 FailoverProvider 打日志 */
   readonly name: string;
 
@@ -34,9 +37,13 @@ export class RelayProvider implements AiProvider {
     this.name = cfg.name;
     this.image2Model = cfg.image2Model;
     this.cutoutModel = cfg.cutoutModel;
+    this.timeoutMs = cfg.timeoutMs > 0 ? cfg.timeoutMs : 120_000;
     this.client = new OpenAI({
       apiKey: cfg.apiKey || 'placeholder',
       baseURL: cfg.baseUrl || undefined,
+      // 默认 10 分钟超时会让失败任务长时间卡在 running；收紧并只重试 1 次，便于快速故障转移
+      timeout: this.timeoutMs,
+      maxRetries: 1,
     });
   }
 
@@ -83,7 +90,9 @@ export class RelayProvider implements AiProvider {
     const item = res?.data?.[0];
     if (item?.b64_json) return Buffer.from(item.b64_json, 'base64');
     if (item?.url) {
-      const r = await fetch(item.url);
+      const r = await fetch(item.url, {
+        signal: AbortSignal.timeout(this.timeoutMs),
+      });
       return Buffer.from(await r.arrayBuffer());
     }
     throw new Error(`${op} 中转站 ${this.name} 返回为空`);
@@ -99,7 +108,9 @@ export class RelayProvider implements AiProvider {
       mime = m[1] || mime;
       buffer = Buffer.from(m[2], 'base64');
     } else {
-      const r = await fetch(image);
+      const r = await fetch(image, {
+        signal: AbortSignal.timeout(this.timeoutMs),
+      });
       if (!r.ok) throw new Error(`下载参考图失败: HTTP ${r.status}`);
       mime = r.headers.get('content-type') || mime;
       buffer = Buffer.from(await r.arrayBuffer());

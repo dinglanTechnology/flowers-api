@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -24,12 +16,12 @@ import { CreateCustomMaterialDto } from './dto/create-custom-material.dto';
 export class MaterialsController {
   constructor(private readonly materialsService: MaterialsService) {}
 
-  /** 内置素材目录（公开，版本化缓存） */
+  /** 内置素材目录（公开） */
   @Public()
   @Get('catalog')
   @ApiData(MaterialsCatalogDto)
-  catalog(@Query('version') version?: string) {
-    return this.materialsService.getCatalog(version);
+  catalog() {
+    return this.materialsService.getCatalog();
   }
 
   @ApiBearerAuth()

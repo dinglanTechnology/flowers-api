@@ -1,5 +1,3 @@
-import { createHash } from 'crypto';
-
 /** 主题配色（从原型 docs/index.html 的 themes 提取，前端换肤用） */
 export interface ThemeConfig {
   id: string;
@@ -155,9 +153,3 @@ export const AVATAR_OPTIONS: AvatarOption[] = [
   { id: 'tea', label: '茶', colors: ['#b8864b', '#6e4335'] },
   { id: 'ink', label: '墨', colors: ['#29322f', '#111615'] },
 ];
-
-/** 配置版本 = 内容哈希，数据变则变（客户端据此决定是否重拉） */
-export const BOOTSTRAP_VERSION = createHash('sha256')
-  .update(JSON.stringify({ t: THEMES, a: AVATAR_OPTIONS }))
-  .digest('hex')
-  .slice(0, 12);

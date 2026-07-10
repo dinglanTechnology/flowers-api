@@ -45,6 +45,8 @@ export class OssStorage implements StorageProvider {
       accessKeyId: this.cfg.accessKeyId,
       accessKeySecret: this.cfg.accessKeySecret,
       endpoint: this.cfg.endpoint || undefined,
+      // 小程序 <image>/downloadFile 要求 https；确保 put() 返回的 result.url 为 https
+      secure: true,
     });
   }
 

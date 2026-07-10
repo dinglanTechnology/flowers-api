@@ -5,6 +5,25 @@ import { AiProvider, CutoutInput, Image2Input } from './ai-provider.interface';
 export type NamedProvider = AiProvider & { readonly name: string };
 
 /**
+ * 展开错误的 cause 链，把真正原因带出来。
+ * 连接层失败时 undici 的 message 恒为 "fetch failed"、OpenAI SDK 为 "Connection error."，
+ * 真正的 errno（ENOTFOUND / ECONNREFUSED / UND_ERR_CONNECT_TIMEOUT / 证书错误）藏在 error.cause 里。
+ * 只取 message 会丢诊断信息，这里沿 cause 链拼出 "fetch failed → ECONNREFUSED (…)"。
+ */
+function describeError(error: unknown): string {
+  const parts: string[] = [];
+  let cur: unknown = error;
+  for (let depth = 0; cur instanceof Error && depth < 5; depth++) {
+    const code = (cur as { code?: string }).code;
+    parts.push(code ? `${cur.message} [${code}]` : cur.message);
+    cur = (cur as { cause?: unknown }).cause;
+  }
+  if (typeof cur === 'string' && cur) parts.push(cur);
+  // 去掉相邻重复（cause 有时与父错误同文案）
+  return parts.filter((p, i) => p && p !== parts[i - 1]).join(' → ');
+}
+
+/**
  * 多中转站故障转移：按顺序尝试（主用 atlas → 备用 tokenlab …），
  * 前一个抛错就切下一个，全部失败才向上抛出汇总错误。
  * 每次成功/切换都记日志，便于观测哪个上游在扛量。
@@ -42,7 +61,7 @@ export class FailoverProvider implements AiProvider {
         }
         return buffer;
       } catch (error) {
-        const msg = (error as Error).message;
+        const msg = describeError(error);
         const isLast = i === this.providers.length - 1;
         this.logger.warn(
           `${op} 中转站 ${p.name} 失败: ${msg}` +

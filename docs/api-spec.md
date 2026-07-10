@@ -36,18 +36,10 @@
 | 429 | 请求过频 | 限流（AI 接口） |
 | 500 | 服务器错误 | 未捕获异常 |
 
-### 1.4 分页（游标）
+### 1.4 分页（page/size）
 
-请求：`?cursor=<上一页最后一条id>&limit=20`（`limit` 1–50，默认 20）
-响应：`{ items: T[], nextCursor: string | null }`（`nextCursor` 为 `null` 表示到底）
-
-### 1.5 静态数据的版本化缓存
-
-内置素材目录等**只读、极少变**的数据走版本缓存，避免重复拉全量：
-
-- `version` = 目录**内容哈希**，数据变则变。
-- 客户端本地缓存数据 + `version`，请求带 `?version=<cached>`：命中返 `{ version, changed: false }`（空载）或 HTTP `304`；未命中下发全量。
-- 服务端同时设 `ETag: <version>` + `Cache-Control: public, max-age=...`，供 CDN/边缘缓存。
+请求：`?page=1&size=20`（`page` 从 1 开始，默认 1；`size` 1–50，默认 20）
+响应：`{ items: T[], total: number, page: number, size: number }`（`total` 为总条数）
 
 ---
 
@@ -184,7 +176,6 @@ interface BuiltinMaterial {
 }
 
 interface MaterialsCatalog {
-  version: string;         // 由 DB 内容算出（换图/上下架即变）
   categories: { id: string; label: string }[]; // flower/greenery/line/vase（代码常量）
   materials: BuiltinMaterial[];
 }
@@ -302,16 +293,13 @@ interface AiTask {
 
 ### 3.3 内置素材目录 Materials Catalog · P2
 
-#### `GET /api/materials/catalog?version=<cached?>` 🔓（可缓存）
+#### `GET /api/materials/catalog` 🔓
 下发内置素材目录。**分类为代码常量；素材从 `Material` 表读**，支持后台上下架（`active`）/换图/调序（`sortOrder`）而不发版。素材已改为**图片渲染**：前端直接贴 `imageUrl`，多样式素材的每款姿态各有独立 `imageUrl`。
 
-- 请求：`?version=<客户端已缓存版本，可选>`
-- 响应（有更新）：`MaterialsCatalog`
+- 响应：`MaterialsCatalog`
   - `materials[]`：`{ id, name, category, imageUrl, styles }`
   - `styles`：花/枝/线为 6 款 `{ styleOption, name, imageUrl }`（长度已烘进图）；花器等单样式素材为 `null`
-- 响应（已最新）：`{ version: string; changed: false }`
-- 版本号由 DB 内容算出（换图/上下架改变 `updatedAt` → version 变 → 客户端自动拉新）
-- 客户端策略：本地缓存 + 版本比对；`styles?.length ? 渲染6款 : 单样式`；渲染选择器时与 `GET /materials/custom` 合并
+- 客户端策略：`styles?.length ? 渲染6款 : 单样式`；渲染选择器时与 `GET /materials/custom` 合并
 - 图片资源：全部 OSS，key 约定 `default-materials/<category>/<id>.png`（缩略图）、`default-materials/<category>/<id>/<styleOption>.png`（姿态）
 
 > 矢量相关字段（`kind`/`colors`/`shape`/`morph`/`lengthScale`）不再下发——纯图片渲染用不到；它们只在生成 PNG 时用（见 `scripts/materials-svg-to-png.mjs`）。主题/头像预设改由 `GET /config/bootstrap` 下发（见 3.9）。
@@ -383,19 +371,13 @@ interface AiTask {
 - 响应：`{ status, progress, imageUrl?, error? }`
 
 #### `POST /api/cutout-flower` ✅
-上传真实花材照片，AI 抠图生成透明底素材。
+上传真实花材照片，AI 抠图生成透明底素材。前端只传 类型 / 花材名 / 照片链接，其余（含 prompt、透明底、去背模型）后端处理。
 - 请求：
 ```ts
 {
-  sourceImageUrl?: string;         // 直传 OSS 后的 URL（推荐）
-  sourceImage?: string;            // 或照片 dataURL（兼容，二选一）
-  name: string;
-  category: MaterialCategory;
-  baseMaterialId: string;
-  baseKind?: string;
-  view?: string;                   // 默认 "front"
-  transparentBackground?: boolean; // 默认 true
-  prompt?: string;                 // 客户端 buildCutoutPrompt()
+  category: MaterialCategory;      // 素材类型 flower | greenery | line
+  name: string;                    // 花材名（过微信文本审核）
+  sourceImageUrl: string;          // 照片链接（直传 OSS 后的 URL）
 }
 ```
 - 响应：`{ taskId, status, progress }`
@@ -422,9 +404,9 @@ interface AiTask {
 
 ### 3.8 分享广场 Plaza · P4（含微信内容审核）
 
-#### `GET /api/plaza?cursor=&limit=` ✅
+#### `GET /api/plaza?page=&size=` ✅
 广场 feed，仅返回 `approved`。每条带 `liked`（当前用户是否已赞，一次批量查询标注）。
-- 响应：`{ items: PlazaPost[]; nextCursor: string | null }`
+- 响应：`{ items: PlazaPost[]; total: number; page: number; size: number }`
 
 #### `POST /api/plaza` ✅
 分享作品。标题过微信 `msgSecCheck`（文本）；图片审核当前为放行 stub（见下）。
@@ -446,12 +428,10 @@ interface AiTask {
 
 ### 3.9 客户端配置 Config · P2
 
-#### `GET /api/config/bootstrap?version=<cached?>` 🔓（可缓存）
-下发前端启动配置：主题 + 头像预设（原写死在前端，现集中下发，版本化）。
+#### `GET /api/config/bootstrap` 🔓
+下发前端启动配置：主题 + 头像预设（原写死在前端，现集中下发）。
 
-- 请求：`?version=<客户端已缓存版本，可选>`
-- 响应（有更新）：`{ version: string; themes: Theme[]; avatars: AvatarOption[] }`
-- 响应（已最新）：`{ version: string; changed: false }`
+- 响应：`{ themes: Theme[]; avatars: AvatarOption[] }`
 - `Theme`：`{ id, label, note, bg, panel, text, accent, …, vase[], previewFlower[] }`（6 套）
 - `AvatarOption`：`{ id, label, colors[] }`（8 个，`id` 与 `User.avatarId` 对齐）
 
@@ -492,7 +472,7 @@ interface AiTask {
 1. `assetId` / `styleOption` / `theme` / `vaseId` / `avatarId` 一经发布**永不复用或删除**，历史作品靠其引用。
 2. `arrangement` 后端**不透明**：只做结构/大小校验，不校验具体 id（避免与自定义花材冲突、避免前端加花就要后端同步）。
 3. **内置素材已由矢量改为图片**：前端直接贴 `imageUrl`，不再需要按 `kind` 跑 draw 函数。矢量源仍在 `builtin-materials.data.ts` + 原型，仅用于生成 PNG（`scripts/materials-svg-to-png.mjs` → OSS）。
-4. 素材目录进 `Material` 表：支持后台上下架（`active`）/换图/调序（`sortOrder`）而不发版；`version` 由 DB 内容算出，变则客户端自动拉新。
+4. 素材目录进 `Material` 表：支持后台上下架（`active`）/换图/调序（`sortOrder`）而不发版。
 5. 缩略图/姿态图**光栅化持久化于 OSS，DB 只存 URL**，展示与 renderer 解耦。
 
 ---
