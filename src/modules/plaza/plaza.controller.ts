@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ApiData } from '../../common/dto/api-response.dto';
 import {
@@ -16,9 +17,14 @@ import { PlazaFeedDto, SharePlazaDto } from './dto/plaza.dto';
 export class PlazaController {
   constructor(private readonly plazaService: PlazaService) {}
 
+  /** 广场 feed（公开，无需登录；登录用户会带上 liked 态） */
+  @Public()
   @Get()
   @ApiData(PlazaFeedResultDto)
-  feed(@CurrentUser('userId') userId: string, @Query() query: PlazaFeedDto) {
+  feed(
+    @CurrentUser('userId') userId: string | undefined,
+    @Query() query: PlazaFeedDto,
+  ) {
     return this.plazaService.feed(userId, query);
   }
 

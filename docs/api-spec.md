@@ -404,8 +404,8 @@ interface AiTask {
 
 ### 3.8 分享广场 Plaza · P4（含微信内容审核）
 
-#### `GET /api/plaza?page=&size=` ✅
-广场 feed，仅返回 `approved`。每条带 `liked`（当前用户是否已赞，一次批量查询标注）。
+#### `GET /api/plaza?page=&size=` ✅ 🔓
+广场 feed，仅返回 `approved`。**公开，无需登录**；带上有效 token 时每条会标注 `liked`（当前用户是否已赞，一次批量查询），未登录时 `liked` 恒为 `false`。
 - 响应：`{ items: PlazaPost[]; total: number; page: number; size: number }`
 
 #### `POST /api/plaza` ✅

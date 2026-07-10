@@ -223,7 +223,7 @@ model AiTask {
 | | `POST /works` | `{ title, theme, vaseId, arrangement, thumbnail?, dateKey }` | `Work` |
 | | `PATCH /works/:id` | 同上（部分） | `Work` |
 | | `DELETE /works/:id` | — | `{ ok: true }` |
-| Plaza | `GET /plaza?page=&size=` | — | `{ items: PlazaPost[], total, page, size }` |
+| Plaza | `GET /plaza?page=&size=` 🔓 | — | `{ items: PlazaPost[], total, page, size }` |
 | | `POST /plaza` | `{ workId }` 或 `{ title, theme, arrangement, thumbnail }` | `PlazaPost`（送审后 pending） |
 | | `GET /plaza/:id` | — | `PlazaPost` |
 | Materials | `GET /materials/custom` | — | `CustomMaterial[]` |

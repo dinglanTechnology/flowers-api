@@ -32,7 +32,7 @@ export class PlazaService {
     private readonly security: WechatSecurityService,
   ) {}
 
-  async feed(userId: string, query: PlazaFeedDto) {
+  async feed(userId: string | undefined, query: PlazaFeedDto) {
     const page = query.page ?? 1;
     const size = query.size ?? 20;
     const where: Prisma.PlazaPostWhereInput = { auditStatus: 'approved' };
@@ -47,15 +47,19 @@ export class PlazaService {
       }),
     ]);
 
-    // 一次查出当前用户在本页里点过赞的帖子，标注 liked
-    const likedSet = new Set(
-      (
-        await this.prisma.plazaLike.findMany({
-          where: { userId, postId: { in: rows.map((p) => p.id) } },
-          select: { postId: true },
-        })
-      ).map((l) => l.postId),
-    );
+    // 一次查出当前用户在本页里点过赞的帖子，标注 liked。
+    // 未登录（无 userId）时跳过：否则 Prisma 会把 userId:undefined 当作不过滤，误标全部为已赞。
+    const likedSet =
+      userId && rows.length
+        ? new Set(
+            (
+              await this.prisma.plazaLike.findMany({
+                where: { userId, postId: { in: rows.map((p) => p.id) } },
+                select: { postId: true },
+              })
+            ).map((l) => l.postId),
+          )
+        : new Set<string>();
 
     return {
       items: rows.map((p) => toPlazaDto(p, likedSet.has(p.id))),

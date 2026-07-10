@@ -52,6 +52,9 @@ export default () => ({
         // 默认异步提交+轮询，避免慢生图的长连接被中间层 60s 超时掐断（UND_ERR_SOCKET）。
         // 仅在确认上游同步稳定时才 AI_ATLAS_SYNC_MODE=true 切回同步。
         syncMode: process.env.AI_ATLAS_SYNC_MODE === 'true',
+        // 默认 worker 侧把图内联成 dataURL 再提交，绕开 atlas 服务端 rehost，
+        // 让私有 OSS / 403 源图也能用。AI_ATLAS_INLINE_IMAGE=false 可关闭。
+        inlineImages: process.env.AI_ATLAS_INLINE_IMAGE !== 'false',
       },
       {
         name: 'tokenlab',

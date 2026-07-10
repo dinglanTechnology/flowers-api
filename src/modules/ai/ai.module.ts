@@ -21,6 +21,8 @@ interface UpstreamConfig {
   timeoutMs: number;
   /** 仅 atlas：是否用同步出图模式；默认异步提交+轮询。openai 协议忽略 */
   syncMode?: boolean;
+  /** 仅 atlas：是否 worker 侧把图内联成 dataURL 再提交（绕开服务端 rehost）；默认 true。openai 协议忽略 */
+  inlineImages?: boolean;
 }
 
 /** 按协议实例化对应 provider */

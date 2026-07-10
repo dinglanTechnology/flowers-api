@@ -193,8 +193,8 @@ material.styles?.length
 
 ### 3.7 分享广场
 
-#### `GET /plaza?page=&size=`
-分页 feed（仅 approved），每条带 `liked`。`page` 从 1 开始，默认 1；`size` 1–50，默认 20。
+#### `GET /plaza?page=&size=` 🔓
+分页 feed（仅 approved）。**公开，无需登录**；登录（带 token）时每条带 `liked`，未登录 `liked` 恒 `false`。`page` 从 1 开始，默认 1；`size` 1–50，默认 20。
 ```jsonc
 { "items": [ /* PlazaPost[]，含 liked */ ], "total": 128, "page": 1, "size": 20 }
 ```

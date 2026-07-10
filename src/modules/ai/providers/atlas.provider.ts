@@ -18,6 +18,13 @@ export interface AtlasUpstreamConfig {
    * 表现为 UND_ERR_SOCKET “other side closed”。异步下每次请求都很短，规避该问题。
    */
   syncMode?: boolean;
+  /**
+   * 是否在 worker 侧把 http(s) 图片先下载成 dataURL 再提交（默认 true）。
+   * 开启后绕开 atlas 服务端 rehost：私有 OSS / 403 / 需鉴权 / 内网可达但公网不可达的
+   * 源图也能用，避免 atlas 拉不到图时回笼统的 “Origin service encountered an error”。
+   * 代价是 worker 多一次下载（图片一般几 MB，可接受）。
+   */
+  inlineImages?: boolean;
 }
 
 interface AtlasData {
@@ -53,6 +60,7 @@ export class AtlasProvider implements AiProvider {
   private readonly cutoutModel: string;
   private readonly timeoutMs: number;
   private readonly syncMode: boolean;
+  private readonly inlineImages: boolean;
 
   constructor(cfg: AtlasUpstreamConfig) {
     this.name = cfg.name;
@@ -65,9 +73,10 @@ export class AtlasProvider implements AiProvider {
     this.cutoutModel = cfg.cutoutModel;
     this.timeoutMs = cfg.timeoutMs > 0 ? cfg.timeoutMs : 120_000;
     this.syncMode = cfg.syncMode ?? false;
+    this.inlineImages = cfg.inlineImages ?? true;
   }
 
-  image2(input: Image2Input): Promise<Buffer> {
+  async image2(input: Image2Input): Promise<Buffer> {
     if (!input.image) {
       throw new Error(
         'image2 缺少参考图（Atlas edit 模型需要输入图 URL 或 base64）',
@@ -76,13 +85,13 @@ export class AtlasProvider implements AiProvider {
     return this.predict('image2', {
       model: this.image2Model,
       prompt: input.prompt,
-      images: [input.image],
+      images: [await this.toInline('image2', input.image)],
       size: input.size ?? '1024x1536',
       output_format: 'png',
     });
   }
 
-  cutout(input: CutoutInput): Promise<Buffer> {
+  async cutout(input: CutoutInput): Promise<Buffer> {
     if (!this.cutoutModel) {
       throw new Error('未配置抠图模型，抠图能力待接入');
     }
@@ -92,8 +101,31 @@ export class AtlasProvider implements AiProvider {
     // 去背模型：单 image 字段、无 prompt，输出带 alpha 的透明 PNG
     return this.predict('cutout', {
       model: this.cutoutModel,
-      image: input.image,
+      image: await this.toInline('cutout', input.image),
     });
+  }
+
+  /**
+   * inlineImages 开启时，把 http(s) 图片下成 dataURL 再交给 atlas，绕开其服务端 rehost。
+   * 已是 dataURL 则原样返回。下载失败 / 拿到的不是图片，直接抛清晰错误，
+   * 而不是让 atlas 回笼统的 “Origin service encountered an error” 难以定位。
+   */
+  private async toInline(op: string, image: string): Promise<string> {
+    if (!this.inlineImages || image.startsWith('data:')) return image;
+    const r = await this.fetchWithTimeout(`${op}:inline`, image, {});
+    if (!r.ok) {
+      throw new Error(
+        `Atlas ${op} 预取源图失败: HTTP ${r.status}（${image.slice(0, 120)}）`,
+      );
+    }
+    const mime = (r.headers.get('content-type') || 'image/png').split(';')[0];
+    if (!mime.startsWith('image/')) {
+      throw new Error(
+        `Atlas ${op} 预取到的不是图片（content-type=${mime}，检查源图 URL 是否可公开访问）`,
+      );
+    }
+    const b64 = Buffer.from(await r.arrayBuffer()).toString('base64');
+    return `data:${mime};base64,${b64}`;
   }
 
   /** 提交一次 generateImage 并（同步/轮询）取回图片字节 */
