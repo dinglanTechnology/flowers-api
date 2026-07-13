@@ -5,6 +5,8 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { WechatService } from './wechat.service';
 import { TokenService } from './token.service';
+import { SmsService } from './sms.service';
+import { CookieService } from '../../common/cookies/cookie.service';
 
 @Module({
   imports: [
@@ -18,7 +20,13 @@ import { TokenService } from './token.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, WechatService, TokenService],
+  providers: [
+    AuthService,
+    WechatService,
+    TokenService,
+    SmsService,
+    CookieService,
+  ],
   exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

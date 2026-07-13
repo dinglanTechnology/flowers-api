@@ -36,8 +36,19 @@ export class WechatSecurityService {
     return this.cachedToken;
   }
 
-  /** 文本审核（msg_sec_check）。返回是否通过。 */
-  async checkText(content: string, openid: string): Promise<boolean> {
+  /**
+   * 文本审核（msg_sec_check）。返回是否通过。
+   * openid 缺省（Web 手机号用户）时无法调用微信审核，短期显式放行并记日志。
+   * TODO(P0-3 中期): Web 用户改走阿里云内容安全 Green（textScan）。
+   */
+  async checkText(
+    content: string,
+    openid?: string | null,
+  ): Promise<boolean> {
+    if (!openid) {
+      this.logger.warn('无 openid（Web 用户），跳过微信文本审核');
+      return true;
+    }
     if (!this.configured()) {
       this.logger.warn('微信未配置，跳过文本审核');
       return true;
@@ -68,7 +79,10 @@ export class WechatSecurityService {
   }
 
   /** 图片审核。TODO(P4): 接入 media_check_async 异步审核 + 回调；当前放行。 */
-  checkImage(_imageUrl: string | null, _openid: string): Promise<boolean> {
+  checkImage(
+    _imageUrl: string | null,
+    _openid?: string | null,
+  ): Promise<boolean> {
     return Promise.resolve(true);
   }
 }

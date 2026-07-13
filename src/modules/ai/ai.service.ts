@@ -144,10 +144,12 @@ export class AiService {
 
   async getCutoutTask(userId: string, taskId: string) {
     const t = await this.ensureOwned(userId, taskId);
+    const url = t.resultUrl ?? undefined;
     return {
       status: t.status,
       progress: t.progress,
-      image: t.resultUrl ?? undefined,
+      imageUrl: url, // 与 image2 统一；Web 端读这个
+      image: url, // @deprecated 兼容小程序旧字段
       error: t.error ?? undefined,
     };
   }

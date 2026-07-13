@@ -38,22 +38,28 @@ export class TokenService {
     return toSeconds(this.config.get<string>('jwt.refreshExpiresIn') ?? '30d');
   }
 
-  /** 签发 access + refresh 令牌对，并将 refresh 落库 Redis */
-  async issue(user: { id: string; openid: string }): Promise<TokenPair> {
-    const accessToken = await this.jwt.signAsync(
-      { sub: user.id, openid: user.openid },
+  /**
+   * 签发 access + refresh 令牌对，并将 refresh 落库 Redis。
+   * openid 可选：微信用户带 openid，Web 手机号用户无 openid（缺省时不写入 JWT / Redis）。
+   */
+  async issue(user: { id: string; openid?: string | null }): Promise<TokenPair> {
+    // openid 缺省时不写入 payload，避免 web 用户携带 openid=undefined
+    const payload: { sub: string; openid?: string } = { sub: user.id };
+    if (user.openid) payload.openid = user.openid;
+
+    const accessToken = await this.jwt.signAsync(payload, {
       // 值形如 '2h'，由 @nestjs/jwt 内部 ms() 解析；转型以满足类型
-      {
-        expiresIn: (this.config.get<string>('jwt.accessExpiresIn') ??
-          '2h') as unknown as number,
-      },
-    );
+      expiresIn: (this.config.get<string>('jwt.accessExpiresIn') ??
+        '2h') as unknown as number,
+    });
 
     const refreshToken = randomBytes(32).toString('base64url');
-    // 值里带上 openid，轮换时无需回查数据库
+    // 值里带上 openid（若有），轮换时无需回查数据库
+    const refreshValue: { id: string; openid?: string } = { id: user.id };
+    if (user.openid) refreshValue.openid = user.openid;
     await this.redis.set(
       REFRESH_PREFIX + this.hash(refreshToken),
-      JSON.stringify({ id: user.id, openid: user.openid }),
+      JSON.stringify(refreshValue),
       'EX',
       this.refreshTtl(),
     );
@@ -70,7 +76,7 @@ export class TokenService {
       throw new UnauthorizedException('refresh token 无效或已过期');
     }
 
-    const user = JSON.parse(raw) as { id: string; openid: string };
+    const user = JSON.parse(raw) as { id: string; openid?: string };
     return this.issue(user);
   }
 

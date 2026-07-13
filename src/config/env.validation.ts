@@ -16,6 +16,13 @@ class EnvironmentVariables {
   @IsOptional() @IsString() WX_APPID?: string;
   @IsOptional() @IsString() WX_SECRET?: string;
 
+  // 阿里云短信（Web 手机号登录）；不填则短信服务走开发降级
+  @IsOptional() @IsString() SMS_ACCESS_KEY_ID?: string;
+  @IsOptional() @IsString() SMS_ACCESS_KEY_SECRET?: string;
+  @IsOptional() @IsString() SMS_ENDPOINT?: string;
+  @IsOptional() @IsString() SMS_SIGN_NAME?: string;
+  @IsOptional() @IsString() SMS_TEMPLATE_CODE?: string;
+
   @IsOptional() @IsIn(['relay', 'mock']) AI_PROVIDER?: string;
   // 旧的单中转站变量（保留兼容，会作为 atlas 主用的回退）
   @IsOptional() @IsString() AI_BASE_URL?: string;
@@ -28,6 +35,12 @@ class EnvironmentVariables {
   @IsOptional() @IsString() AI_TOKENLAB_API_KEY?: string;
 
   @IsOptional() @IsIn(['oss', 'minio']) STORAGE_PROVIDER?: string;
+
+  // Web 端 CORS 白名单 + httpOnly Cookie
+  @IsOptional() @IsString() CORS_ORIGINS?: string;
+  @IsOptional() @IsString() COOKIE_DOMAIN?: string;
+  @IsOptional() @IsIn(['lax', 'strict', 'none']) COOKIE_SAMESITE?: string;
+  @IsOptional() @IsIn(['true', 'false']) COOKIE_SECURE?: string;
 }
 
 export function validateEnv(

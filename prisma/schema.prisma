@@ -10,12 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// 用户：微信 openid 建号
+/// 用户：微信 openid 或 Web 手机号建号
+/// openid 可空（Web 用户无 openid，Postgres unique 允许多个 NULL 并存）
+/// phone 唯一，作为跨端统一身份键（同号 Web 登录并入已有微信账号）
 model User {
   id        String   @id @default(cuid())
-  openid    String   @unique
+  openid    String?  @unique
   unionid   String?
-  phone     String?
+  phone     String?  @unique
+  loginType String   @default("wechat") // wechat | phone，标识建号来源
   nickname  String   @default("")
   avatarId  String   @default("lotus")
   avatarUrl String?

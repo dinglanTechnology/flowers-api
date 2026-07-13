@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import {
   toPublicUser,
@@ -6,7 +6,9 @@ import {
 } from '../../common/serializers/user.serializer';
 import { WechatService } from './wechat.service';
 import { TokenService } from './token.service';
+import { SmsService } from './sms.service';
 import { WechatLoginDto } from './dto/wechat-login.dto';
+import { SmsLoginDto } from './dto/sms-login.dto';
 
 export interface LoginResult {
   accessToken: string;
@@ -20,6 +22,7 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly wechat: WechatService,
     private readonly tokens: TokenService,
+    private readonly sms: SmsService,
   ) {}
 
   async wechatLogin(dto: WechatLoginDto): Promise<LoginResult> {
@@ -44,6 +47,39 @@ export class AuthService {
         nickname: dto.nickname ?? '',
         avatarUrl: dto.avatarUrl ?? null,
         phone: phone ?? null,
+      },
+    });
+
+    const { accessToken, refreshToken } = await this.tokens.issue({
+      id: user.id,
+      openid: user.openid,
+    });
+    return { accessToken, refreshToken, user: toPublicUser(user) };
+  }
+
+  /** Web 手机号登录：发送验证码（限流与降级逻辑在 SmsService） */
+  async sendSmsCode(phone: string): Promise<void> {
+    await this.sms.sendCode(phone);
+  }
+
+  /**
+   * Web 手机号验证码登录。
+   * 账号合并：phone 作为跨端统一身份键——若该 phone 已属于某微信账号则直接登入该账号，
+   * 否则新建手机号账号（openid 留空、loginType='phone'）。
+   */
+  async smsLogin(dto: SmsLoginDto): Promise<LoginResult> {
+    if (!(await this.sms.verifyCode(dto.phone, dto.code))) {
+      throw new BadRequestException('验证码错误或已过期');
+    }
+
+    const user = await this.prisma.user.upsert({
+      where: { phone: dto.phone },
+      // 命中已有账号（含微信老账号）即直接登入，不覆盖其资料；昵称仅在建号时使用
+      update: {},
+      create: {
+        phone: dto.phone,
+        loginType: 'phone',
+        nickname: dto.nickname ?? '',
       },
     });
 
