@@ -192,6 +192,9 @@ export class AiImage2StatusDto {
 export class AiCutoutStatusDto {
   status!: string;
   progress!: number;
+  /** 成品透明底图 URL。与 image2 统一用此字段（Web 端推荐读这个） */
+  imageUrl?: string;
+  /** @deprecated 旧字段，保留兼容小程序；新接入请用 imageUrl */
   image?: string;
   error?: string;
 }
