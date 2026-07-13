@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 
 import configuration from './config/configuration';
@@ -48,6 +48,9 @@ import { AppConfigModule } from './modules/app-config/app-config.module';
     // 全局响应包裹 + 异常处理
     { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
     { provide: APP_FILTER, useClass: AllExceptionsFilter },
+    // 全局限流：让 @Throttle() 真正生效（sms/send、ai 接口等按各自 limit 限流）。
+    // 无此 guard 时 @Throttle 仅是元数据、形同虚设。放在鉴权前，未登录请求也受限。
+    { provide: APP_GUARD, useClass: ThrottlerGuard },
     // 全局鉴权（@Public() 跳过）；JwtService 由 AuthModule 导出的 JwtModule 提供
     { provide: APP_GUARD, useClass: JwtAuthGuard },
   ],
