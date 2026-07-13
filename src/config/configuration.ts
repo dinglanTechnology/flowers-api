@@ -22,9 +22,32 @@ export default () => ({
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '90d',
   },
   redisUrl: process.env.REDIS_URL ?? 'redis://localhost:6379',
+  // CORS 白名单（逗号分隔）。为空时开发放行任意 origin（credentials 场景反射请求 origin）。
+  corsOrigins: (process.env.CORS_ORIGINS ?? '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean),
+  // Web 端 httpOnly Cookie 令牌存储配置
+  cookie: {
+    domain: process.env.COOKIE_DOMAIN || undefined, // 跨子域共享时设 .example.com；单域留空
+    // 同站部署(web 与 api 同注册域)用 lax；跨站部署须 none（且 secure 必开）
+    sameSite: (process.env.COOKIE_SAMESITE ?? 'lax') as 'lax' | 'strict' | 'none',
+    // 生产必须 true（Secure，仅 https）。默认按 NODE_ENV 推断
+    secure: process.env.COOKIE_SECURE
+      ? process.env.COOKIE_SECURE === 'true'
+      : process.env.NODE_ENV === 'production',
+  },
   wechat: {
     appId: process.env.WX_APPID ?? '',
     secret: process.env.WX_SECRET ?? '',
+  },
+  // 阿里云短信服务（Web 手机号验证码登录）。未配置 accessKey 时 SmsService 走开发降级（日志打印验证码，不真发）。
+  sms: {
+    accessKeyId: process.env.SMS_ACCESS_KEY_ID ?? '',
+    accessKeySecret: process.env.SMS_ACCESS_KEY_SECRET ?? '',
+    endpoint: process.env.SMS_ENDPOINT ?? 'dysmsapi.aliyuncs.com',
+    signName: process.env.SMS_SIGN_NAME ?? '',
+    templateCode: process.env.SMS_TEMPLATE_CODE ?? '',
   },
   ai: {
     provider: process.env.AI_PROVIDER ?? 'mock',

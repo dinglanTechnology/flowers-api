@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
+import { ACCESS_COOKIE } from '../cookies/cookie.service';
 
 /**
  * 全局鉴权守卫（P1 在 app.module 注册为 APP_GUARD 后生效）。
@@ -68,7 +69,12 @@ export class JwtAuthGuard implements CanActivate {
   }
 
   private extractToken(request: Request): string | undefined {
+    // 优先 Authorization: Bearer（小程序 / API 客户端）
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    if (type === 'Bearer' && token) return token;
+    // 兜底 httpOnly Cookie（Web 端）
+    const cookies = (request as Request & { cookies?: Record<string, string> })
+      .cookies;
+    return cookies?.[ACCESS_COOKIE];
   }
 }
