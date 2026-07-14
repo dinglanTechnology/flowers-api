@@ -36,6 +36,11 @@ export class UsersService {
     ) {
       throw new BadRequestException('昵称未通过内容审核');
     }
+    const exists = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true },
+    });
+    if (!exists) throw new NotFoundException('用户不存在');
     const user = await this.prisma.user.update({
       where: { id: userId },
       data: dto,

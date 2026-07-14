@@ -35,7 +35,7 @@ export class TokenService {
   }
 
   private refreshTtl(): number {
-    return toSeconds(this.config.get<string>('jwt.refreshExpiresIn') ?? '30d');
+    return toSeconds(this.config.getOrThrow<string>('jwt.refreshExpiresIn'));
   }
 
   /**
@@ -48,9 +48,10 @@ export class TokenService {
     if (user.openid) payload.openid = user.openid;
 
     const accessToken = await this.jwt.signAsync(payload, {
-      // 值形如 '2h'，由 @nestjs/jwt 内部 ms() 解析；转型以满足类型
-      expiresIn: (this.config.get<string>('jwt.accessExpiresIn') ??
-        '2h') as unknown as number,
+      // 值形如 '30d'，由 @nestjs/jwt 内部 ms() 解析；转型以满足类型
+      expiresIn: this.config.getOrThrow<string>(
+        'jwt.accessExpiresIn',
+      ) as unknown as number,
     });
 
     const refreshToken = randomBytes(32).toString('base64url');
