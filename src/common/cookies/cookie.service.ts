@@ -45,12 +45,13 @@ export class CookieService {
     tokens: { accessToken: string; refreshToken: string },
   ): void {
     const base = this.baseOptions();
+    // 有效期以 configuration.ts 为单一来源；缺失即配置错误，getOrThrow 响亮报错
     const accessMs = toMs(
-      this.config.get<string>('jwt.accessExpiresIn') ?? '2h',
+      this.config.getOrThrow<string>('jwt.accessExpiresIn'),
       7_200_000,
     );
     const refreshMs = toMs(
-      this.config.get<string>('jwt.refreshExpiresIn') ?? '30d',
+      this.config.getOrThrow<string>('jwt.refreshExpiresIn'),
       2_592_000_000,
     );
     res.cookie(ACCESS_COOKIE, tokens.accessToken, {
