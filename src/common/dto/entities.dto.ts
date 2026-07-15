@@ -121,7 +121,7 @@ export class CustomMaterialDto {
   userId!: string;
   @ApiProperty({ example: '阳台茉莉' })
   name!: string;
-  @ApiProperty({ enum: ['flower', 'greenery', 'line'], example: 'flower' })
+  @ApiProperty({ enum: ['flower', 'greenery', 'line', 'vase'], example: 'flower' })
   category!: string;
   @ApiProperty({ example: 'mat-rose' })
   baseMaterialId!: string;

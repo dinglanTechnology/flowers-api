@@ -30,11 +30,11 @@ export class Image2Dto {
 
 export class CutoutDto {
   @ApiProperty({
-    enum: ['flower', 'greenery', 'line'],
+    enum: ['flower', 'greenery', 'line', 'vase'],
     description: '素材类型',
     example: 'flower',
   })
-  @IsIn(['flower', 'greenery', 'line'])
+  @IsIn(['flower', 'greenery', 'line', 'vase'])
   category!: string;
 
   @ApiProperty({
