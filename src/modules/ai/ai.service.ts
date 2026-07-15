@@ -14,10 +14,11 @@ import { Image2Dto, CutoutDto } from './dto/ai.dto';
 import { checkImageRef, UnsupportedImageError } from './image-format.util';
 
 /**
- * 各类素材的抠图侧重点：三类难点不同，prompt 分开调优。
+ * 各类素材的抠图侧重点：四类难点不同，prompt 分开调优。
  * - flower：柔边花瓣 + 花蕊细节，半透明薄瓣易抠穿/留灰边
  * - greenery：叶片/枝条间的负空间要一起镂空，细茎叶尖易断
  * - line：极细线条/草茎结构，最怕抠断、遗漏、抗锯齿留描边
+ * - vase：花瓶/容器硬边规整，玻璃/釉面的透光、反光与瓶口内壁易误抠
  */
 const CUTOUT_CATEGORY: Record<string, { label: string; focus: string }> = {
   flower: {
@@ -34,6 +35,11 @@ const CUTOUT_CATEGORY: Record<string, { label: string; focus: string }> = {
     label: '线条材料',
     focus:
       '主体是极细的线条 / 枝条 / 草茎，务必完整保留每一根细结构、绝不抠断或遗漏；细边不要因抗锯齿留下灰白描边或光晕。',
+  },
+  vase: {
+    label: '花器',
+    focus:
+      '主体为花瓶 / 容器，硬质规整的瓶身轮廓要干净利落、完整贴合；玻璃或釉面的透光、高光和反光要保留，不要当作背景抠掉；瓶口内壁、把手镂空处的负空间要一并抠透，不留背景色块。',
   },
 };
 

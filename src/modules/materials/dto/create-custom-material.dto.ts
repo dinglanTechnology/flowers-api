@@ -11,8 +11,8 @@ export class CreateCustomMaterialDto {
   @MaxLength(20)
   name!: string;
 
-  @ApiProperty({ enum: ['flower', 'greenery', 'line'], example: 'flower' })
-  @IsIn(['flower', 'greenery', 'line'])
+  @ApiProperty({ enum: ['flower', 'greenery', 'line', 'vase'], example: 'flower' })
+  @IsIn(['flower', 'greenery', 'line', 'vase'])
   category!: string;
 
   @ApiProperty({ description: '基于哪个内置素材', example: 'mat-rose' })

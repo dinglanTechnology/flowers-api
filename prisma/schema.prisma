@@ -104,7 +104,7 @@ model CustomMaterial {
   userId         String
   user           User     @relation(fields: [userId], references: [id])
   name           String
-  category       String // flower | greenery | line
+  category       String // flower | greenery | line | vase
   baseMaterialId String
   baseKind       String?
   imageUrl       String // 透明底成品
