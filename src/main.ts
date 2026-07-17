@@ -12,6 +12,8 @@ async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const config = app.get(ConfigService);
   const corsOrigins = config.get<string[]>('corsOrigins') ?? [];
+  // development 下跨域全放行（含 CSRF 校验豁免）；非 development 按 CORS_ORIGINS 白名单
+  const devCors = config.get<string>('nodeEnv') === 'development';
 
   app.setGlobalPrefix('api');
   // 请求体上限调大：AI 参考图内联 dataURL、/upload 代传、作品缩略图、抠图原图均为 base64 图，
@@ -27,10 +29,10 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  // CORS：配了白名单则按名单放行并允许携带 Cookie；未配置（开发）则反射请求 origin。
+  // CORS：development 反射任意 origin（credentials 下不能用 '*'）；
+  // 非 development 按 CORS_ORIGINS 白名单放行并允许携带 Cookie。
   app.enableCors({
-    origin:
-      corsOrigins.length > 0 ? corsOrigins : (_origin, cb) => cb(null, true), // dev：反射任意 origin（credentials 下不能用 '*'）
+    origin: devCors ? (_origin, cb) => cb(null, true) : corsOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   });
@@ -48,8 +50,8 @@ async function bootstrap(): Promise<void> {
       cookies?.[ACCESS_COOKIE] ?? cookies?.[REFRESH_COOKIE],
     );
     if (!cookieAuthed) return next(); // 无 Cookie 鉴权（如登录本身）不拦
-    // 未配置白名单（开发）时不强制，避免本地联调被拦
-    if (corsOrigins.length === 0) return next();
+    // development 不强制，避免本地联调被拦
+    if (devCors) return next();
     const origin = req.headers.origin;
     if (origin && corsOrigins.includes(origin)) return next();
     return res
