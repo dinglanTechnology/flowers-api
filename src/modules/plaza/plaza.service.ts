@@ -18,14 +18,14 @@ import {
   ViewPlazaDto,
 } from './dto/plaza.dto';
 
-function toPlazaDto(p: PlazaPost, liked = false) {
+/** 列表项：不含 arrangement 大快照（单条可达 ~700KB，列表页不需要，继续编辑走详情接口） */
+function toPlazaFeedItem(p: Omit<PlazaPost, 'arrangement'>, liked = false) {
   return {
     id: p.id,
     userId: p.userId,
     authorName: p.authorName,
     title: p.title,
     theme: p.theme,
-    arrangement: p.arrangement,
     thumbnailUrl: p.thumbnailUrl, // 原图快照（详情/下载等高清场景）
     // 列表小图（480px webp）；非 AI 来源（创作台快照）无缩略图，前端回退 thumbnailUrl
     thumbUrl: aiThumbOf(p.thumbnailUrl),
@@ -36,6 +36,11 @@ function toPlazaDto(p: PlazaPost, liked = false) {
     auditStatus: p.auditStatus,
     createdAt: p.createdAt.toISOString(),
   };
+}
+
+/** 详情/发布响应：含 arrangement 完整快照（点开继续编辑用） */
+function toPlazaDto(p: PlazaPost, liked = false) {
+  return { ...toPlazaFeedItem(p, liked), arrangement: p.arrangement };
 }
 
 /** feed 三种排序的 orderBy 映射，tie-break 严格按需求约定 */
@@ -74,6 +79,9 @@ export class PlazaService {
         orderBy: SORT_ORDER_BY[query.sort ?? 'latest'],
         skip: (page - 1) * size,
         take: size,
+        // 列表页不返回 arrangement（快照单条可达数百 KB，严重拖慢传输与查询）；
+        // 「点开继续编辑」走 GET /plaza/:id 详情接口取完整快照
+        omit: { arrangement: true },
       }),
     ]);
 
@@ -92,7 +100,7 @@ export class PlazaService {
         : new Set<string>();
 
     return {
-      items: rows.map((p) => toPlazaDto(p, likedSet.has(p.id))),
+      items: rows.map((p) => toPlazaFeedItem(p, likedSet.has(p.id))),
       total,
       page,
       size,

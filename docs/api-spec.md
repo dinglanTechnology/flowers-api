@@ -407,7 +407,7 @@ interface AiTask {
 
 #### `GET /api/plaza?page=&size=` ✅ 🔓
 广场 feed，仅返回 `approved`。**公开，无需登录**；带上有效 token 时每条会标注 `liked`（当前用户是否已赞，一次批量查询），未登录时 `liked` 恒为 `false`。
-- 响应：`{ items: PlazaPost[]; total: number; page: number; size: number }`
+- 响应：`{ items: PlazaPost[]; total: number; page: number; size: number }`（feed 列表项**不含 `arrangement`**（快照过大），继续编辑用 `GET /api/plaza/:id` 取）
 
 #### `POST /api/plaza` ✅
 分享作品。标题过微信 `msgSecCheck`（文本）；图片审核当前为放行 stub（见下）。
