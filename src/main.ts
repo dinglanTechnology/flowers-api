@@ -22,12 +22,12 @@ async function bootstrap(): Promise<void> {
     }),
   );
 
-  // CORS 全放开：反射任意 origin（credentials 场景浏览器不认字面量 '*'，反射等效）。
-  // 代价：Cookie 鉴权的写操作不再有 Origin 白名单 CSRF 防护，敏感客户端建议用 Bearer token。
+  // CORS 全放开：反射任意 Origin，并允许浏览器跨站携带 Cookie。
+  // credentials 场景不能返回字面量 "*"，origin: true 会回显请求 Origin。
   app.enableCors({
-    origin: '*',
-    credentials: false,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'HEAD', 'PUT', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   });
 
   const swaggerConfig = new DocumentBuilder()

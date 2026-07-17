@@ -31,15 +31,14 @@ export class CookieService {
 
   private baseOptions(): CookieOptions {
     // 默认 SameSite=None + Secure：跨站（如 localhost 页面 → 远程 dev API）也能种植/回带。
-    // Chrome/Firefox 对 http://localhost 同样放行 Secure Cookie。Cookie 永远 host-only
-    // （未配 COOKIE_DOMAIN 时），不存在"所有域共享"的设法。
+    // Chrome/Firefox 对 http://localhost 同样放行 Secure Cookie。未配 COOKIE_DOMAIN
+    // 时不发送 Domain 属性，让 Cookie 正确绑定到线上 API 主机。
     return {
       httpOnly: true,
       secure: this.config.get<boolean>('cookie.secure') ?? true,
       sameSite:
         this.config.get<'lax' | 'strict' | 'none'>('cookie.sameSite') ?? 'none',
-      domain:
-        this.config.get<string>('cookie.domain') ?? '.localhost,.127.0.0.1',
+      domain: this.config.get<string>('cookie.domain') || undefined,
       path: '/',
     };
   }
