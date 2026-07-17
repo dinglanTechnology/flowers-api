@@ -20,3 +20,15 @@ export async function makeThumbnail(buffer: Buffer): Promise<Buffer | null> {
     return null;
   }
 }
+
+/**
+ * 由 AI 原图 URL 派生缩略图 URL。命名约定：
+ * ai/(image2|cutout)/<taskId>.png → ai/<type>/<taskId>_thumb.webp（上传原图时必然已生成）。
+ * 非 AI 图（创作台快照、直传图）返回 undefined，调用方回退原图字段。
+ */
+export function aiThumbOf(url: string | null | undefined): string | undefined {
+  if (!url) return undefined;
+  return /\/ai\/(?:image2|cutout)\/[^/]+\.png$/.test(url)
+    ? url.replace(/\.png$/, '_thumb.webp')
+    : undefined;
+}

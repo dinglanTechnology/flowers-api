@@ -132,7 +132,8 @@ interface PlazaPost {
   title: string;
   theme: Theme;
   arrangement: Arrangement;
-  thumbnailUrl: string | null;
+  thumbnailUrl: string | null; // 展示图·原图
+  thumbUrl?: string;      // 展示图缩略图（480px webp）；非 AI 来源无缩略图，回退 thumbnailUrl
   likeCount: number;
   liked: boolean;           // 当前登录用户是否已赞
   auditStatus: AuditStatus; // feed 仅返回 approved

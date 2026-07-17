@@ -10,6 +10,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { RedisService } from '../../redis/redis.service';
 import { WechatSecurityService } from '../../wechat/wechat-security.service';
 import { secondsToNextMidnight, todayKey } from '../../common/utils/day.util';
+import { aiThumbOf } from '../../common/utils/image.util';
 import {
   PlazaFeedDto,
   PlazaSort,
@@ -25,7 +26,9 @@ function toPlazaDto(p: PlazaPost, liked = false) {
     title: p.title,
     theme: p.theme,
     arrangement: p.arrangement,
-    thumbnailUrl: p.thumbnailUrl,
+    thumbnailUrl: p.thumbnailUrl, // 原图快照（详情/下载等高清场景）
+    // 列表小图（480px webp）；非 AI 来源（创作台快照）无缩略图，前端回退 thumbnailUrl
+    thumbUrl: aiThumbOf(p.thumbnailUrl),
     likeCount: p.likeCount,
     viewCount: p.viewCount,
     workId: p.workId,
@@ -259,7 +262,7 @@ export class PlazaService {
     }
   }
 
-  /** 某作品最新一张 succeeded 的 image2 展示图（优先缩略图）URL，无则 null */
+  /** 某作品最新一张 succeeded 的 image2 成品图（原图）URL，无则 null */
   private async latestAiImageUrl(
     userId: string,
     workId: string,
@@ -267,8 +270,8 @@ export class PlazaService {
     const task = await this.prisma.aiTask.findFirst({
       where: { userId, workId, type: 'image2', status: 'succeeded' },
       orderBy: { createdAt: 'desc' },
-      select: { resultUrl: true, thumbUrl: true },
+      select: { resultUrl: true },
     });
-    return task ? (task.thumbUrl ?? task.resultUrl) : null;
+    return task?.resultUrl ?? null;
   }
 }
