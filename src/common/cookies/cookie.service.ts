@@ -30,15 +30,16 @@ export class CookieService {
   constructor(private readonly config: ConfigService) {}
 
   private baseOptions(): CookieOptions {
-    // development（localhost 联调）强制 host-only Cookie（不下发 domain 属性）：
-    // 浏览器会拒绝 Domain=localhost/IP 的 Cookie，只有不带 domain 才能种上
-    const isDev = this.config.get<string>('nodeEnv') === 'development';
+    // 默认 SameSite=None + Secure：跨站（如 localhost 页面 → 远程 dev API）也能种植/回带。
+    // Chrome/Firefox 对 http://localhost 同样放行 Secure Cookie。Cookie 永远 host-only
+    // （未配 COOKIE_DOMAIN 时），不存在"所有域共享"的设法。
     return {
       httpOnly: true,
-      secure: this.config.get<boolean>('cookie.secure') ?? false,
+      secure: this.config.get<boolean>('cookie.secure') ?? true,
       sameSite:
-        this.config.get<'lax' | 'strict' | 'none'>('cookie.sameSite') ?? 'lax',
-      domain: isDev ? undefined : this.config.get<string>('cookie.domain'),
+        this.config.get<'lax' | 'strict' | 'none'>('cookie.sameSite') ?? 'none',
+      domain:
+        this.config.get<string>('cookie.domain') ?? '.localhost,.127.0.0.1',
       path: '/',
     };
   }

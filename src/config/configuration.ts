@@ -22,21 +22,14 @@ export default () => ({
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? '90d',
   },
   redisUrl: process.env.REDIS_URL ?? 'redis://localhost:6379',
-  // CORS 白名单（逗号分隔）。为空时开发放行任意 origin（credentials 场景反射请求 origin）。
-  corsOrigins: (process.env.CORS_ORIGINS ?? '')
-    .split(',')
-    .map((s) => s.trim())
-    .filter(Boolean),
   // Web 端 httpOnly Cookie 令牌存储配置
   cookie: {
-    domain: process.env.COOKIE_DOMAIN || undefined, // 跨子域共享时设 .example.com；单域留空
-    // 同站部署(web 与 api 同注册域)用 lax；跨站部署须 none（且 secure 必开）
-    sameSite: (process.env.COOKIE_SAMESITE ?? 'lax') as
+    domain: process.env.COOKIE_DOMAIN || undefined, // 跨子域共享时设 .example.com；留空=host-only
+    // 默认 none：跨站（如 localhost 页面 → 远程 dev API）也能回带 Cookie。同站部署可设 lax 收紧
+    sameSite: (process.env.COOKIE_SAMESITE ?? 'none') as
       'lax' | 'strict' | 'none',
-    // 生产必须 true（Secure，仅 https）。默认按 NODE_ENV 推断
-    secure: process.env.COOKIE_SECURE
-      ? process.env.COOKIE_SECURE === 'true'
-      : process.env.NODE_ENV === 'production',
+    // SameSite=None 必须 Secure。Chrome/Firefox 对 http://localhost 也放行 Secure Cookie
+    secure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : true,
   },
   wechat: {
     appId: process.env.WX_APPID ?? '',
