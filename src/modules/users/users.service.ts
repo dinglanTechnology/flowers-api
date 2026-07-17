@@ -215,11 +215,12 @@ export class UsersService {
         status: 'succeeded',
       },
       orderBy: { createdAt: 'desc' },
-      select: { workId: true, resultUrl: true },
+      select: { workId: true, resultUrl: true, thumbUrl: true },
     });
     for (const t of tasks) {
-      if (t.workId && t.resultUrl && !map.has(t.workId)) {
-        map.set(t.workId, t.resultUrl);
+      const url = t.thumbUrl ?? t.resultUrl;
+      if (t.workId && url && !map.has(t.workId)) {
+        map.set(t.workId, url);
       }
     }
     return map;

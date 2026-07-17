@@ -130,6 +130,7 @@ model AiTask {
   prompt         String?
   inputImageUrl  String?
   resultUrl      String?
+  thumbUrl       String? // 缩略图（480px webp），列表/封面场景代替原图
   error          String?
   workId         String? // 关联作品（不加 FK，作品删除后任务保留）；NULL=未保存草稿
   meta           Json? // size / baseMaterialId / category 等

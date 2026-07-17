@@ -102,7 +102,7 @@ docker logs -f flowers-api
 | `OSS_BUCKET` | 是 | | 存储桶名 |
 | `OSS_ACCESS_KEY_ID` | 是 | ✅ | 阿里云 AccessKey ID |
 | `OSS_ACCESS_KEY_SECRET` | 是 | ✅ | 阿里云 AccessKey Secret |
-| `OSS_CDN_BASE` | 否 | | 可选，图片 CDN 域名 |
+| `OSS_CDN_BASE` | 否 | | 可选，图片 CDN/自定义域名；生产已绑 `https://flower-prod.zhilingtech.com`（新签发的 URL 走该域名，并消除 OSS 默认域名的强制下载） |
 
 > 程序启动会校验关键变量，缺失会 fail-fast 并打印缺哪个。
 

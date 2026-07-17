@@ -259,7 +259,7 @@ export class PlazaService {
     }
   }
 
-  /** 某作品最新一张 succeeded 的 image2 成品图 URL，无则 null */
+  /** 某作品最新一张 succeeded 的 image2 展示图（优先缩略图）URL，无则 null */
   private async latestAiImageUrl(
     userId: string,
     workId: string,
@@ -267,8 +267,8 @@ export class PlazaService {
     const task = await this.prisma.aiTask.findFirst({
       where: { userId, workId, type: 'image2', status: 'succeeded' },
       orderBy: { createdAt: 'desc' },
-      select: { resultUrl: true },
+      select: { resultUrl: true, thumbUrl: true },
     });
-    return task?.resultUrl ?? null;
+    return task ? (task.thumbUrl ?? task.resultUrl) : null;
   }
 }

@@ -51,7 +51,12 @@ export class OssStorage implements StorageProvider {
   }
 
   async put(key: string, buffer: Buffer, contentType: string): Promise<string> {
-    const result = await this.client.put(key, buffer, { mime: contentType });
+    // key 均为一次性（taskId/UUID），内容不可变，放心长缓存：
+    // 之前不写 Cache-Control，浏览器每次访问都重新拉原图（AI 图动辄 2MB+）。
+    const result = await this.client.put(key, buffer, {
+      mime: contentType,
+      headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
+    });
     return this.cfg.cdnBase ? `${this.cfg.cdnBase}/${key}` : result.url;
   }
 

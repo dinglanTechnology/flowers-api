@@ -168,6 +168,7 @@ export class AiService {
       status: t.status,
       progress: t.progress,
       imageUrl: t.resultUrl ?? undefined,
+      thumbUrl: t.thumbUrl ?? undefined, // 列表/预览用缩略图（480px webp）
       error: t.error ?? undefined,
       remaining, // 今日剩余额度；成功后的「今日还剩 X 次」toast 取此值
     };
@@ -180,6 +181,7 @@ export class AiService {
       status: t.status,
       progress: t.progress,
       imageUrl: url, // 与 image2 统一；Web 端读这个
+      thumbUrl: t.thumbUrl ?? undefined,
       image: url, // @deprecated 兼容小程序旧字段
       error: t.error ?? undefined,
     };

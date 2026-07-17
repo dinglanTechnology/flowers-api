@@ -11,6 +11,7 @@ import {
   type StorageProvider,
 } from '../../storage/storage.interface';
 import { PrismaService } from '../../prisma/prisma.service';
+import { makeThumbnail } from '../../common/utils/image.util';
 
 export const AI_QUEUE = 'ai';
 
@@ -97,9 +98,23 @@ export class AiProcessor extends WorkerHost {
     const key = `ai/${job.name}/${taskId}.png`;
     const url = await this.storage.put(key, buffer, 'image/png');
 
+    // 同步存一张缩略图：列表/封面场景直接用小图，不必拉 2MB+ 的原图。
+    // 失败不阻塞任务（原图已可用），仅记日志。
+    const thumb = await makeThumbnail(buffer);
+    let thumbUrl: string | null = null;
+    if (thumb) {
+      thumbUrl = await this.storage.put(
+        `ai/${job.name}/${taskId}_thumb.webp`,
+        thumb,
+        'image/webp',
+      );
+    } else {
+      this.logger.warn(`AI 任务 ${taskId} 缩略图生成失败，仅保留原图`);
+    }
+
     await this.prisma.aiTask.update({
       where: { id: taskId },
-      data: { status: 'succeeded', progress: 100, resultUrl: url },
+      data: { status: 'succeeded', progress: 100, resultUrl: url, thumbUrl },
     });
   }
 

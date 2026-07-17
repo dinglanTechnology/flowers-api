@@ -368,7 +368,7 @@ interface AiTask {
 - 响应：`{ taskId, status, progress }`
 
 #### `GET /api/image2/:taskId` ✅
-- 响应：`{ status, progress, imageUrl?, error? }`
+- 响应：`{ status, progress, imageUrl?, thumbUrl?, error? }`（`thumbUrl` = 480px webp 缩略图，列表/预览用）
 
 #### `POST /api/cutout-flower` ✅
 上传真实花材照片，AI 抠图生成透明底素材。前端只传 类型 / 花材名 / 照片链接，其余（含 prompt、透明底、去背模型）后端处理。
@@ -383,7 +383,7 @@ interface AiTask {
 - 响应：`{ taskId, status, progress }`
 
 #### `GET /api/cutout-flower/:taskId` ✅
-- 响应：`{ status, progress, image?, error? }`（`image` = 透明底图 URL）
+- 响应：`{ status, progress, image?, thumbUrl?, error? }`（`image` = 透明底图 URL；`thumbUrl` = 480px webp 缩略图）
 
 ---
 
