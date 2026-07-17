@@ -72,8 +72,8 @@ export class JwtAuthGuard implements CanActivate {
     // 优先 Authorization: Bearer（小程序 / API 客户端）
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     if (type === 'Bearer' && token) return token;
-    // 兜底 httpOnly Cookie（Web 端）
-    const cookies = (request as Request & { cookies?: Record<string, string> })
+    // 兜底 httpOnly Cookie（Web 端）；Express 类型里 cookies 是 any，先收窄
+    const cookies = (request as unknown as { cookies?: Record<string, string> })
       .cookies;
     return cookies?.[ACCESS_COOKIE];
   }

@@ -42,7 +42,10 @@ export class TokenService {
    * 签发 access + refresh 令牌对，并将 refresh 落库 Redis。
    * openid 可选：微信用户带 openid，Web 手机号用户无 openid（缺省时不写入 JWT / Redis）。
    */
-  async issue(user: { id: string; openid?: string | null }): Promise<TokenPair> {
+  async issue(user: {
+    id: string;
+    openid?: string | null;
+  }): Promise<TokenPair> {
     // openid 缺省时不写入 payload，避免 web 用户携带 openid=undefined
     const payload: { sub: string; openid?: string } = { sub: user.id };
     if (user.openid) payload.openid = user.openid;

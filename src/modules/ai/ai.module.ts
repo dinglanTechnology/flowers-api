@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BullModule } from '@nestjs/bullmq';
 import { AiController } from './ai.controller';
 import { AiService } from './ai.service';
+import { AiQuotaService } from './ai-quota.service';
 import { AiProcessor, AI_QUEUE } from './ai.processor';
 import { AI_PROVIDER } from './providers/ai-provider.interface';
 import { MockProvider } from './providers/mock.provider';
@@ -61,6 +62,7 @@ function parseRedis(url?: string): {
   controllers: [AiController],
   providers: [
     AiService,
+    AiQuotaService,
     AiProcessor,
     {
       provide: AI_PROVIDER,

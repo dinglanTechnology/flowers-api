@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { randomInt } from 'crypto';
 import Dysmsapi, { SendSmsRequest } from '@alicloud/dysmsapi20170525';
@@ -45,7 +41,9 @@ export class SmsService {
           )
         : null;
     if (!this.client) {
-      this.logger.warn('阿里云短信未配置，发码走开发降级（仅打印日志，不真发）');
+      this.logger.warn(
+        '阿里云短信未配置，发码走开发降级（仅打印日志，不真发）',
+      );
     }
   }
 
@@ -82,7 +80,10 @@ export class SmsService {
         templateCode: this.templateCode,
         templateParam: JSON.stringify({ code }),
       });
-      const res = await this.client.sendSmsWithOptions(req, new RuntimeOptions({}));
+      const res = await this.client.sendSmsWithOptions(
+        req,
+        new RuntimeOptions({}),
+      );
       if (res.body?.code !== 'OK') {
         // 下发失败：清掉冷却，允许用户立即重试
         await this.redis.del(COOLDOWN_PREFIX + phone);

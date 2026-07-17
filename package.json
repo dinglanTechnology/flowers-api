@@ -26,6 +26,15 @@
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio"
   },
+  "jest": {
+    "moduleFileExtensions": ["js", "json", "ts"],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "testEnvironment": "node"
+  },
   "dependencies": {
     "@alicloud/dysmsapi20170525": "^4.6.0",
     "@alicloud/openapi-client": "^0.4.15",

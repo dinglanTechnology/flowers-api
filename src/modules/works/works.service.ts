@@ -92,8 +92,47 @@ export class WorksService {
 
   async remove(userId: string, id: string) {
     await this.ensureOwned(userId, id);
+    // 关联的广场发布由 PlazaPost.workId 的 onDelete: Cascade 一并撤回
     await this.prisma.work.delete({ where: { id } });
     return { ok: true };
+  }
+
+  /**
+   * 下载弹窗图片列表：最新 AI 图在前、更早 AI 图随后、创作台预览图垫底；
+   * 无 AI 图时只有预览图（前端据此隐藏缩略图区）。
+   */
+  async images(userId: string, id: string) {
+    const work = await this.ensureOwned(userId, id);
+    const tasks = await this.prisma.aiTask.findMany({
+      where: {
+        userId,
+        workId: id,
+        type: 'image2',
+        status: 'succeeded',
+        resultUrl: { not: null },
+      },
+      orderBy: { createdAt: 'desc' },
+      select: { id: true, resultUrl: true, createdAt: true },
+    });
+    const images: {
+      type: 'ai' | 'preview';
+      taskId?: string;
+      url: string;
+      createdAt: string;
+    }[] = tasks.map((t) => ({
+      type: 'ai' as const,
+      taskId: t.id,
+      url: t.resultUrl as string,
+      createdAt: t.createdAt.toISOString(),
+    }));
+    if (work.thumbnailUrl) {
+      images.push({
+        type: 'preview',
+        url: work.thumbnailUrl,
+        createdAt: work.updatedAt.toISOString(),
+      });
+    }
+    return { images };
   }
 
   private async ensureOwned(userId: string, id: string): Promise<Work> {

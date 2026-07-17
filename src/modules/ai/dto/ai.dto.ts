@@ -26,6 +26,16 @@ export class Image2Dto {
   @IsOptional()
   @IsString()
   size?: string;
+
+  @ApiProperty({
+    required: false,
+    description:
+      '关联作品 id（每日 5 次额度按 用户×作品 计）；不传按未保存草稿共享一个额度桶',
+    example: 'ckwork123',
+  })
+  @IsOptional()
+  @IsString()
+  workId?: string;
 }
 
 export class CutoutDto {

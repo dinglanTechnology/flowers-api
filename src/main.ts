@@ -6,10 +6,7 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import cookieParser from 'cookie-parser';
 import type { NextFunction, Request, Response } from 'express';
 import { AppModule } from './app.module';
-import {
-  ACCESS_COOKIE,
-  REFRESH_COOKIE,
-} from './common/cookies/cookie.service';
+import { ACCESS_COOKIE, REFRESH_COOKIE } from './common/cookies/cookie.service';
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -33,9 +30,7 @@ async function bootstrap(): Promise<void> {
   // CORS：配了白名单则按名单放行并允许携带 Cookie；未配置（开发）则反射请求 origin。
   app.enableCors({
     origin:
-      corsOrigins.length > 0
-        ? corsOrigins
-        : (_origin, cb) => cb(null, true), // dev：反射任意 origin（credentials 下不能用 '*'）
+      corsOrigins.length > 0 ? corsOrigins : (_origin, cb) => cb(null, true), // dev：反射任意 origin（credentials 下不能用 '*'）
     credentials: true,
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
   });

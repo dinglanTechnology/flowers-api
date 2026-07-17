@@ -10,6 +10,7 @@ import { JobsOptions, Queue } from 'bullmq';
 import { AiTask } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { AI_QUEUE } from './ai.processor';
+import { AiQuotaService } from './ai-quota.service';
 import { Image2Dto, CutoutDto } from './dto/ai.dto';
 import { checkImageRef, UnsupportedImageError } from './image-format.util';
 
@@ -79,6 +80,7 @@ export class AiService {
   constructor(
     private readonly prisma: PrismaService,
     @InjectQueue(AI_QUEUE) private readonly queue: Queue,
+    private readonly quota: AiQuotaService,
     config: ConfigService,
   ) {
     this.jobOpts = {
@@ -104,6 +106,9 @@ export class AiService {
   async submitImage2(userId: string, dto: Image2Dto) {
     const image = dto.referenceImageUrl ?? dto.referenceImage;
     this.assertFriendlyImage(image);
+    const workId = dto.workId ?? null;
+    // 每日额度卡控（用户×作品×自然日，成功+在途 ≥5 抛 429）
+    await this.quota.assertAvailable(userId, workId);
     const task = await this.prisma.aiTask.create({
       data: {
         userId,
@@ -112,6 +117,7 @@ export class AiService {
         progress: 5,
         prompt: dto.prompt,
         inputImageUrl: dto.referenceImageUrl ?? null,
+        workId,
         meta: { size: dto.size ?? '1024x1536' },
       },
     });
@@ -120,7 +126,13 @@ export class AiService {
       { taskId: task.id, prompt: dto.prompt, image },
       this.jobOpts,
     );
-    return { taskId: task.id, status: task.status, progress: task.progress };
+    const remaining = await this.quota.remaining(userId, workId);
+    return {
+      taskId: task.id,
+      status: task.status,
+      progress: task.progress,
+      remaining,
+    };
   }
 
   async submitCutout(userId: string, dto: CutoutDto) {
@@ -151,11 +163,13 @@ export class AiService {
 
   async getImage2Task(userId: string, taskId: string) {
     const t = await this.ensureOwned(userId, taskId);
+    const remaining = await this.quota.remaining(userId, t.workId);
     return {
       status: t.status,
       progress: t.progress,
       imageUrl: t.resultUrl ?? undefined,
       error: t.error ?? undefined,
+      remaining, // 今日剩余额度；成功后的「今日还剩 X 次」toast 取此值
     };
   }
 

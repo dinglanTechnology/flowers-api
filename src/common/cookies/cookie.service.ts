@@ -33,7 +33,8 @@ export class CookieService {
     return {
       httpOnly: true,
       secure: this.config.get<boolean>('cookie.secure') ?? false,
-      sameSite: this.config.get<'lax' | 'strict' | 'none'>('cookie.sameSite') ?? 'lax',
+      sameSite:
+        this.config.get<'lax' | 'strict' | 'none'>('cookie.sameSite') ?? 'lax',
       domain: this.config.get<string>('cookie.domain'),
       path: '/',
     };

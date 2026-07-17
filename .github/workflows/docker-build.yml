@@ -59,7 +59,7 @@ jobs:
             "${{ secrets.JENKINS_URL }}/crumbIssuer/api/json" | jq -r .crumb)
           echo "::set-output name=crumb::$CRUMB"
 
-      - name: Notify Jenkins for uat branch
+      - name: Notify Jenkins for develop branch
         env:
           CRUMB: ${{ steps.get-crumb.outputs.crumb }}
         run: |

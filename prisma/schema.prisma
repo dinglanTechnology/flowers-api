@@ -33,17 +33,18 @@ model User {
 
 /// 作品：插花快照 + 日历聚合
 model Work {
-  id           String   @id @default(cuid())
+  id           String      @id @default(cuid())
   userId       String
-  user         User     @relation(fields: [userId], references: [id])
-  title        String   @default("今日花事")
-  theme        String   @default("night")
+  user         User        @relation(fields: [userId], references: [id])
+  title        String      @default("今日花事")
+  theme        String      @default("night")
   vaseId       String
   arrangement  Json // { items[], theme, vaseId, ... } 插花数据快照
   thumbnailUrl String?
   dateKey      String // "2026-07-08"，按天聚合用
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  posts        PlazaPost[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@index([userId, dateKey])
   @@index([userId, createdAt])
@@ -60,11 +61,15 @@ model PlazaPost {
   arrangement  Json // 支持"点开继续编辑"
   thumbnailUrl String?
   likeCount    Int         @default(0) // 冗余计数，随 PlazaLike 增删维护
+  viewCount    Int         @default(0) // 冗余计数，随浏览上报去重后递增
+  workId       String? // 来源作品；作品删除时级联撤回本帖
+  work         Work?    @relation(fields: [workId], references: [id], onDelete: Cascade)
   likes        PlazaLike[]
   auditStatus  String      @default("pending") // pending | approved | rejected
   createdAt    DateTime    @default(now())
 
   @@index([auditStatus, createdAt])
+  @@index([workId])
 }
 
 /// 点赞记录（userId + postId 唯一，防重复赞、支持取消）
@@ -126,9 +131,11 @@ model AiTask {
   inputImageUrl  String?
   resultUrl      String?
   error          String?
+  workId         String? // 关联作品（不加 FK，作品删除后任务保留）；NULL=未保存草稿
   meta           Json? // size / baseMaterialId / category 等
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   @@index([userId, createdAt])
+  @@index([userId, workId, createdAt])
 }

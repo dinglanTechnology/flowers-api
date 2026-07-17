@@ -115,8 +115,6 @@ export class AiProcessor extends WorkerHost {
         this.jobTimeoutMs,
       );
     });
-    return Promise.race([p, timeout]).finally(() =>
-      clearTimeout(timer),
-    ) as Promise<T>;
+    return Promise.race([p, timeout]).finally(() => clearTimeout(timer));
   }
 }

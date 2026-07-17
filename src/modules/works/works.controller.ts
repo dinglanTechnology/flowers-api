@@ -11,7 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { ApiData } from '../../common/dto/api-response.dto';
-import { OkDto, WorkDto } from '../../common/dto/entities.dto';
+import { OkDto, WorkDto, WorkImagesDto } from '../../common/dto/entities.dto';
 import { WorksService } from './works.service';
 import { CreateWorkDto } from './dto/create-work.dto';
 import { UpdateWorkDto } from './dto/update-work.dto';
@@ -46,6 +46,13 @@ export class WorksController {
   @ApiData(WorkDto, { errors: [403, 404] })
   findOne(@CurrentUser('userId') userId: string, @Param('id') id: string) {
     return this.worksService.findOne(userId, id);
+  }
+
+  /** 下载弹窗图片列表：AI 图新→旧在前，创作台预览图垫底 */
+  @Get(':id/images')
+  @ApiData(WorkImagesDto, { errors: [403, 404] })
+  images(@CurrentUser('userId') userId: string, @Param('id') id: string) {
+    return this.worksService.images(userId, id);
   }
 
   /** 保存作品 */

@@ -2,12 +2,20 @@ import {
   BadRequestException,
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { Prisma, PlazaPost } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
+import { RedisService } from '../../redis/redis.service';
 import { WechatSecurityService } from '../../wechat/wechat-security.service';
-import { PlazaFeedDto, SharePlazaDto } from './dto/plaza.dto';
+import { secondsToNextMidnight, todayKey } from '../../common/utils/day.util';
+import {
+  PlazaFeedDto,
+  PlazaSort,
+  SharePlazaDto,
+  ViewPlazaDto,
+} from './dto/plaza.dto';
 
 function toPlazaDto(p: PlazaPost, liked = false) {
   return {
@@ -19,17 +27,36 @@ function toPlazaDto(p: PlazaPost, liked = false) {
     arrangement: p.arrangement,
     thumbnailUrl: p.thumbnailUrl,
     likeCount: p.likeCount,
+    viewCount: p.viewCount,
+    workId: p.workId,
     liked,
     auditStatus: p.auditStatus,
     createdAt: p.createdAt.toISOString(),
   };
 }
 
+/** feed 三种排序的 orderBy 映射，tie-break 严格按需求约定 */
+const SORT_ORDER_BY: Record<
+  PlazaSort,
+  Prisma.PlazaPostOrderByWithRelationInput[]
+> = {
+  latest: [{ createdAt: 'desc' }, { likeCount: 'desc' }],
+  mostLiked: [{ likeCount: 'desc' }, { createdAt: 'desc' }],
+  hottest: [
+    { viewCount: 'desc' },
+    { likeCount: 'desc' },
+    { createdAt: 'desc' },
+  ],
+};
+
 @Injectable()
 export class PlazaService {
+  private readonly logger = new Logger(PlazaService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly security: WechatSecurityService,
+    private readonly redis: RedisService,
   ) {}
 
   async feed(userId: string | undefined, query: PlazaFeedDto) {
@@ -41,7 +68,7 @@ export class PlazaService {
       this.prisma.plazaPost.count({ where }),
       this.prisma.plazaPost.findMany({
         where,
-        orderBy: { createdAt: 'desc' },
+        orderBy: SORT_ORDER_BY[query.sort ?? 'latest'],
         skip: (page - 1) * size,
         take: size,
       }),
@@ -73,10 +100,11 @@ export class PlazaService {
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new NotFoundException('用户不存在');
 
-    let title: string;
+    const title = dto.title;
     let theme: string;
     let arrangement: Prisma.InputJsonValue;
     let thumbnailUrl: string | null;
+    let workId: string | null = null;
 
     if (dto.workId) {
       const work = await this.prisma.work.findUnique({
@@ -85,17 +113,18 @@ export class PlazaService {
       if (!work) throw new NotFoundException('作品不存在');
       if (work.userId !== userId)
         throw new ForbiddenException('无权分享该作品');
-      title = work.title;
+      workId = work.id;
       theme = work.theme;
       arrangement = work.arrangement as Prisma.InputJsonValue;
-      thumbnailUrl = work.thumbnailUrl;
+      // 发布展示图优先取该作品最新一张 AI 图，没有则用创作台预览图
+      thumbnailUrl =
+        (await this.latestAiImageUrl(userId, work.id)) ?? work.thumbnailUrl;
     } else {
-      if (!dto.title || !dto.theme || !dto.arrangement) {
+      if (!dto.theme || !dto.arrangement) {
         throw new BadRequestException(
-          '缺少 workId 或作品信息（title/theme/arrangement）',
+          '缺少 workId 或作品信息（theme/arrangement）',
         );
       }
-      title = dto.title;
       theme = dto.theme;
       arrangement = dto.arrangement as Prisma.InputJsonValue;
       thumbnailUrl = dto.thumbnail ?? null;
@@ -117,6 +146,7 @@ export class PlazaService {
         theme,
         arrangement,
         thumbnailUrl,
+        workId,
         auditStatus: 'approved',
       },
     });
@@ -131,6 +161,57 @@ export class PlazaService {
       where: { userId_postId: { userId, postId: id } },
     }));
     return toPlazaDto(post, liked);
+  }
+
+  /** 撤回发布：仅作者本人；点赞记录随 PlazaLike 的 Cascade 一并清理 */
+  async remove(userId: string, id: string) {
+    const post = await this.prisma.plazaPost.findUnique({ where: { id } });
+    if (!post) throw new NotFoundException('发布不存在');
+    if (post.userId !== userId) throw new ForbiddenException('无权撤回该发布');
+    await this.prisma.plazaPost.delete({ where: { id } });
+    return { ok: true };
+  }
+
+  /**
+   * 浏览量上报（作品详情曝光）：同一 viewer（登录按 userId、匿名按 anonId）
+   * 对同一帖子每个自然日（Asia/Shanghai）最多计 1 次。
+   * Redis 去重 + DB 冗余计数；Redis 故障时降级为直接计数（宁可多计不丢计）。
+   */
+  async recordView(userId: string | undefined, id: string, dto: ViewPlazaDto) {
+    const post = await this.prisma.plazaPost.findUnique({ where: { id } });
+    if (!post || post.auditStatus !== 'approved')
+      throw new NotFoundException('作品不存在');
+
+    const viewer = userId
+      ? `u:${userId}`
+      : dto.anonId
+        ? `a:${dto.anonId}`
+        : null;
+    if (!viewer) throw new BadRequestException('缺少访客标识');
+
+    let counted = true;
+    try {
+      const key = `pv:${todayKey()}:${id}:${viewer}`;
+      const set = await this.redis.set(
+        key,
+        '1',
+        'EX',
+        secondsToNextMidnight() + 300,
+        'NX',
+      );
+      counted = set === 'OK';
+    } catch (err) {
+      this.logger.warn(`浏览去重 Redis 异常，降级直接计数: ${String(err)}`);
+    }
+
+    if (counted) {
+      const updated = await this.prisma.plazaPost.update({
+        where: { id },
+        data: { viewCount: { increment: 1 } },
+      });
+      return { counted: true, viewCount: updated.viewCount };
+    }
+    return { counted: false, viewCount: post.viewCount };
   }
 
   /** 点赞/取消赞（幂等 toggle）：liked 表示本次操作后的状态 */
@@ -176,5 +257,18 @@ export class PlazaService {
       }
       throw err;
     }
+  }
+
+  /** 某作品最新一张 succeeded 的 image2 成品图 URL，无则 null */
+  private async latestAiImageUrl(
+    userId: string,
+    workId: string,
+  ): Promise<string | null> {
+    const task = await this.prisma.aiTask.findFirst({
+      where: { userId, workId, type: 'image2', status: 'succeeded' },
+      orderBy: { createdAt: 'desc' },
+      select: { resultUrl: true },
+    });
+    return task?.resultUrl ?? null;
   }
 }

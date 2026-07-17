@@ -41,10 +41,7 @@ export class WechatSecurityService {
    * openid 缺省（Web 手机号用户）时无法调用微信审核，短期显式放行并记日志。
    * TODO(P0-3 中期): Web 用户改走阿里云内容安全 Green（textScan）。
    */
-  async checkText(
-    content: string,
-    openid?: string | null,
-  ): Promise<boolean> {
+  async checkText(content: string, openid?: string | null): Promise<boolean> {
     if (!openid) {
       this.logger.warn('无 openid（Web 用户），跳过微信文本审核');
       return true;

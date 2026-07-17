@@ -73,7 +73,13 @@ export function checkImageBytes(buf: Buffer): void {
 
 /** 按魔数识别图片真实格式 */
 function sniffImage(b: Buffer): { label: string; friendly: boolean } {
-  if (b.length >= 8 && b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47)
+  if (
+    b.length >= 8 &&
+    b[0] === 0x89 &&
+    b[1] === 0x50 &&
+    b[2] === 0x4e &&
+    b[3] === 0x47
+  )
     return { label: 'PNG', friendly: true };
   if (b.length >= 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff)
     return { label: 'JPEG', friendly: true };
@@ -98,7 +104,8 @@ function sniffImage(b: Buffer): { label: string; friendly: boolean } {
   // ISO-BMFF 容器：字节 4-8 为 'ftyp'，brand 区分 HEIC/HEIF/AVIF
   if (b.length >= 12 && b.toString('ascii', 4, 8) === 'ftyp') {
     const brand = b.toString('ascii', 8, 12);
-    if (/hei|mif1|msf1/i.test(brand)) return { label: 'HEIC/HEIF', friendly: false };
+    if (/hei|mif1|msf1/i.test(brand))
+      return { label: 'HEIC/HEIF', friendly: false };
     if (/avif|avis/i.test(brand)) return { label: 'AVIF', friendly: false };
     return { label: `ftyp:${brand}`, friendly: false };
   }

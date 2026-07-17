@@ -31,7 +31,8 @@ export default () => ({
   cookie: {
     domain: process.env.COOKIE_DOMAIN || undefined, // 跨子域共享时设 .example.com；单域留空
     // 同站部署(web 与 api 同注册域)用 lax；跨站部署须 none（且 secure 必开）
-    sameSite: (process.env.COOKIE_SAMESITE ?? 'lax') as 'lax' | 'strict' | 'none',
+    sameSite: (process.env.COOKIE_SAMESITE ?? 'lax') as
+      'lax' | 'strict' | 'none',
     // 生产必须 true（Secure，仅 https）。默认按 NODE_ENV 推断
     secure: process.env.COOKIE_SECURE
       ? process.env.COOKIE_SECURE === 'true'
