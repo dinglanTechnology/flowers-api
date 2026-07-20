@@ -1,2586 +1,806 @@
 {
-  "mat-camellia": [
+  "mat-dahlia": [
     {
-      "styleOption": "camellia-full-mid",
-      "name": "山茶盛放",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#d96f7d",
-        "#f2c4be",
-        "#8a3f4a"
-      ]
+      "styleOption": "dahlia-full",
+      "name": "大丽花盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "camellia-bud-short",
-      "name": "山茶花苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "dahlia-half",
+      "name": "大丽花半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "camellia-cluster-mid",
-      "name": "三朵山茶",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "camellia-tall-long",
-      "name": "高枝山茶",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "camellia-wide-mid",
-      "name": "横展山茶",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#d96f7d",
-        "#f2c4be",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "camellia-droop-long",
-      "name": "垂枝山茶",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "dahlia-bud",
+      "name": "大丽花花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-peony": [
-    {
-      "styleOption": "peony-full-mid",
-      "name": "芍药盛放",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#e8a1b2",
-        "#f5d0ca",
-        "#b85f76"
-      ]
-    },
-    {
-      "styleOption": "peony-bud-short",
-      "name": "芍药花苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "peony-cluster-mid",
-      "name": "芍药小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "peony-tall-long",
-      "name": "高枝芍药",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "peony-wide-mid",
-      "name": "横展芍药",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#e8a1b2",
-        "#f5d0ca",
-        "#b85f76"
-      ]
-    },
-    {
-      "styleOption": "peony-droop-long",
-      "name": "垂枝芍药",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-orchid": [
-    {
-      "styleOption": "orchid-open",
-      "name": "弧枝开花",
-      "morph": "orchid-open",
-      "lengthScale": 100,
-      "colors": [
-        "#f2e8c9",
-        "#c58fb1",
-        "#6e8c64"
-      ]
-    },
-    {
-      "styleOption": "orchid-bud",
-      "name": "含苞短枝",
-      "morph": "orchid-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "orchid-cluster",
-      "name": "三簇兰枝",
-      "morph": "orchid-cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "orchid-tall",
-      "name": "高挑兰枝",
-      "morph": "orchid-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "orchid-side",
-      "name": "侧伸兰枝",
-      "morph": "orchid-side",
-      "lengthScale": 106,
-      "colors": [
-        "#f2e8c9",
-        "#c58fb1",
-        "#6e8c64"
-      ]
-    },
-    {
-      "styleOption": "orchid-droop",
-      "name": "垂落兰枝",
-      "morph": "orchid-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-lily": [
-    {
-      "styleOption": "lily-full-mid",
-      "name": "百合盛开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#fff1cf",
-        "#e5a65a",
-        "#7b9a63"
-      ]
-    },
-    {
-      "styleOption": "lily-bud-short",
-      "name": "百合花苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "lily-cluster-mid",
-      "name": "百合小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "lily-tall-long",
-      "name": "高枝百合",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "lily-wide-mid",
-      "name": "横展百合",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#fff1cf",
-        "#e5a65a",
-        "#7b9a63"
-      ]
-    },
-    {
-      "styleOption": "lily-droop-long",
-      "name": "垂枝百合",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-anthurium": [
-    {
-      "styleOption": "anthurium-full-mid",
-      "name": "掌花正开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#bf3f46",
-        "#f0c955",
-        "#5d8d55"
-      ]
-    },
-    {
-      "styleOption": "anthurium-bud-short",
-      "name": "掌花短苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "anthurium-cluster-mid",
-      "name": "掌花小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "anthurium-tall-long",
-      "name": "高枝掌花",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "anthurium-wide-mid",
-      "name": "侧展掌花",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#bf3f46",
-        "#f0c955",
-        "#5d8d55"
-      ]
-    },
-    {
-      "styleOption": "anthurium-droop-long",
-      "name": "垂枝掌花",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-spray": [
-    {
-      "styleOption": "spray-full-mid",
-      "name": "小花束",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#f4c45f",
-        "#cf6f89",
-        "#7aa66b"
-      ]
-    },
-    {
-      "styleOption": "spray-bud-short",
-      "name": "短枝小花",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "spray-cluster-mid",
-      "name": "小花密簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "spray-tall-long",
-      "name": "高枝小花",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "spray-wide-mid",
-      "name": "横展小花",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#f4c45f",
-        "#cf6f89",
-        "#7aa66b"
-      ]
-    },
-    {
-      "styleOption": "spray-droop-long",
-      "name": "垂落小花",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-rose": [
-    {
-      "styleOption": "rose-full-mid",
-      "name": "玫瑰盛放",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#c83f5a",
-        "#f4a6aa",
-        "#7a253a"
-      ]
-    },
-    {
-      "styleOption": "rose-bud-short",
-      "name": "玫瑰花苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "rose-cluster-mid",
-      "name": "玫瑰三朵",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "rose-tall-long",
-      "name": "高枝玫瑰",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "rose-wide-mid",
-      "name": "横展玫瑰",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#c83f5a",
-        "#f4a6aa",
-        "#7a253a"
-      ]
-    },
-    {
-      "styleOption": "rose-droop-long",
-      "name": "垂枝玫瑰",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-tulip": [
-    {
-      "styleOption": "tulip-full-mid",
-      "name": "郁金香开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#e85f72",
-        "#ffd0b5",
-        "#5c8a57"
-      ]
-    },
-    {
-      "styleOption": "tulip-bud-short",
-      "name": "郁金香苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "tulip-cluster-mid",
-      "name": "郁金香小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "tulip-tall-long",
-      "name": "高枝郁金香",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "tulip-wide-mid",
-      "name": "横展郁金香",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#e85f72",
-        "#ffd0b5",
-        "#5c8a57"
-      ]
-    },
-    {
-      "styleOption": "tulip-droop-long",
-      "name": "垂枝郁金香",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-carnation": [
-    {
-      "styleOption": "carnation-full-mid",
-      "name": "康乃馨开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#df7fa0",
-        "#ffd4dc",
-        "#9d4e64"
-      ]
-    },
-    {
-      "styleOption": "carnation-bud-short",
-      "name": "康乃馨苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "carnation-cluster-mid",
-      "name": "康乃馨小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "carnation-tall-long",
-      "name": "高枝康乃馨",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "carnation-wide-mid",
-      "name": "横展康乃馨",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#df7fa0",
-        "#ffd4dc",
-        "#9d4e64"
-      ]
-    },
-    {
-      "styleOption": "carnation-droop-long",
-      "name": "垂枝康乃馨",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-hydrangea": [
-    {
-      "styleOption": "hydrangea-full-mid",
-      "name": "绣球圆簇",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#9db7e8",
-        "#c7d6f7",
-        "#6d80b1"
-      ]
-    },
-    {
-      "styleOption": "hydrangea-bud-short",
-      "name": "绣球短苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "hydrangea-cluster-mid",
-      "name": "绣球小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "hydrangea-tall-long",
-      "name": "高枝绣球",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "hydrangea-wide-mid",
-      "name": "横展绣球",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#9db7e8",
-        "#c7d6f7",
-        "#6d80b1"
-      ]
-    },
-    {
-      "styleOption": "hydrangea-droop-long",
-      "name": "垂枝绣球",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-sunflower": [
-    {
-      "styleOption": "sunflower-full-mid",
-      "name": "向日葵开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#f2b23c",
-        "#ffe06f",
-        "#6d4527"
-      ]
-    },
-    {
-      "styleOption": "sunflower-bud-short",
-      "name": "向日葵苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "sunflower-cluster-mid",
-      "name": "向日葵小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "sunflower-tall-long",
-      "name": "高枝向日葵",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "sunflower-wide-mid",
-      "name": "横展向日葵",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#f2b23c",
-        "#ffe06f",
-        "#6d4527"
-      ]
-    },
-    {
-      "styleOption": "sunflower-droop-long",
-      "name": "垂枝向日葵",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-lisianthus": [
-    {
-      "styleOption": "lisianthus-full-mid",
-      "name": "洋桔梗开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#b78ad8",
-        "#ead8f6",
-        "#6e4a8a"
-      ]
-    },
-    {
-      "styleOption": "lisianthus-bud-short",
-      "name": "洋桔梗苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "lisianthus-cluster-mid",
-      "name": "洋桔梗小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "lisianthus-tall-long",
-      "name": "高枝洋桔梗",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "lisianthus-wide-mid",
-      "name": "横展洋桔梗",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#b78ad8",
-        "#ead8f6",
-        "#6e4a8a"
-      ]
-    },
-    {
-      "styleOption": "lisianthus-droop-long",
-      "name": "垂枝洋桔梗",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-calla": [
-    {
-      "styleOption": "calla-full-mid",
-      "name": "马蹄莲开",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#f7f2d7",
-        "#d7b25e",
-        "#67855b"
-      ]
-    },
-    {
-      "styleOption": "calla-bud-short",
-      "name": "马蹄莲苞",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "calla-cluster-mid",
-      "name": "马蹄莲小簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "calla-tall-long",
-      "name": "高枝马蹄莲",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "calla-wide-mid",
-      "name": "横展马蹄莲",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#f7f2d7",
-        "#d7b25e",
-        "#67855b"
-      ]
-    },
-    {
-      "styleOption": "calla-droop-long",
-      "name": "垂枝马蹄莲",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-babysbreath": [
-    {
-      "styleOption": "babysbreath-full-mid",
-      "name": "满天星散枝",
-      "morph": "full",
-      "lengthScale": 100,
-      "colors": [
-        "#f8f3dc",
-        "#ffffff",
-        "#7f9a71"
-      ]
-    },
-    {
-      "styleOption": "babysbreath-bud-short",
-      "name": "满天星短枝",
-      "morph": "bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "babysbreath-cluster-mid",
-      "name": "满天星密簇",
-      "morph": "cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "babysbreath-tall-long",
-      "name": "高枝满天星",
-      "morph": "tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "babysbreath-wide-mid",
-      "name": "横展满天星",
-      "morph": "wide",
-      "lengthScale": 106,
-      "colors": [
-        "#f8f3dc",
-        "#ffffff",
-        "#7f9a71"
-      ]
-    },
-    {
-      "styleOption": "babysbreath-droop-long",
-      "name": "垂枝满天星",
-      "morph": "droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+  "mat-gerbera": [
+    {
+      "styleOption": "gerbera-full",
+      "name": "非洲菊盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-half",
+      "name": "非洲菊半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud",
+      "name": "非洲菊花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
   "mat-lotus": [
     {
-      "styleOption": "lotus-open",
-      "name": "荷花盛放",
-      "morph": "lotus-open",
-      "lengthScale": 100,
-      "colors": [
-        "#e9a0b5",
-        "#f8d7c8",
-        "#78945e"
-      ]
+      "styleOption": "lotus-full",
+      "name": "莲花盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lotus-half",
+      "name": "莲花半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
       "styleOption": "lotus-bud",
-      "name": "荷花花苞",
-      "morph": "lotus-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "lotus-pod",
-      "name": "莲蓬半开",
-      "morph": "lotus-pod",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "lotus-tall",
-      "name": "高枝荷花",
-      "morph": "lotus-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "lotus-side",
-      "name": "侧伸荷花",
-      "morph": "lotus-side",
-      "lengthScale": 106,
-      "colors": [
-        "#e9a0b5",
-        "#f8d7c8",
-        "#78945e"
-      ]
-    },
-    {
-      "styleOption": "lotus-droop",
-      "name": "垂首荷花",
-      "morph": "lotus-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "name": "莲花花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-waterlily": [
+  "mat-calla": [
     {
-      "styleOption": "waterlily-open",
-      "name": "睡莲平展",
-      "morph": "waterlily-open",
-      "lengthScale": 100,
-      "colors": [
-        "#f1bfd0",
-        "#fff0c7",
-        "#638f6d"
-      ]
+      "styleOption": "calla-full",
+      "name": "马蹄莲盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "waterlily-bud",
-      "name": "睡莲合苞",
-      "morph": "waterlily-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "calla-half",
+      "name": "马蹄莲半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "waterlily-double",
-      "name": "双层睡莲",
-      "morph": "waterlily-double",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "waterlily-tall",
-      "name": "长梗睡莲",
-      "morph": "waterlily-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "waterlily-float",
-      "name": "漂浮睡莲",
-      "morph": "waterlily-float",
-      "lengthScale": 106,
-      "colors": [
-        "#f1bfd0",
-        "#fff0c7",
-        "#638f6d"
-      ]
-    },
-    {
-      "styleOption": "waterlily-droop",
-      "name": "斜垂睡莲",
-      "morph": "waterlily-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "calla-bud",
+      "name": "马蹄莲花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-iris": [
+  "mat-rose": [
     {
-      "styleOption": "iris-open",
-      "name": "鸢尾展开",
-      "morph": "iris-open",
-      "lengthScale": 100,
-      "colors": [
-        "#7c65b8",
-        "#d7c5f2",
-        "#5f8a62"
-      ]
+      "styleOption": "rose-full",
+      "name": "玫瑰盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "iris-bud",
-      "name": "鸢尾花苞",
-      "morph": "iris-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "rose-half",
+      "name": "玫瑰半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "iris-double",
-      "name": "双花鸢尾",
-      "morph": "iris-double",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "iris-tall",
-      "name": "高枝鸢尾",
-      "morph": "iris-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "iris-side",
-      "name": "侧开鸢尾",
-      "morph": "iris-side",
-      "lengthScale": 106,
-      "colors": [
-        "#7c65b8",
-        "#d7c5f2",
-        "#5f8a62"
-      ]
-    },
-    {
-      "styleOption": "iris-droop",
-      "name": "弯枝鸢尾",
-      "morph": "iris-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "rose-bud",
+      "name": "玫瑰花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-dahlia": [
+  "mat-peony": [
     {
-      "styleOption": "dahlia-open",
-      "name": "大丽花盘",
-      "morph": "dahlia-open",
-      "lengthScale": 100,
-      "colors": [
-        "#d65b71",
-        "#f3b064",
-        "#7f4a4a"
-      ]
+      "styleOption": "peony-full",
+      "name": "牡丹盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "dahlia-bud",
-      "name": "大丽花苞",
-      "morph": "dahlia-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "peony-half",
+      "name": "牡丹半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "dahlia-double",
-      "name": "双头大丽",
-      "morph": "dahlia-double",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "dahlia-tall",
-      "name": "高枝大丽",
-      "morph": "dahlia-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "dahlia-wide",
-      "name": "横展大丽",
-      "morph": "dahlia-wide",
-      "lengthScale": 106,
-      "colors": [
-        "#d65b71",
-        "#f3b064",
-        "#7f4a4a"
-      ]
-    },
-    {
-      "styleOption": "dahlia-droop",
-      "name": "垂枝大丽",
-      "morph": "dahlia-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "peony-bud",
+      "name": "牡丹花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-wintersweet": [
+  "mat-hibiscus": [
     {
-      "styleOption": "wintersweet-open",
-      "name": "蜡梅枝开",
-      "morph": "wintersweet-open",
-      "lengthScale": 100,
-      "colors": [
-        "#f0c84d",
-        "#ffe7a0",
-        "#745437"
-      ]
+      "styleOption": "hibiscus-full",
+      "name": "木槿花盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "wintersweet-short",
-      "name": "蜡梅短枝",
-      "morph": "wintersweet-short",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "hibiscus-half",
+      "name": "木槿花半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "wintersweet-cluster",
-      "name": "蜡梅密簇",
-      "morph": "wintersweet-cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "wintersweet-tall",
-      "name": "高枝蜡梅",
-      "morph": "wintersweet-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "wintersweet-side",
-      "name": "横伸蜡梅",
-      "morph": "wintersweet-side",
-      "lengthScale": 106,
-      "colors": [
-        "#f0c84d",
-        "#ffe7a0",
-        "#745437"
-      ]
-    },
-    {
-      "styleOption": "wintersweet-droop",
-      "name": "垂枝蜡梅",
-      "morph": "wintersweet-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "hibiscus-bud",
+      "name": "木槿花花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-freesia": [
+  "mat-camellia": [
     {
-      "styleOption": "freesia-open",
-      "name": "小苍兰弧穗",
-      "morph": "freesia-open",
-      "lengthScale": 100,
-      "colors": [
-        "#f4cf70",
-        "#fff2c2",
-        "#668f61"
-      ]
+      "styleOption": "camellia-full",
+      "name": "山茶花盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "freesia-bud",
-      "name": "小苍兰花苞",
-      "morph": "freesia-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "camellia-half",
+      "name": "山茶花半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "freesia-cluster",
-      "name": "小苍兰密穗",
-      "morph": "freesia-cluster",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "freesia-tall",
-      "name": "高枝小苍兰",
-      "morph": "freesia-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "freesia-side",
-      "name": "侧伸小苍兰",
-      "morph": "freesia-side",
-      "lengthScale": 106,
-      "colors": [
-        "#f4cf70",
-        "#fff2c2",
-        "#668f61"
-      ]
-    },
-    {
-      "styleOption": "freesia-droop",
-      "name": "垂穗小苍兰",
-      "morph": "freesia-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "camellia-bud",
+      "name": "山茶花花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-phalaenopsis": [
+  "mat-geranium": [
     {
-      "styleOption": "phalaenopsis-open",
-      "name": "蝴蝶兰展翼",
-      "morph": "phalaenopsis-open",
-      "lengthScale": 100,
-      "colors": [
-        "#f0d9f4",
-        "#c781b7",
-        "#6d8a5d"
-      ]
+      "styleOption": "geranium-full",
+      "name": "天竺葵盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "phalaenopsis-bud",
-      "name": "蝴蝶兰含苞",
-      "morph": "phalaenopsis-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "geranium-half",
+      "name": "天竺葵半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "phalaenopsis-double",
-      "name": "双花蝴蝶兰",
-      "morph": "phalaenopsis-double",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
+      "styleOption": "geranium-bud",
+      "name": "天竺葵花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-sunflower": [
+    {
+      "styleOption": "sunflower-full",
+      "name": "向日葵盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "phalaenopsis-tall",
-      "name": "高枝蝴蝶兰",
-      "morph": "phalaenopsis-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
+      "styleOption": "sunflower-half",
+      "name": "向日葵半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "phalaenopsis-side",
-      "name": "侧伸蝴蝶兰",
-      "morph": "phalaenopsis-side",
-      "lengthScale": 106,
-      "colors": [
-        "#f0d9f4",
-        "#c781b7",
-        "#6d8a5d"
-      ]
+      "styleOption": "sunflower-bud",
+      "name": "向日葵花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-eustoma": [
+    {
+      "styleOption": "eustoma-full",
+      "name": "洋桔梗盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "phalaenopsis-droop",
-      "name": "垂落蝴蝶兰",
-      "morph": "phalaenopsis-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "eustoma-half",
+      "name": "洋桔梗半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "eustoma-bud",
+      "name": "洋桔梗花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-magnolia": [
+    {
+      "styleOption": "magnolia-full",
+      "name": "玉兰花盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "magnolia-half",
+      "name": "玉兰花半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "magnolia-bud",
+      "name": "玉兰花花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-gardenia": [
+    {
+      "styleOption": "gardenia-full",
+      "name": "栀子花盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gardenia-half",
+      "name": "栀子花半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gardenia-bud",
+      "name": "栀子花花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-delphinium": [
+    {
+      "styleOption": "delphinium-single",
+      "name": "飞燕草单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "delphinium-branch",
+      "name": "飞燕草分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-crabapple": [
+    {
+      "styleOption": "crabapple-single",
+      "name": "海棠单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "crabapple-cluster",
+      "name": "海棠簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-dendrobium": [
+    {
+      "styleOption": "dendrobium-single",
+      "name": "石斛单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dendrobium-cluster",
+      "name": "石斛簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-spider-lily": [
+    {
+      "styleOption": "spider-lily-cluster-a",
+      "name": "石蒜簇生A",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "spider-lily-cluster-b",
+      "name": "石蒜簇生B",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-hydrangea": [
+    {
+      "styleOption": "hydrangea-single",
+      "name": "绣球单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "hydrangea-cluster",
+      "name": "绣球簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
   "mat-anemone": [
     {
-      "styleOption": "anemone-open",
-      "name": "银莲花盛放",
-      "morph": "anemone-open",
-      "lengthScale": 100,
-      "colors": [
-        "#f1f0e6",
-        "#8aa4d6",
-        "#2d2933"
-      ]
+      "styleOption": "anemone-single",
+      "name": "银莲花单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "anemone-bud",
-      "name": "银莲花苞",
-      "morph": "anemone-bud",
-      "lengthScale": 78,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "anemone-double",
-      "name": "双朵银莲",
-      "morph": "anemone-double",
-      "lengthScale": 96,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "anemone-tall",
-      "name": "高枝银莲",
-      "morph": "anemone-tall",
-      "lengthScale": 128,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "anemone-wide",
-      "name": "横展银莲",
-      "morph": "anemone-wide",
-      "lengthScale": 106,
-      "colors": [
-        "#f1f0e6",
-        "#8aa4d6",
-        "#2d2933"
-      ]
-    },
-    {
-      "styleOption": "anemone-droop",
-      "name": "垂枝银莲",
-      "morph": "anemone-droop",
-      "lengthScale": 136,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "anemone-cluster",
+      "name": "银莲花簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-monstera": [
+  "mat-iris": [
     {
-      "styleOption": "monstera-upright-short",
-      "name": "龟背直叶",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#3e7751",
-        "#79a56c",
-        "#244d39"
-      ]
+      "styleOption": "iris-single",
+      "name": "鸢尾单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "monstera-arched-mid",
-      "name": "龟背弧叶",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "monstera-cascade-long",
-      "name": "龟背垂叶",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#3e7751",
-        "#79a56c",
-        "#244d39"
-      ]
-    },
-    {
-      "styleOption": "monstera-fan-mid",
-      "name": "龟背扇叶",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "monstera-sparse-long",
-      "name": "龟背疏叶",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "monstera-cluster-short",
-      "name": "龟背簇叶",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "iris-cluster",
+      "name": "鸢尾簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-eucalyptus": [
+  "mat-limonium": [
     {
-      "styleOption": "eucalyptus-upright-short",
-      "name": "尤加利直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#8aa889",
-        "#557b63",
-        "#b7c6a5"
-      ]
+      "styleOption": "limonium-single",
+      "name": "补血草单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "eucalyptus-arched-mid",
-      "name": "尤加利弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "eucalyptus-cascade-long",
-      "name": "尤加利垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#8aa889",
-        "#557b63",
-        "#b7c6a5"
-      ]
-    },
-    {
-      "styleOption": "eucalyptus-fan-mid",
-      "name": "尤加利扇枝",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "eucalyptus-sparse-long",
-      "name": "尤加利疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "eucalyptus-cluster-short",
-      "name": "尤加利簇枝",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "limonium-cluster",
+      "name": "补血草簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-bamboo": [
+  "mat-ilex-berry": [
     {
-      "styleOption": "bamboo-upright-short",
-      "name": "竹叶直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#4d7b50",
-        "#90b36e",
-        "#355e43"
-      ]
+      "styleOption": "ilex-berry-single",
+      "name": "冬青果单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "bamboo-arched-mid",
-      "name": "竹叶弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "bamboo-cascade-long",
-      "name": "竹叶垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#4d7b50",
-        "#90b36e",
-        "#355e43"
-      ]
-    },
-    {
-      "styleOption": "bamboo-fan-mid",
-      "name": "竹叶扇枝",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "bamboo-sparse-long",
-      "name": "竹叶疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "bamboo-cluster-short",
-      "name": "竹叶簇枝",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "ilex-berry-cluster",
+      "name": "冬青果簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-fern": [
+  "mat-lily-of-the-valley": [
     {
-      "styleOption": "fern-upright-short",
-      "name": "蕨叶直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#4f8b5b",
-        "#9ec27b",
-        "#2f6045"
-      ]
+      "styleOption": "lily-of-the-valley-single",
+      "name": "铃兰单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "fern-arched-mid",
-      "name": "蕨叶弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "fern-cascade-long",
-      "name": "蕨叶垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#4f8b5b",
-        "#9ec27b",
-        "#2f6045"
-      ]
-    },
-    {
-      "styleOption": "fern-fan-mid",
-      "name": "蕨叶扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "fern-sparse-long",
-      "name": "蕨叶疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "fern-cluster-short",
-      "name": "蕨叶密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "lily-of-the-valley-cluster",
+      "name": "铃兰簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-dusty-miller": [
+  "mat-gypsophila": [
     {
-      "styleOption": "dustymiller-upright-short",
-      "name": "银叶菊直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#aebaae",
-        "#7f9388",
-        "#d8dfd1"
-      ]
-    },
-    {
-      "styleOption": "dustymiller-arched-mid",
-      "name": "银叶菊弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "dustymiller-cascade-long",
-      "name": "银叶菊垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#aebaae",
-        "#7f9388",
-        "#d8dfd1"
-      ]
-    },
-    {
-      "styleOption": "dustymiller-fan-mid",
-      "name": "银叶菊扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "dustymiller-sparse-long",
-      "name": "银叶菊疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "dustymiller-cluster-short",
-      "name": "银叶菊密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "gypsophila-cluster",
+      "name": "满天星簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-nandina": [
+  "mat-cowherb": [
     {
-      "styleOption": "nandina-upright-short",
-      "name": "南天竹直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#9b3946",
-        "#d57a65",
-        "#566f43"
-      ]
+      "styleOption": "cowherb-single",
+      "name": "王不留行单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "nandina-arched-mid",
-      "name": "南天竹弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "cowherb-cluster",
+      "name": "王不留行簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-spiraea": [
+    {
+      "styleOption": "spiraea-single",
+      "name": "绣线菊单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "nandina-cascade-long",
-      "name": "南天竹垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#9b3946",
-        "#d57a65",
-        "#566f43"
-      ]
+      "styleOption": "spiraea-cluster",
+      "name": "绣线菊簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-sweet-william": [
+    {
+      "styleOption": "sweet-william-single",
+      "name": "须苞石竹单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "nandina-fan-mid",
-      "name": "南天竹扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
+      "styleOption": "sweet-william-cluster",
+      "name": "须苞石竹簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-catchfly": [
+    {
+      "styleOption": "catchfly-single",
+      "name": "蝇子草单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "nandina-sparse-long",
-      "name": "南天竹疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
+      "styleOption": "catchfly-branch",
+      "name": "蝇子草分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-melaleuca": [
+    {
+      "styleOption": "melaleuca-single",
+      "name": "白千层单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "nandina-cluster-short",
-      "name": "南天竹密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "melaleuca-branch",
+      "name": "白千层分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-ivy": [
+    {
+      "styleOption": "ivy-single",
+      "name": "常春藤单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "ivy-branch",
+      "name": "常春藤分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-maple": [
+    {
+      "styleOption": "maple-single",
+      "name": "枫叶单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "maple-branch",
+      "name": "枫叶分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
   "mat-olive": [
     {
-      "styleOption": "olive-upright-short",
-      "name": "橄榄直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#7e965f",
-        "#596f4a",
-        "#b7bf92"
-      ]
+      "styleOption": "olive-single",
+      "name": "橄榄叶单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "olive-arched-mid",
-      "name": "橄榄弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "olive-cascade-long",
-      "name": "橄榄垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#7e965f",
-        "#596f4a",
-        "#b7bf92"
-      ]
-    },
-    {
-      "styleOption": "olive-fan-mid",
-      "name": "橄榄扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "olive-sparse-long",
-      "name": "橄榄疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "olive-cluster-short",
-      "name": "橄榄密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "olive-bundle",
+      "name": "橄榄叶束枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-lotus-leaf": [
+  "mat-monstera": [
     {
-      "styleOption": "lotusleaf-upright",
-      "name": "荷叶直柄",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#4d7b55",
-        "#8bae6a",
-        "#315740"
-      ]
+      "styleOption": "monstera-single",
+      "name": "龟背竹单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "lotusleaf-arched",
-      "name": "荷叶弧柄",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "lotusleaf-cascade",
-      "name": "荷叶垂柄",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "lotusleaf-fan",
-      "name": "荷叶扇展",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "lotusleaf-sparse",
-      "name": "荷叶疏柄",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#4d7b55",
-        "#8bae6a",
-        "#315740"
-      ]
-    },
-    {
-      "styleOption": "lotusleaf-cluster",
-      "name": "荷叶小簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "monstera-cluster",
+      "name": "龟背竹簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-sweetflag": [
+  "mat-pittosporum": [
     {
-      "styleOption": "sweetflag-upright",
-      "name": "菖蒲直叶",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#5c8755",
-        "#a4bd6d",
-        "#345d45"
-      ]
+      "styleOption": "pittosporum-single",
+      "name": "海桐单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "sweetflag-arched",
-      "name": "菖蒲弧叶",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
+      "styleOption": "pittosporum-cluster",
+      "name": "海桐簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-alocasia": [
+    {
+      "styleOption": "alocasia-single",
+      "name": "海芋单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "sweetflag-cascade",
-      "name": "菖蒲垂叶",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
+      "styleOption": "alocasia-branch",
+      "name": "海芋分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-ruscus": [
+    {
+      "styleOption": "ruscus-single",
+      "name": "假叶树单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "sweetflag-fan",
-      "name": "菖蒲扇叶",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
+      "styleOption": "ruscus-branch",
+      "name": "假叶树分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-yucca": [
+    {
+      "styleOption": "yucca-single",
+      "name": "丝兰单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "sweetflag-sparse",
-      "name": "菖蒲疏叶",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#5c8755",
-        "#a4bd6d",
-        "#345d45"
-      ]
+      "styleOption": "yucca-cluster",
+      "name": "丝兰簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-davallia": [
+    {
+      "styleOption": "davallia-single",
+      "name": "兔脚蕨单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "sweetflag-cluster",
-      "name": "菖蒲密叶",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "davallia-branch",
+      "name": "兔脚蕨分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-eucalyptus": [
+    {
+      "styleOption": "eucalyptus-single",
+      "name": "尤加利单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "eucalyptus-branch",
+      "name": "尤加利分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-white-plum": [
+    {
+      "styleOption": "white-plum-upright",
+      "name": "白梅直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "white-plum-curve",
+      "name": "白梅曲枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-amaranthus": [
+    {
+      "styleOption": "amaranthus-single",
+      "name": "狐尾苋单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "amaranthus-curve",
+      "name": "狐尾苋曲枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-forsythia": [
+    {
+      "styleOption": "forsythia-upright",
+      "name": "连翘直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "forsythia-curve",
+      "name": "连翘曲枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
   "mat-willow": [
     {
-      "styleOption": "willow-upright-short",
-      "name": "垂枝直形",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#6f8c59",
-        "#a8bd7d",
-        "#536b45"
-      ]
+      "styleOption": "willow-upright",
+      "name": "柳直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "willow-arched-mid",
-      "name": "垂枝弧形",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "willow-cascade-long",
-      "name": "垂枝瀑布",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#6f8c59",
-        "#a8bd7d",
-        "#536b45"
-      ]
-    },
-    {
-      "styleOption": "willow-fan-mid",
-      "name": "垂枝扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "willow-sparse-long",
-      "name": "垂枝疏线",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "willow-cluster-short",
-      "name": "垂枝密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "willow-curve",
+      "name": "柳曲枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-reed": [
+  "mat-pieris": [
     {
-      "styleOption": "reed-upright-short",
-      "name": "芦苇直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#b68f57",
-        "#e3c48b",
-        "#7d6847"
-      ]
+      "styleOption": "pieris-upright",
+      "name": "马醉木直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "reed-arched-mid",
-      "name": "芦苇弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "reed-cascade-long",
-      "name": "芦苇垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#b68f57",
-        "#e3c48b",
-        "#7d6847"
-      ]
-    },
-    {
-      "styleOption": "reed-fan-mid",
-      "name": "芦苇扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "reed-sparse-long",
-      "name": "芦苇疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "reed-cluster-short",
-      "name": "芦苇密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "pieris-curve",
+      "name": "马醉木曲枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ],
-  "mat-branch": [
+  "mat-bamboo": [
     {
-      "styleOption": "dry-lean",
-      "name": "斜生短枝",
-      "morph": "dry-lean",
-      "lengthScale": 86,
-      "colors": [
-        "#7c5842",
-        "#a0714f",
-        "#4a352c"
-      ]
+      "styleOption": "bamboo-upright",
+      "name": "竹直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     },
     {
-      "styleOption": "dry-fork",
-      "name": "双叉高枝",
-      "morph": "dry-fork",
-      "lengthScale": 118,
-      "colors": [
-        "#7c5842",
-        "#a0714f",
-        "#4a352c"
-      ]
-    },
-    {
-      "styleOption": "dry-crown",
-      "name": "顶部分叉",
-      "morph": "dry-crown",
-      "lengthScale": 105,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "dry-broken",
-      "name": "断枝横伸",
-      "morph": "dry-broken",
-      "lengthScale": 96,
-      "colors": [
-        "#7c5842",
-        "#a0714f",
-        "#4a352c"
-      ]
-    },
-    {
-      "styleOption": "dry-zigzag",
-      "name": "折线瘦枝",
-      "morph": "dry-zigzag",
-      "lengthScale": 132,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "dry-split",
-      "name": "双干散枝",
-      "morph": "dry-split",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    }
-  ],
-  "mat-pussy-willow": [
-    {
-      "styleOption": "pussywillow-upright-short",
-      "name": "银柳直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#d8d4c8",
-        "#f0eadc",
-        "#6d6459"
-      ]
-    },
-    {
-      "styleOption": "pussywillow-arched-mid",
-      "name": "银柳弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "pussywillow-cascade-long",
-      "name": "银柳垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#d8d4c8",
-        "#f0eadc",
-        "#6d6459"
-      ]
-    },
-    {
-      "styleOption": "pussywillow-fan-mid",
-      "name": "银柳扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "pussywillow-sparse-long",
-      "name": "银柳疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "pussywillow-cluster-short",
-      "name": "银柳密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-wheat": [
-    {
-      "styleOption": "wheat-upright-short",
-      "name": "麦穗直枝",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#c9964f",
-        "#efd08b",
-        "#7b603a"
-      ]
-    },
-    {
-      "styleOption": "wheat-arched-mid",
-      "name": "麦穗弧枝",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    },
-    {
-      "styleOption": "wheat-cascade-long",
-      "name": "麦穗垂枝",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#c9964f",
-        "#efd08b",
-        "#7b603a"
-      ]
-    },
-    {
-      "styleOption": "wheat-fan-mid",
-      "name": "麦穗扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "wheat-sparse-long",
-      "name": "麦穗疏枝",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "wheat-cluster-short",
-      "name": "麦穗密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-foxtail": [
-    {
-      "styleOption": "foxtail-upright",
-      "name": "狗尾草直穗",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#a88755",
-        "#d3b67a",
-        "#5e7047"
-      ]
-    },
-    {
-      "styleOption": "foxtail-arched",
-      "name": "狗尾草弧穗",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "foxtail-cascade",
-      "name": "狗尾草垂穗",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "foxtail-fan",
-      "name": "狗尾草扇形",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "foxtail-sparse",
-      "name": "狗尾草疏穗",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#a88755",
-        "#d3b67a",
-        "#5e7047"
-      ]
-    },
-    {
-      "styleOption": "foxtail-cluster",
-      "name": "狗尾草密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
-    }
-  ],
-  "mat-clematis-vine": [
-    {
-      "styleOption": "clematisvine-upright",
-      "name": "铁线莲直藤",
-      "morph": "upright",
-      "lengthScale": 76,
-      "colors": [
-        "#7b8d63",
-        "#c6b6e8",
-        "#4d6344"
-      ]
-    },
-    {
-      "styleOption": "clematisvine-arched",
-      "name": "铁线莲弧藤",
-      "morph": "arched",
-      "lengthScale": 104,
-      "colors": [
-        "#d96f7d",
-        "#f6bdc2",
-        "#8a3f4a"
-      ]
-    },
-    {
-      "styleOption": "clematisvine-cascade",
-      "name": "铁线莲垂藤",
-      "morph": "cascade",
-      "lengthScale": 138,
-      "colors": [
-        "#f0bb4f",
-        "#fff0b3",
-        "#708a4e"
-      ]
-    },
-    {
-      "styleOption": "clematisvine-fan",
-      "name": "铁线莲扇藤",
-      "morph": "fan",
-      "lengthScale": 112,
-      "colors": [
-        "#a978c7",
-        "#ead1f2",
-        "#60497f"
-      ]
-    },
-    {
-      "styleOption": "clematisvine-sparse",
-      "name": "铁线莲疏藤",
-      "morph": "sparse",
-      "lengthScale": 132,
-      "colors": [
-        "#7b8d63",
-        "#c6b6e8",
-        "#4d6344"
-      ]
-    },
-    {
-      "styleOption": "clematisvine-cluster",
-      "name": "铁线莲密簇",
-      "morph": "cluster",
-      "lengthScale": 86,
-      "colors": [
-        "#4d8760",
-        "#a8c98b",
-        "#2e5d43"
-      ]
+      "styleOption": "bamboo-curve",
+      "name": "竹曲枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
     }
   ]
 }

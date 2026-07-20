@@ -15,6 +15,7 @@
  *
  * 一般无需额外配置：.env 里已有 OSS_BUCKET / OSS_REGION，直接 pnpm materials:seed 即可。
  */
+import 'dotenv/config';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { PrismaClient, Prisma } from '@prisma/client';
@@ -100,6 +101,21 @@ async function main() {
       create: { id: m.id, ...data },
     });
     ok += 1;
+  }
+
+  // prune：删除已不在 BUILTIN_MATERIALS 中的行（data.ts 是单一事实源，移除即下架删除）
+  const keepIds = BUILTIN_MATERIALS.map((m) => m.id);
+  const stale = await prisma.material.findMany({
+    where: { id: { notIn: keepIds } },
+    select: { id: true },
+  });
+  if (stale.length) {
+    await prisma.material.deleteMany({
+      where: { id: { in: stale.map((s) => s.id) } },
+    });
+    console.log(
+      `prune 删除 ${stale.length} 个已移除素材: ${stale.map((s) => s.id).join(', ')}`,
+    );
   }
 
   const total = await prisma.material.count();
