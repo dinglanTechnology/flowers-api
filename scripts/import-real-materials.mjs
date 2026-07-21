@@ -51,22 +51,37 @@ const VASE_NAMES = {
   'vase-pitcher-stoneware-black': '黑色石陶水壶瓶',
 };
 
-/* ---------------- 变体规则 ---------------- */
-const VARIANTS = new Set([
+/* ---------------- 变体规则（形态 + 可选茎长，见 temp/素材准备需求-v2.md） ---------------- */
+const FORMS = new Set([
   'full', 'half', 'bud', 'single', 'cluster', 'branch', 'bundle',
-  'upright', 'curve', 'cluster-a', 'cluster-b',
+  'upright', 'curve', 'droop', 'cluster-a', 'cluster-b',
 ]);
-const VARIANT_CN = {
+const LENGTHS = { long: '长茎', mid: '中茎', short: '短茎' };
+const FORM_CN = {
   full: '盛放', half: '半开', bud: '花苞', single: '单枝', cluster: '簇生',
-  branch: '分枝', bundle: '束枝', upright: '直立', curve: '曲枝',
+  branch: '分枝', bundle: '束枝', upright: '直立', curve: '弯枝', droop: '垂枝',
   'cluster-a': '簇生A', 'cluster-b': '簇生B',
 };
 /** 显示图优先级：主花 full 优先；其余 single 优先（与需求一致） */
-const PRIORITY_MAIN = ['full', 'half', 'bud'];
+const PRIORITY_MAIN = ['full', 'half', 'bud', 'curve', 'droop'];
 const PRIORITY_DEFAULT = [
-  'single', 'upright', 'full', 'branch', 'bundle',
-  'half', 'cluster', 'curve', 'bud', 'cluster-a', 'cluster-b',
+  'single', 'upright', 'full', 'branch', 'bundle', 'curve',
+  'half', 'cluster', 'droop', 'bud', 'cluster-a', 'cluster-b',
 ];
+
+/** 'curve-long' → ['curve','long']；'cluster-a' → ['cluster-a', undefined] */
+function splitVariant(variant) {
+  const parts = variant.split('-');
+  const last = parts.at(-1);
+  return LENGTHS[last]
+    ? [parts.slice(0, -1).join('-'), last]
+    : [variant, undefined];
+}
+const cnOf = (variant) => {
+  const [form, len] = splitVariant(variant);
+  return FORM_CN[form] + (len ? `（${LENGTHS[len]}）` : '');
+};
+const LENGTH_RANK = { mid: 1, long: 2, short: 3 }; // 无茎长=0（标准款排最前）
 
 const slugify = (s) =>
   s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
@@ -76,11 +91,13 @@ function assertKey(key) {
   return key;
 }
 
-/** 从文件名（去 .png）解析变体后缀；无法识别返回 null */
+/** 从文件名（去 .png）解析变体：'-<形态>' 或 '-<形态>-<茎长>'；无法识别返回 null */
 function parseVariant(stem) {
-  const m = /-([a-z]+(?:-[ab])?)$/i.exec(stem);
-  const v = m?.[1]?.toLowerCase();
-  return v && VARIANTS.has(v) ? v : null;
+  const m = /-([a-z]+(?:-[ab])?)(?:-(long|mid|short))?$/i.exec(stem);
+  if (!m) return null;
+  const form = m[1].toLowerCase();
+  if (!FORMS.has(form)) return null;
+  return m[2] ? `${form}-${m[2].toLowerCase()}` : form;
 }
 
 const anomalies = [];
@@ -125,15 +142,20 @@ for (const g of GROUPS) {
     }
     if (!variants.length) continue;
 
-    const base = slugify(files[0].slice(0, -4).replace(/-[a-z]+(?:-[ab])?$/i, ''));
+    const base = slugify(files[0].slice(0, -4).replace(/-[a-z]+(?:-[ab])?(?:-(?:long|mid|short))?$/i, ''));
     const slug = SLUG_OVERRIDE[rel] ?? base;
     const id = `mat-${slug}`;
     const priority = g.main ? PRIORITY_MAIN : PRIORITY_DEFAULT;
-    variants.sort(
-      (a, b) =>
-        priority.indexOf(a.variant) - priority.indexOf(b.variant) ||
-        a.variant.localeCompare(b.variant),
-    );
+    const rank = (v) => {
+      const [form, len] = splitVariant(v);
+      const fi = priority.indexOf(form);
+      return [(fi === -1 ? 99 : fi), len ? LENGTH_RANK[len] : 0];
+    };
+    variants.sort((a, b) => {
+      const [fa, la] = rank(a.variant);
+      const [fb, lb] = rank(b.variant);
+      return fa - fb || la - lb || a.variant.localeCompare(b.variant);
+    });
 
     materials.push({
       id,
@@ -142,7 +164,7 @@ for (const g of GROUPS) {
       kind: slug,
       styles: variants.map((v) => ({
         styleOption: `${slug}-${v.variant}`,
-        name: `${cleanName}${VARIANT_CN[v.variant]}`,
+        name: `${cleanName}${cnOf(v.variant)}`,
         variant: v.variant,
         src: v.src,
       })),

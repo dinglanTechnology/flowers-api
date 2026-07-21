@@ -717,7 +717,7 @@
     },
     {
       "styleOption": "white-plum-curve",
-      "name": "白梅曲枝",
+      "name": "白梅弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -733,7 +733,7 @@
     },
     {
       "styleOption": "amaranthus-curve",
-      "name": "狐尾苋曲枝",
+      "name": "狐尾苋弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -749,7 +749,7 @@
     },
     {
       "styleOption": "forsythia-curve",
-      "name": "连翘曲枝",
+      "name": "连翘弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -765,7 +765,7 @@
     },
     {
       "styleOption": "willow-curve",
-      "name": "柳曲枝",
+      "name": "柳弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -781,7 +781,7 @@
     },
     {
       "styleOption": "pieris-curve",
-      "name": "马醉木曲枝",
+      "name": "马醉木弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -797,7 +797,7 @@
     },
     {
       "styleOption": "bamboo-curve",
-      "name": "竹曲枝",
+      "name": "竹弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
