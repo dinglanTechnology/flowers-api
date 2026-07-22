@@ -92,8 +92,12 @@ docker logs -f flowers-api
 | `WX_APPID` | 是 | | 微信小程序 AppID |
 | `WX_SECRET` | 是 | ✅ | 微信小程序 AppSecret |
 | `AI_PROVIDER` | 是 | | `relay`（`mock` 只出占位图） |
+| `AI_ARK_API_KEY` | 是 | ✅ | 火山方舟 API Key（主用出图，doubao-seedream；填了即第一优先级） |
+| `AI_ARK_BASE_URL` | 否 | | 默认 `https://ark.cn-beijing.volces.com/api/v3` |
+| `AI_ARK_IMAGE2_MODEL` | 否 | | 默认 `doubao-seedream-5-0-pro-260628` |
+| `AI_ARK_WATERMARK` | 否 | | 默认 `false`（不加 AI 水印） |
 | `AI_ATLAS_BASE_URL` | 是 | | `https://api.atlascloud.ai/api/v1` |
-| `AI_ATLAS_API_KEY` | 是 | ✅ | Atlas Cloud API Key（主用 AI） |
+| `AI_ATLAS_API_KEY` | 是 | ✅ | Atlas Cloud API Key（备用出图 + 抠图主力，seedream 无去背能力） |
 | `AI_ATLAS_CUTOUT_MODEL` | 建议 | | `youchuan/v8.1/remove-background`（抠图出真透明底） |
 | `AI_TOKENLAB_BASE_URL` | 否 | | `https://api.tokenlab.sh/v1`（备用，未验证，可不填） |
 | `AI_TOKENLAB_API_KEY` | 否 | ✅ | TokenLab API Key（备用） |

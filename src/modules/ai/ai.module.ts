@@ -9,12 +9,13 @@ import { AI_PROVIDER } from './providers/ai-provider.interface';
 import { MockProvider } from './providers/mock.provider';
 import { RelayProvider } from './providers/relay.provider';
 import { AtlasProvider } from './providers/atlas.provider';
+import { ArkProvider } from './providers/ark.provider';
 import { FailoverProvider, NamedProvider } from './providers/failover.provider';
 
 /** 单个上游配置（含协议） */
 interface UpstreamConfig {
   name: string;
-  protocol: 'atlas' | 'openai';
+  protocol: 'atlas' | 'openai' | 'ark';
   baseUrl: string;
   apiKey: string;
   image2Model: string;
@@ -24,11 +25,15 @@ interface UpstreamConfig {
   syncMode?: boolean;
   /** 仅 atlas：是否 worker 侧把图内联成 dataURL 再提交（绕开服务端 rehost）；默认 true。openai 协议忽略 */
   inlineImages?: boolean;
+  /** 仅 ark：是否加 AI 水印 */
+  watermark?: boolean;
 }
 
 /** 按协议实例化对应 provider */
 function buildProvider(u: UpstreamConfig): NamedProvider {
-  return u.protocol === 'atlas' ? new AtlasProvider(u) : new RelayProvider(u);
+  if (u.protocol === 'atlas') return new AtlasProvider(u);
+  if (u.protocol === 'ark') return new ArkProvider(u);
+  return new RelayProvider(u);
 }
 
 function parseRedis(url?: string): {

@@ -8,6 +8,8 @@ const ATLAS_CUTOUT_MODEL = 'openai/gpt-image-2/edit';
 const TOKENLAB_IMAGE2_MODEL = 'gpt-image-2';
 // cutout 走 OpenAI images.edit；nano-banana-2 当前不支持 image-edit 操作。
 const TOKENLAB_CUTOUT_MODEL = 'gpt-image-2';
+// 火山方舟（Ark）doubao-seedream：文/图生图统一 generations 端点；无去背能力，抠图仍靠 atlas
+const ARK_IMAGE2_MODEL = 'doubao-seedream-5-0-pro-260628';
 
 /** 集中读取环境变量，供 ConfigService 按路径取用（如 config.get('jwt.secret')） */
 export default () => ({
@@ -29,7 +31,9 @@ export default () => ({
     sameSite: (process.env.COOKIE_SAMESITE ?? 'none') as
       'lax' | 'strict' | 'none',
     // SameSite=None 必须 Secure。Chrome/Firefox 对 http://localhost 也放行 Secure Cookie
-    secure: process.env.COOKIE_SECURE ? process.env.COOKIE_SECURE === 'true' : true,
+    secure: process.env.COOKIE_SECURE
+      ? process.env.COOKIE_SECURE === 'true'
+      : true,
   },
   wechat: {
     appId: process.env.WX_APPID ?? '',
@@ -56,6 +60,19 @@ export default () => ({
     // 模型 ID 分平台配置：默认按各自协议命名，可用 AI_<NAME>_*_MODEL 覆盖。
     // 只有同时填了 baseUrl + apiKey 的上游才会被启用。
     upstreams: [
+      // 火山方舟 doubao-seedream：主用出图。填 AI_ARK_API_KEY 即启用并排在最前（主用）。
+      {
+        name: 'ark',
+        protocol: 'ark',
+        baseUrl:
+          process.env.AI_ARK_BASE_URL ??
+          'https://ark.cn-beijing.volces.com/api/v3',
+        apiKey: process.env.AI_ARK_API_KEY ?? '',
+        image2Model: process.env.AI_ARK_IMAGE2_MODEL ?? ARK_IMAGE2_MODEL,
+        cutoutModel: '',
+        timeoutMs: parseInt(process.env.AI_REQUEST_TIMEOUT_MS ?? '120000', 10),
+        watermark: process.env.AI_ARK_WATERMARK === 'true',
+      },
       {
         name: 'atlas',
         protocol: 'atlas',

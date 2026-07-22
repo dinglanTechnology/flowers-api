@@ -30,6 +30,11 @@ class EnvironmentVariables {
   // 主用中转站：Atlas Cloud
   @IsOptional() @IsString() AI_ATLAS_BASE_URL?: string;
   @IsOptional() @IsString() AI_ATLAS_API_KEY?: string;
+  // 火山方舟 doubao-seedream（填 AI_ARK_API_KEY 即成为主用出图上游）
+  @IsOptional() @IsString() AI_ARK_BASE_URL?: string;
+  @IsOptional() @IsString() AI_ARK_API_KEY?: string;
+  @IsOptional() @IsString() AI_ARK_IMAGE2_MODEL?: string;
+  @IsOptional() @IsIn(['true', 'false']) AI_ARK_WATERMARK?: string;
   // 备用中转站：TokenLab
   @IsOptional() @IsString() AI_TOKENLAB_BASE_URL?: string;
   @IsOptional() @IsString() AI_TOKENLAB_API_KEY?: string;
