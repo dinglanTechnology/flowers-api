@@ -61,6 +61,8 @@ export class ArkProvider implements AiProvider {
       output_format: 'png',
       stream: false,
       watermark: this.watermark,
+      // Seedream 5.0 Pro：固定 fast 极速模式（牺牲画质提速）
+      optimize_prompt_options: { mode: 'fast' },
       ...(input.image ? { image: input.image } : {}),
     };
     const res = await fetch(`${this.baseUrl}/images/generations`, {
@@ -88,7 +90,7 @@ export class ArkProvider implements AiProvider {
       });
       if (!r.ok) throw new Error(`Ark image2 回源下载失败: HTTP ${r.status}`);
       this.logger.log(
-        `image2 由 ark 出图（${input.image ? '图生图' : '文生图'}）`,
+        `image2 由 ark 出图（${input.image ? '图生图' : '文生图'}，optimize=fast）`,
       );
       return Buffer.from(await r.arrayBuffer());
     }
