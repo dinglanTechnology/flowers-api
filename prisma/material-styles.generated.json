@@ -1,22 +1,208 @@
 {
+  "mat-lily": [
+    {
+      "styleOption": "lily-single-full-white",
+      "name": "百合花单枝盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-single-full-yellow",
+      "name": "百合花单枝盛放（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-single-half-white",
+      "name": "百合花单枝半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-single-half-yellow",
+      "name": "百合花单枝半开（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-single-bud-white",
+      "name": "百合花单枝花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-single-bud-yellow",
+      "name": "百合花单枝花苞（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-branch-white",
+      "name": "百合花分枝（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lily-branch-yellow",
+      "name": "百合花分枝（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-cymbidium": [
+    {
+      "styleOption": "cymbidium-full-white",
+      "name": "大花蕙兰盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cymbidium-half-white",
+      "name": "大花蕙兰半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cymbidium-bud-green",
+      "name": "大花蕙兰花苞（绿）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
   "mat-dahlia": [
     {
-      "styleOption": "dahlia-full",
-      "name": "大丽花盛放",
+      "styleOption": "dahlia-full-orange",
+      "name": "大丽花盛放（橙）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "dahlia-half",
-      "name": "大丽花半开",
+      "styleOption": "dahlia-full-pink",
+      "name": "大丽花盛放（粉）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "dahlia-bud",
-      "name": "大丽花花苞",
+      "styleOption": "dahlia-full-purple",
+      "name": "大丽花盛放（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-full-red",
+      "name": "大丽花盛放（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-full-white",
+      "name": "大丽花盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-full-yellow",
+      "name": "大丽花盛放（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-half-orange",
+      "name": "大丽花半开（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-half-pink",
+      "name": "大丽花半开（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-half-purple",
+      "name": "大丽花半开（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-half-red",
+      "name": "大丽花半开（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-half-white",
+      "name": "大丽花半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-half-yellow",
+      "name": "大丽花半开（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-bud-orange",
+      "name": "大丽花花苞（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-bud-pink",
+      "name": "大丽花花苞（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-bud-purple",
+      "name": "大丽花花苞（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-bud-red",
+      "name": "大丽花花苞（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-bud-white",
+      "name": "大丽花花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "dahlia-bud-yellow",
+      "name": "大丽花花苞（黄）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -31,6 +217,48 @@
       "colors": []
     },
     {
+      "styleOption": "gerbera-full-orange",
+      "name": "非洲菊盛放（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-full-pink",
+      "name": "非洲菊盛放（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-full-purple",
+      "name": "非洲菊盛放（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-full-red",
+      "name": "非洲菊盛放（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-full-white",
+      "name": "非洲菊盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-full-yellow",
+      "name": "非洲菊盛放（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
       "styleOption": "gerbera-half",
       "name": "非洲菊半开",
       "morph": "photo",
@@ -38,8 +266,224 @@
       "colors": []
     },
     {
+      "styleOption": "gerbera-half-orange",
+      "name": "非洲菊半开（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-half-pink",
+      "name": "非洲菊半开（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-half-purple",
+      "name": "非洲菊半开（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-half-red",
+      "name": "非洲菊半开（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-half-white",
+      "name": "非洲菊半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-half-yellow",
+      "name": "非洲菊半开（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
       "styleOption": "gerbera-bud",
       "name": "非洲菊花苞",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud-orange",
+      "name": "非洲菊花苞（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud-pink",
+      "name": "非洲菊花苞（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud-purple",
+      "name": "非洲菊花苞（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud-red",
+      "name": "非洲菊花苞（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud-white",
+      "name": "非洲菊花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gerbera-bud-yellow",
+      "name": "非洲菊花苞（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-cosmos": [
+    {
+      "styleOption": "cosmos-full-pink",
+      "name": "格桑花盛放（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-full-purple",
+      "name": "格桑花盛放（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-full-white",
+      "name": "格桑花盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-half-pink",
+      "name": "格桑花半开（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-half-purple",
+      "name": "格桑花半开（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-half-white",
+      "name": "格桑花半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-bud-pink",
+      "name": "格桑花花苞（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-bud-purple",
+      "name": "格桑花花苞（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cosmos-bud-white",
+      "name": "格桑花花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-chrysanthemum": [
+    {
+      "styleOption": "chrysanthemum-full-white",
+      "name": "菊花盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "chrysanthemum-full-yellow",
+      "name": "菊花盛放（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "chrysanthemum-half-white",
+      "name": "菊花半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "chrysanthemum-half-yellow",
+      "name": "菊花半开（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "chrysanthemum-bud-white",
+      "name": "菊花花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "chrysanthemum-bud-yellow",
+      "name": "菊花花苞（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-carnation": [
+    {
+      "styleOption": "carnation-full",
+      "name": "康乃馨盛放",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "carnation-half",
+      "name": "康乃馨半开",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "carnation-bud",
+      "name": "康乃馨花苞",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -93,22 +537,85 @@
   ],
   "mat-rose": [
     {
-      "styleOption": "rose-full",
-      "name": "玫瑰盛放",
+      "styleOption": "rose-full-pink",
+      "name": "玫瑰盛放（粉）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "rose-half",
-      "name": "玫瑰半开",
+      "styleOption": "rose-full-red",
+      "name": "玫瑰盛放（红）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "rose-bud",
-      "name": "玫瑰花苞",
+      "styleOption": "rose-full-white",
+      "name": "玫瑰盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-full-yellow",
+      "name": "玫瑰盛放（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-half-pink",
+      "name": "玫瑰半开（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-half-red",
+      "name": "玫瑰半开（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-half-white",
+      "name": "玫瑰半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-half-yellow",
+      "name": "玫瑰半开（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-bud-pink",
+      "name": "玫瑰花苞（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-bud-red",
+      "name": "玫瑰花苞（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-bud-white",
+      "name": "玫瑰花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "rose-bud-yellow",
+      "name": "玫瑰花苞（黄）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -116,22 +623,64 @@
   ],
   "mat-peony": [
     {
-      "styleOption": "peony-full",
-      "name": "牡丹盛放",
+      "styleOption": "peony-full-blue",
+      "name": "牡丹盛放（蓝）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "peony-half",
-      "name": "牡丹半开",
+      "styleOption": "peony-full-red",
+      "name": "牡丹盛放（红）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "peony-bud",
-      "name": "牡丹花苞",
+      "styleOption": "peony-full-white",
+      "name": "牡丹盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "peony-half-blue",
+      "name": "牡丹半开（蓝）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "peony-half-red",
+      "name": "牡丹半开（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "peony-half-white",
+      "name": "牡丹半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "peony-bud-blue",
+      "name": "牡丹花苞（蓝）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "peony-bud-red",
+      "name": "牡丹花苞（红）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "peony-bud-white",
+      "name": "牡丹花苞（白）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -231,22 +780,22 @@
   ],
   "mat-eustoma": [
     {
-      "styleOption": "eustoma-full",
-      "name": "洋桔梗盛放",
+      "styleOption": "eustoma-full-pinkish-white",
+      "name": "洋桔梗盛放（粉白）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "eustoma-half",
-      "name": "洋桔梗半开",
+      "styleOption": "eustoma-half-pinkish-white",
+      "name": "洋桔梗半开（粉白）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
     },
     {
-      "styleOption": "eustoma-bud",
-      "name": "洋桔梗花苞",
+      "styleOption": "eustoma-bud-pinkish-white",
+      "name": "洋桔梗花苞（粉白）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -275,6 +824,50 @@
       "colors": []
     }
   ],
+  "mat-tulip": [
+    {
+      "styleOption": "tulip-full-pink",
+      "name": "郁金香盛放（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "tulip-full-white",
+      "name": "郁金香盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "tulip-half-pink",
+      "name": "郁金香半开（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "tulip-half-white",
+      "name": "郁金香半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "tulip-bud-pink",
+      "name": "郁金香花苞（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "tulip-bud-white",
+      "name": "郁金香花苞（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
   "mat-gardenia": [
     {
       "styleOption": "gardenia-full",
@@ -298,118 +891,6 @@
       "colors": []
     }
   ],
-  "mat-delphinium": [
-    {
-      "styleOption": "delphinium-single",
-      "name": "飞燕草单枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "delphinium-branch",
-      "name": "飞燕草分枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
-  "mat-crabapple": [
-    {
-      "styleOption": "crabapple-single",
-      "name": "海棠单枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "crabapple-cluster",
-      "name": "海棠簇生",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
-  "mat-dendrobium": [
-    {
-      "styleOption": "dendrobium-single",
-      "name": "石斛单枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "dendrobium-cluster",
-      "name": "石斛簇生",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
-  "mat-spider-lily": [
-    {
-      "styleOption": "spider-lily-cluster-a",
-      "name": "石蒜簇生A",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "spider-lily-cluster-b",
-      "name": "石蒜簇生B",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
-  "mat-hydrangea": [
-    {
-      "styleOption": "hydrangea-single",
-      "name": "绣球单枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "hydrangea-cluster",
-      "name": "绣球簇生",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
-  "mat-anemone": [
-    {
-      "styleOption": "anemone-single",
-      "name": "银莲花单枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "anemone-cluster",
-      "name": "银莲花簇生",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
-  "mat-iris": [
-    {
-      "styleOption": "iris-single",
-      "name": "鸢尾单枝",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    },
-    {
-      "styleOption": "iris-cluster",
-      "name": "鸢尾簇生",
-      "morph": "photo",
-      "lengthScale": 1,
-      "colors": []
-    }
-  ],
   "mat-limonium": [
     {
       "styleOption": "limonium-single",
@@ -421,6 +902,64 @@
     {
       "styleOption": "limonium-cluster",
       "name": "补血草簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-lilac": [
+    {
+      "styleOption": "lilac-single",
+      "name": "丁香单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-full-purple",
+      "name": "丁香盛放（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-full-white",
+      "name": "丁香盛放（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-branch",
+      "name": "丁香分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-half-purple",
+      "name": "丁香半开（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-half-white",
+      "name": "丁香半开（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-bud-purple",
+      "name": "丁香花苞（紫）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "lilac-bud-white",
+      "name": "丁香花苞（白）",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -442,6 +981,102 @@
       "colors": []
     }
   ],
+  "mat-delphinium": [
+    {
+      "styleOption": "delphinium-single",
+      "name": "飞燕草单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "delphinium-branch",
+      "name": "飞燕草分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-hyacinth": [
+    {
+      "styleOption": "hyacinth-single",
+      "name": "风信子单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "hyacinth-cluster",
+      "name": "风信子簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-cottonrose": [
+    {
+      "styleOption": "cottonrose-single",
+      "name": "芙蓉花单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "cottonrose-branch",
+      "name": "芙蓉花分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-crabapple": [
+    {
+      "styleOption": "crabapple-single",
+      "name": "海棠单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "crabapple-cluster",
+      "name": "海棠簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-plumeria": [
+    {
+      "styleOption": "plumeria-single",
+      "name": "鸡蛋花单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "plumeria-cluster",
+      "name": "鸡蛋花簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-bluestarflower": [
+    {
+      "styleOption": "bluestarflower-single",
+      "name": "蓝星花单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "bluestarflower-cluster",
+      "name": "蓝星花簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
   "mat-lily-of-the-valley": [
     {
       "styleOption": "lily-of-the-valley-single",
@@ -458,10 +1093,116 @@
       "colors": []
     }
   ],
+  "mat-astilbe": [
+    {
+      "styleOption": "astilbe-single-orange",
+      "name": "落新妇单枝（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "astilbe-single-pink",
+      "name": "落新妇单枝（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "astilbe-single-white",
+      "name": "落新妇单枝（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "astilbe-cluster-orange",
+      "name": "落新妇簇生（橙）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "astilbe-cluster-pink",
+      "name": "落新妇簇生（粉）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "astilbe-cluster-white",
+      "name": "落新妇簇生（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
   "mat-gypsophila": [
     {
       "styleOption": "gypsophila-cluster",
       "name": "满天星簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-spider-lily": [
+    {
+      "styleOption": "spider-lily-cluster-a",
+      "name": "石蒜簇生A",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "spider-lily-cluster-b",
+      "name": "石蒜簇生B",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-narcissus": [
+    {
+      "styleOption": "narcissus-single-white",
+      "name": "水仙花单枝（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "narcissus-single-yellow",
+      "name": "水仙花单枝（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "narcissus-cluster-white",
+      "name": "水仙花簇生（白）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "narcissus-cluster-yellow",
+      "name": "水仙花簇生（黄）",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-gladiolus": [
+    {
+      "styleOption": "gladiolus-single",
+      "name": "唐菖蒲单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "gladiolus-cluster",
+      "name": "唐菖蒲簇生",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -478,6 +1219,22 @@
     {
       "styleOption": "cowherb-cluster",
       "name": "王不留行簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-hydrangea": [
+    {
+      "styleOption": "hydrangea-single",
+      "name": "绣球单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "hydrangea-cluster",
+      "name": "绣球簇生",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -515,6 +1272,22 @@
       "colors": []
     }
   ],
+  "mat-anemone": [
+    {
+      "styleOption": "anemone-single",
+      "name": "银莲花单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "anemone-cluster",
+      "name": "银莲花簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
   "mat-catchfly": [
     {
       "styleOption": "catchfly-single",
@@ -526,6 +1299,38 @@
     {
       "styleOption": "catchfly-branch",
       "name": "蝇子草分枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-iris": [
+    {
+      "styleOption": "iris-single",
+      "name": "鸢尾单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "iris-cluster",
+      "name": "鸢尾簇生",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-stock": [
+    {
+      "styleOption": "stock-single",
+      "name": "紫罗兰单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "stock-cluster",
+      "name": "紫罗兰簇生",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -590,6 +1395,22 @@
     {
       "styleOption": "olive-bundle",
       "name": "橄榄叶束枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-davallia-mariesii": [
+    {
+      "styleOption": "davallia-mariesii-single",
+      "name": "高山羊齿单枝",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "davallia-mariesii-cluster",
+      "name": "高山羊齿簇生",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
@@ -780,8 +1601,54 @@
       "colors": []
     },
     {
-      "styleOption": "pieris-curve",
-      "name": "马醉木弯枝",
+      "styleOption": "pieris-curve-a",
+      "name": "马醉木弯枝A",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "pieris-curve-b",
+      "name": "马醉木弯枝B",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-allium": [
+    {
+      "styleOption": "allium-upright",
+      "name": "弯葱直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "allium-curve-a",
+      "name": "弯葱弯枝A",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "allium-curve-b",
+      "name": "弯葱弯枝B",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    }
+  ],
+  "mat-snowwillow": [
+    {
+      "styleOption": "snowwillow-upright",
+      "name": "雪柳直立",
+      "morph": "photo",
+      "lengthScale": 1,
+      "colors": []
+    },
+    {
+      "styleOption": "snowwillow-curve",
+      "name": "雪柳弯枝",
       "morph": "photo",
       "lengthScale": 1,
       "colors": []
