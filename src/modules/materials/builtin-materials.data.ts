@@ -41,13 +41,6 @@ export const BUILTIN_MATERIALS: BuiltinMaterial[] = [
     colors: [],
   },
   {
-    id: 'mat-gerbera',
-    name: '非洲菊',
-    category: 'flower',
-    kind: 'gerbera',
-    colors: [],
-  },
-  {
     id: 'mat-cosmos',
     name: '格桑花',
     category: 'flower',
